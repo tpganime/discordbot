@@ -9,15 +9,15 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ onAdd }) => {
   return (
     <nav className="sticky top-0 z-50 w-full px-6 py-4">
-      <div className="max-w-7xl mx-auto flex items-center justify-between glass-effect rounded-2xl px-6 py-3 shadow-lg ring-1 ring-white/10">
+      <div className="max-w-7xl mx-auto flex items-center justify-between glass-effect rounded-2xl px-6 py-3 shadow-lg">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-pink-500/20 bg-slate-900 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-xl overflow-hidden bg-slate-800 shadow-lg shadow-pink-500/20 ring-1 ring-white/10">
             <img 
-              src="/input_file_1.png" 
+              src="input_file_1.png" 
               alt="Logo" 
               className="w-full h-full object-cover"
               onError={(e) => {
-                (e.target as HTMLImageElement).src = 'https://via.placeholder.com/40/0f172a/f472b6?text=M';
+                (e.target as HTMLImageElement).src = 'https://via.placeholder.com/40/0f172a/f472b6?text=TPG';
               }}
             />
           </div>
@@ -37,9 +37,9 @@ const Navbar: React.FC<NavbarProps> = ({ onAdd }) => {
           onClick={() => onAdd()}
           target="_blank"
           rel="noopener noreferrer"
-          className="px-5 py-2 bg-gradient-to-r from-indigo-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap"
+          className="px-5 py-2 bg-gradient-to-r from-indigo-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white rounded-xl text-sm font-bold transition-all shadow-lg active:scale-95"
         >
-          Add to Discord
+          Add to Server
         </a>
       </div>
     </nav>

@@ -54,7 +54,7 @@ const InteractiveAI: React.FC = () => {
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-pink-500/50 bg-slate-900">
                   <img 
-                    src="/input_file_1.png" 
+                    src="input_file_1.png" 
                     alt="Chat Icon" 
                     className="w-full h-full object-cover"
                     onError={(e) => {
