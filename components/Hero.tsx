@@ -19,14 +19,16 @@ const Hero: React.FC<HeroProps> = ({ onAdd }) => {
         </div>
         
         <div className="flex justify-center mb-8">
-            <img 
-              src="input_file_1.png" 
-              alt="Bot Logo Large" 
-              className="w-32 h-32 md:w-40 md:h-40 rounded-[2rem] shadow-2xl shadow-pink-600/30 ring-4 ring-white/10 bg-slate-900"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = 'https://via.placeholder.com/160/0f172a/f472b6?text=MUSIC';
-              }}
-            />
+            <div className="w-32 h-32 md:w-40 md:h-40 rounded-[2rem] overflow-hidden shadow-2xl shadow-pink-600/30 ring-4 ring-white/10 bg-slate-900 flex items-center justify-center">
+              <img 
+                src="/input_file_1.png" 
+                alt="Bot Logo Large" 
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = 'https://via.placeholder.com/160/0f172a/f472b6?text=MUSIC';
+                }}
+              />
+            </div>
         </div>
 
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight tracking-tight">
@@ -43,7 +45,7 @@ const Hero: React.FC<HeroProps> = ({ onAdd }) => {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a 
             href={BOT_INVITE_URL}
-            onClick={onAdd}
+            onClick={() => onAdd()}
             target="_blank"
             rel="noopener noreferrer"
             className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all bg-gradient-to-br from-indigo-600 to-pink-600 rounded-2xl hover:opacity-90 active:scale-95 shadow-2xl shadow-indigo-600/30 w-full sm:w-auto overflow-hidden"

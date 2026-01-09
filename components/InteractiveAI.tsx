@@ -52,11 +52,16 @@ const InteractiveAI: React.FC = () => {
             {/* Header */}
             <div className="bg-white/5 px-6 py-4 flex items-center justify-between border-b border-white/5">
               <div className="flex items-center gap-3">
-                <img 
-                  src="input_file_1.png" 
-                  alt="Chat Icon" 
-                  className="w-10 h-10 rounded-full ring-2 ring-pink-500/50"
-                />
+                <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-pink-500/50 bg-slate-900">
+                  <img 
+                    src="/input_file_1.png" 
+                    alt="Chat Icon" 
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://via.placeholder.com/40/0f172a/f472b6?text=AI';
+                    }}
+                  />
+                </div>
                 <div>
                   <div className="font-bold text-white leading-tight">{BOT_NAME} AI</div>
                   <div className="text-xs text-pink-400 flex items-center gap-1">
