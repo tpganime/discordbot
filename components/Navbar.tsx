@@ -32,7 +32,9 @@ const Navbar: React.FC<NavbarProps> = ({ onAdd }) => {
 
         <a 
           href={BOT_INVITE_URL}
-          onClick={onAdd}
+          onClick={(e) => {
+            onAdd();
+          }}
           target="_blank"
           rel="noopener noreferrer"
           className="px-5 py-2 bg-gradient-to-r from-indigo-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap"
