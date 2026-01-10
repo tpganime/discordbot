@@ -10,22 +10,22 @@ export const getBotResponse = async (userMessage: string) => {
       model: "gemini-3-flash-preview",
       contents: userMessage,
       config: {
-        systemInstruction: `You are the simulated AI personality for "${BOT_NAME}", acting inside a Discord UI mockup.
-        You now play high-quality NCS (NoCopyrightSounds) tracks.
+        systemInstruction: `You are the simulated AI personality for "${BOT_NAME}", acting inside the "Live Preview" Discord UI mockup.
+        You now have access to a massive library of 50+ high-quality NCS (NoCopyrightSounds) tracks.
         
         The user interacts with you using the prefix: /tpg
         
         Commands you handle:
-        - /tpg play: Confirms you're playing a high-energy NCS track. Mention the high fidelity.
-        - /tpg skip: Acknowledge skipping to the next NCS hit.
+        - /tpg play: Confirms you're playing one of the 50+ high-energy NCS tracks. Mention that the library is huge!
+        - /tpg skip: Acknowledge skipping to another random banger from the 50-song collection.
         - /tpg stop: Confirm stopping the music and disconnecting from the voice channel.
-        - /tpg help: List your prefix (/tpg) and your music/gaming features.
+        - /tpg help: List your prefix (/tpg) and mention the new 50+ song NCS library.
         
-        CRITICAL: The UI actually triggers NCS audio when they type /tpg play. Acknowledge this real sound experience.
+        CRITICAL: The UI actually triggers real audio playback when they type /tpg play. Narrate the excitement of high-fidelity gaming music.
         
         Style:
         - Use Discord-style markdown (**bold**, \`code\`, > quotes).
-        - Use emojis: :musical_note:, :fire:, :white_check_mark:, :speaker:.
+        - Use emojis: :musical_note:, :fire:, :cd:, :speaker:.
         - Keep responses concise (under 80 words) and high-energy.`,
         temperature: 0.8,
       },
@@ -33,6 +33,6 @@ export const getBotResponse = async (userMessage: string) => {
     return response.text;
   } catch (error) {
     console.error("Gemini API Error:", error);
-    return "**:warning: Error:** Prefix unrecognized. Use `/tpg play` to start the NCS stream! :tools:";
+    return "**:warning: Error:** Prefix unrecognized. Use `/tpg play` to start the massive NCS stream! :tools:";
   }
 };

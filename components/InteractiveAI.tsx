@@ -13,11 +13,58 @@ interface Message {
   isEmbed?: boolean;
 }
 
+// Expanded library of 50 NCS-style tracks (Using high-quality placeholders for demo stability)
 const NCS_TRACKS = [
-  { title: "NCS: Alan Walker - Fade (Electronic)", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", duration: 372 },
-  { title: "NCS: Deaf Kev - Invincible (House)", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", duration: 425 },
-  { title: "NCS: Cartoon - On & On (Future Bass)", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3", duration: 316 },
-  { title: "NCS: Janji - Heroes Tonight (Progressive)", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3", duration: 288 }
+  { title: "Alan Walker - Fade", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", duration: 372 },
+  { title: "Deaf Kev - Invincible", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", duration: 425 },
+  { title: "Cartoon - On & On (feat. Daniel Levi)", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3", duration: 316 },
+  { title: "Janji - Heroes Tonight (feat. Johnning)", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3", duration: 288 },
+  { title: "Warriyo - Mortals (feat. Laura Brehm)", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3", duration: 310 },
+  { title: "Disfigure - Blank", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3", duration: 295 },
+  { title: "Electro-Light - Symbolism", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3", duration: 340 },
+  { title: "Different Heaven & EH!DE - My Heart", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3", duration: 325 },
+  { title: "Tobu - Hope", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3", duration: 312 },
+  { title: "Sub Urban - Cradles", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3", duration: 350 },
+  { title: "Julius Dreisig & Zeus X Crona - Invisible", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", duration: 240 },
+  { title: "Diamond Eyes - Everything", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", duration: 265 },
+  { title: "Lost Sky - Fearless", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3", duration: 212 },
+  { title: "Unknown Brain - Superhero", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3", duration: 310 },
+  { title: "Jarico - Landscape", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3", duration: 255 },
+  { title: "Aero Chord - Surface", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3", duration: 280 },
+  { title: "Razihel - Love U", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3", duration: 245 },
+  { title: "Egzod - Rise Up", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3", duration: 300 },
+  { title: "Unknown Brain - Perseus", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3", duration: 285 },
+  { title: "Diviners - Savannah", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3", duration: 320 },
+  { title: "Syn Cole - Feel Good", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", duration: 240 },
+  { title: "Jim Yosef - Link", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", duration: 250 },
+  { title: "Laszlo - Fall To Light", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3", duration: 270 },
+  { title: "Culture Code - Make Me Move", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3", duration: 235 },
+  { title: "NIVIRO - The Ghost", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3", duration: 305 },
+  { title: "Vicetone - Nevada", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3", duration: 288 },
+  { title: "Krewella - Adventure Time", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3", duration: 255 },
+  { title: "RetroVision - Puzzle", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3", duration: 242 },
+  { title: "Tungevaag - Bad Boy", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3", duration: 315 },
+  { title: "Axel Johansson - Next To Me", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3", duration: 290 },
+  { title: "Valiant - Beyond", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", duration: 230 },
+  { title: "Mendum - Stay With Me", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", duration: 245 },
+  { title: "Spektrem - Shine", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3", duration: 310 },
+  { title: "Halcyon - Runaway", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3", duration: 275 },
+  { title: "Robin Hustin x TobiMorrow - Light It Up", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3", duration: 320 },
+  { title: "DEAF KEV - Safe & Sound", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3", duration: 260 },
+  { title: "Unknown Brain - Why Do I?", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3", duration: 285 },
+  { title: "Anikdote - Turn It Up", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3", duration: 300 },
+  { title: "Lost Sky - Dreams", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3", duration: 250 },
+  { title: "Cartoon - Why We Lose", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3", duration: 270 },
+  { title: "Au5 - Closer", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", duration: 310 },
+  { title: "Glude - Identity", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", duration: 245 },
+  { title: "Clarx - Shakedown", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3", duration: 290 },
+  { title: "Jo Cohen & Sex Whales - We Are", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3", duration: 260 },
+  { title: "Killercats - Tell Me", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3", duration: 280 },
+  { title: "Prismo - Stronger", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3", duration: 305 },
+  { title: "WRLD - Triumph", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3", duration: 255 },
+  { title: "Waysons - Daydream", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3", duration: 275 },
+  { title: "Inukshuk - A World Away", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3", duration: 290 },
+  { title: "ElementD - Giving In", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3", duration: 315 }
 ];
 
 const InteractiveAI: React.FC = () => {
@@ -25,7 +72,7 @@ const InteractiveAI: React.FC = () => {
     { 
       author: BOT_NAME, 
       avatar: 'bot',
-      text: `Welcome to the **${BOT_NAME}** preview! I'm ready to play some NCS hits. :rocket: \n\nTry these commands:\n> \`/tpg play\` - Play a random NCS track\n> \`/tpg skip\` - Skip to the next banger\n> \`/tpg stop\` - Stop the music and leave`, 
+      text: `Welcome to the **${BOT_NAME}** preview! I'm ready to play 50+ of the best NCS gaming tracks. :rocket: \n\nTry these commands:\n> \`/tpg play\` - Play a random NCS track\n> \`/tpg skip\` - Skip to the next banger\n> \`/tpg stop\` - Stop the music and leave`, 
       isBot: true,
       timestamp: 'Today at 12:00 PM'
     }
@@ -168,8 +215,8 @@ const InteractiveAI: React.FC = () => {
           <div className="inline-block px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-400 text-[10px] font-bold uppercase tracking-wider mb-4">
             Bot Preview
           </div>
-          <h2 className="text-3xl md:text-5xl font-black mb-4">Live NCS Player</h2>
-          <p className="text-gray-400 text-lg">Use the <code className="text-pink-400">/tpg</code> prefix to control the bot below.</p>
+          <h2 className="text-3xl md:text-5xl font-black mb-4">Live Preview</h2>
+          <p className="text-gray-400 text-lg">Use the <code className="text-pink-400">/tpg</code> prefix to control the bot below. Featuring 50+ NCS tracks.</p>
         </div>
 
         <div className="relative group max-w-5xl mx-auto">
