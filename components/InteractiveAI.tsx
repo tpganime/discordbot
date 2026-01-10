@@ -13,20 +13,45 @@ interface Message {
   isEmbed?: boolean;
 }
 
+const MOCK_TRACKS = [
+  { title: "Lofi Study Beats", url: "https://cdn.pixabay.com/audio/2022/05/27/audio_1808f3030c.mp3", duration: 144 },
+  { title: "Phonk Night Drive", url: "https://cdn.pixabay.com/audio/2022/01/18/audio_d0a13f69d2.mp3", duration: 128 },
+  { title: "Midnight Synthwave", url: "https://cdn.pixabay.com/audio/2022/03/10/audio_c3523e414c.mp3", duration: 195 },
+  { title: "Chill Gaming Mix", url: "https://cdn.pixabay.com/audio/2024/09/01/audio_123456789.mp3", urlFallback: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", duration: 360 }
+];
+
 const InteractiveAI: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
     { 
       author: BOT_NAME, 
       avatar: 'bot',
-      text: `Welcome to the **${BOT_NAME}** preview! Try typing \`/play\` followed by a song name to see me in action! :sparkles:`, 
+      text: `Welcome to the **${BOT_NAME}** preview! I'm now fully functional. \n\nTry commands like:\n> \`/play\` - Start listening to high-quality music\n> \`/stop\` - Stop the music and leave\n> \`/help\` - See all features`, 
       isBot: true,
       timestamp: 'Today at 12:00 PM'
     }
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [nowPlaying, setNowPlaying] = useState<string | null>(null);
+  const [nowPlaying, setNowPlaying] = useState<typeof MOCK_TRACKS[0] | null>(null);
+  const [playbackTime, setPlaybackTime] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  
   const scrollRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const progressInterval = useRef<number | null>(null);
+
+  useEffect(() => {
+    audioRef.current = new Audio();
+    audioRef.current.volume = 0.5;
+    
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+      if (progressInterval.current) clearInterval(progressInterval.current);
+    };
+  }, []);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -34,9 +59,64 @@ const InteractiveAI: React.FC = () => {
     }
   }, [messages, isTyping]);
 
+  const startProgressTracking = () => {
+    if (progressInterval.current) clearInterval(progressInterval.current);
+    progressInterval.current = window.setInterval(() => {
+      if (audioRef.current && !audioRef.current.paused) {
+        setPlaybackTime(audioRef.current.currentTime);
+      }
+    }, 1000);
+  };
+
+  const handlePlayMusic = (trackIndex: number = 0) => {
+    const track = MOCK_TRACKS[trackIndex];
+    if (audioRef.current) {
+      audioRef.current.src = track.url;
+      audioRef.current.play().catch(e => {
+        console.warn("Autoplay blocked or link failed, trying fallback", e);
+        if (audioRef.current) {
+          audioRef.current.src = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3";
+          audioRef.current.play();
+        }
+      });
+      setNowPlaying(track);
+      setPlaybackTime(0);
+      setIsPaused(false);
+      startProgressTracking();
+    }
+  };
+
+  const handleStopMusic = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+    setNowPlaying(null);
+    setPlaybackTime(0);
+    if (progressInterval.current) clearInterval(progressInterval.current);
+  };
+
+  const togglePause = () => {
+    if (audioRef.current) {
+      if (audioRef.current.paused) {
+        audioRef.current.play();
+        setIsPaused(false);
+      } else {
+        audioRef.current.pause();
+        setIsPaused(true);
+      }
+    }
+  };
+
   const getCurrentTime = () => {
     const now = new Date();
     return `Today at ${now.getHours() % 12 || 12}:${now.getMinutes().toString().padStart(2, '0')} ${now.getHours() >= 12 ? 'PM' : 'AM'}`;
+  };
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
   const handleSend = async () => {
@@ -45,7 +125,6 @@ const InteractiveAI: React.FC = () => {
     const userText = input.trim();
     setInput('');
     
-    // Add User Message
     setMessages(prev => [...prev, { 
       author: 'You', 
       avatar: 'user',
@@ -56,12 +135,21 @@ const InteractiveAI: React.FC = () => {
     
     setIsTyping(true);
 
-    // Mock immediate command feedback for Music
-    if (userText.toLowerCase().startsWith('/play')) {
-      const song = userText.substring(6) || 'a random Lo-Fi track';
-      setNowPlaying(song);
-    } else if (userText.toLowerCase().startsWith('/stop')) {
-      setNowPlaying(null);
+    // Command Logic
+    const lowerText = userText.toLowerCase();
+    let botPrefix = "";
+
+    if (lowerText.startsWith('/play')) {
+      const trackIdx = Math.floor(Math.random() * MOCK_TRACKS.length);
+      handlePlayMusic(trackIdx);
+      botPrefix = `**:musical_note: Now playing:** \`${MOCK_TRACKS[trackIdx].title}\` in High Fidelity! \n\n`;
+    } else if (lowerText.startsWith('/stop') || lowerText.startsWith('/leave')) {
+      handleStopMusic();
+      botPrefix = `**:white_check_mark: Stopped playback.** See you later! \n\n`;
+    } else if (lowerText.startsWith('/skip')) {
+       const trackIdx = Math.floor(Math.random() * MOCK_TRACKS.length);
+       handlePlayMusic(trackIdx);
+       botPrefix = `**:track_next: Skipped!** Now playing: \`${MOCK_TRACKS[trackIdx].title}\` \n\n`;
     }
 
     const botText = await getBotResponse(userText);
@@ -70,7 +158,7 @@ const InteractiveAI: React.FC = () => {
     setMessages(prev => [...prev, { 
       author: BOT_NAME, 
       avatar: 'bot',
-      text: botText || "No response.", 
+      text: botPrefix + (botText || "Request processed."), 
       isBot: true,
       timestamp: getCurrentTime(),
       isEmbed: userText.startsWith('/')
@@ -82,13 +170,12 @@ const InteractiveAI: React.FC = () => {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <div className="inline-block px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-400 text-[10px] font-bold uppercase tracking-wider mb-4">
-            Interactive Demo
+            Live Preview
           </div>
           <h2 className="text-3xl md:text-5xl font-black mb-4">Try {BOT_NAME} Now</h2>
-          <p className="text-gray-400 text-lg">Experience our music commands in this Discord simulator.</p>
+          <p className="text-gray-400 text-lg">Type <code className="text-pink-400">/play</code> to hear real high-quality music instantly.</p>
         </div>
 
-        {/* Discord Simulation Wrapper */}
         <div className="relative group max-w-5xl mx-auto">
           <div className="flex h-[600px] bg-[#313338] rounded-2xl overflow-hidden shadow-2xl border border-white/5 ring-1 ring-black/50">
             
@@ -115,16 +202,13 @@ const InteractiveAI: React.FC = () => {
                      <span className="text-gray-400 group-hover:text-white transition-colors">#</span>
                      <span className="text-sm font-medium">general</span>
                    </div>
-                   <div className="flex items-center gap-2 px-2 py-1 rounded hover:bg-[#35373c] text-gray-400 cursor-pointer group">
-                     <span className="text-gray-400 group-hover:text-white transition-colors">#</span>
-                     <span className="text-sm font-medium">music-bot</span>
-                   </div>
                  </div>
                  <div className="space-y-1">
                    <div className="text-[11px] font-bold text-gray-400 uppercase px-2 mb-1">Voice Channels</div>
-                   <div className="flex items-center gap-2 px-2 py-1 rounded hover:bg-[#35373c] text-gray-400 cursor-pointer group">
+                   <div className="flex items-center gap-2 px-2 py-1 rounded hover:bg-[#35373c] text-green-400 cursor-pointer group">
                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
                      <span className="text-sm font-medium">Music Room</span>
+                     {nowPlaying && <div className="ml-auto w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>}
                    </div>
                  </div>
                </div>
@@ -132,13 +216,11 @@ const InteractiveAI: React.FC = () => {
 
             {/* Chat Area */}
             <div className="flex-1 flex flex-col min-w-0 bg-[#313338]">
-              {/* Header */}
               <div className="h-12 px-4 flex items-center shadow-sm border-b border-black/10 shrink-0">
                 <span className="text-gray-400 font-bold mr-2">#</span>
                 <span className="text-white font-bold text-sm">general</span>
               </div>
 
-              {/* Messages Container */}
               <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-6 scrollbar-thin scrollbar-thumb-gray-700">
                 {messages.map((m, i) => (
                   <div key={i} className="flex gap-4 group hover:bg-[#2e3035] -mx-4 px-4 py-1 transition-colors">
@@ -158,11 +240,7 @@ const InteractiveAI: React.FC = () => {
                         <span className={`font-bold hover:underline cursor-pointer ${m.isBot ? 'text-pink-400' : 'text-white'}`}>
                           {m.author}
                         </span>
-                        {m.isBot && (
-                          <span className="bg-[#5865f2] text-white text-[10px] font-bold px-1 rounded-[3px] h-3.5 flex items-center mt-0.5">
-                            BOT
-                          </span>
-                        )}
+                        {m.isBot && <span className="bg-[#5865f2] text-white text-[10px] font-bold px-1 rounded-[3px] h-3.5 flex items-center mt-0.5">BOT</span>}
                         <span className="text-[10px] text-gray-400 font-medium">{m.timestamp}</span>
                       </div>
                       
@@ -180,42 +258,60 @@ const InteractiveAI: React.FC = () => {
                     </div>
                   </div>
                 ))}
-                
                 {isTyping && (
                   <div className="flex gap-4 -mx-4 px-4 py-1">
                     <div className="w-10 h-10 shrink-0"></div>
-                    <div className="flex items-center gap-1.5 h-10">
-                      <div className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce"></div>
-                      <div className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce delay-75"></div>
-                      <div className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce delay-150"></div>
-                    </div>
+                    <div className="flex items-center gap-1.5 h-10"><div className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce"></div><div className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce delay-75"></div><div className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce delay-150"></div></div>
                   </div>
                 )}
               </div>
 
-              {/* Now Playing Bar (Mock) */}
+              {/* Enhanced Now Playing Bar */}
               {nowPlaying && (
-                <div className="mx-4 mb-2 p-2 bg-[#2b2d31] rounded-lg flex items-center gap-3 border border-white/5 animate-slide-up">
-                  <div className="w-10 h-10 bg-indigo-600 rounded flex items-center justify-center shrink-0">
-                    <MusicIcon size="sm" className="!bg-transparent !shadow-none !ring-0 !w-6 !h-6" />
+                <div className="mx-4 mb-2 p-3 bg-[#232428] rounded-lg flex flex-col gap-2 border border-white/5 animate-slide-up shadow-xl">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-indigo-600 rounded flex items-center justify-center shrink-0 shadow-lg animate-pulse">
+                      <MusicIcon size="sm" className="!bg-transparent !shadow-none !ring-0 !w-6 !h-6" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <div className="text-[10px] text-indigo-400 font-bold uppercase tracking-widest leading-none">Live Audio</div>
+                        <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></div>
+                      </div>
+                      <div className="text-xs text-white font-bold truncate mt-1">{nowPlaying.title}</div>
+                    </div>
+                    <div className="flex gap-3 mr-2">
+                      <button onClick={togglePause} className="text-gray-400 hover:text-white transition-colors">
+                        {isPaused ? (
+                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        ) : (
+                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                        )}
+                      </button>
+                      <button onClick={handleStopMusic} className="text-gray-400 hover:text-red-400 transition-colors">
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                      </button>
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-[10px] text-indigo-400 font-bold uppercase tracking-widest leading-none mb-1">Now Playing</div>
-                    <div className="text-xs text-white font-medium truncate">{nowPlaying}</div>
-                  </div>
-                  <div className="flex gap-2 mr-2">
-                    <button className="text-gray-400 hover:text-white"><svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg></button>
-                    <button onClick={() => setNowPlaying(null)} className="text-gray-400 hover:text-red-400"><svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+                  {/* Progress Bar */}
+                  <div className="space-y-1">
+                    <div className="h-1 bg-white/10 rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-indigo-500 transition-all duration-1000" 
+                        style={{ width: `${(playbackTime / nowPlaying.duration) * 100}%` }}
+                      ></div>
+                    </div>
+                    <div className="flex justify-between text-[9px] text-gray-500 font-bold font-mono">
+                      <span>{formatTime(playbackTime)}</span>
+                      <span>{formatTime(nowPlaying.duration)}</span>
+                    </div>
                   </div>
                 </div>
               )}
 
-              {/* Input Wrapper */}
               <div className="px-4 pb-6 pt-2 shrink-0">
                 <div className="bg-[#383a40] rounded-lg flex items-center px-4 py-2.5 gap-3 shadow-inner">
-                  <button className="text-gray-400 hover:text-white transition-colors">
-                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
-                  </button>
+                  <button className="text-gray-400 hover:text-white transition-colors"><svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg></button>
                   <input 
                     type="text" 
                     value={input}
@@ -232,7 +328,6 @@ const InteractiveAI: React.FC = () => {
               </div>
             </div>
 
-            {/* Members Sidebar */}
             <div className="hidden lg:flex flex-col w-60 bg-[#2b2d31] p-3 overflow-y-auto">
               <div className="text-[11px] font-bold text-gray-400 uppercase px-2 mb-2">Online — 1</div>
               <div className="flex items-center gap-3 px-2 py-1.5 rounded hover:bg-[#35373c] cursor-pointer group">
@@ -244,7 +339,7 @@ const InteractiveAI: React.FC = () => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="text-sm font-medium text-white truncate leading-tight">{BOT_NAME}</div>
-                  <div className="text-[10px] text-gray-400 truncate">Listening to music...</div>
+                  <div className="text-[10px] text-gray-400 truncate">{nowPlaying ? 'Listening to ' + nowPlaying.title : 'Idle'}</div>
                 </div>
               </div>
             </div>
