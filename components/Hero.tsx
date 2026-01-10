@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { BOT_INVITE_URL, BOT_NAME, BOT_TAGLINE } from '../constants';
+import MusicIcon from './MusicIcon';
 
 interface HeroProps {
   onAdd: () => void;
@@ -19,16 +20,7 @@ const Hero: React.FC<HeroProps> = ({ onAdd }) => {
         </div>
         
         <div className="flex justify-center mb-10 animate-float">
-            <div className="w-36 h-36 md:w-52 md:h-52 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-pink-600/40 ring-4 ring-white/10 bg-slate-900 flex items-center justify-center p-0.5">
-              <img 
-                src="input_file_1.png" 
-                alt="Bot Logo Large" 
-                className="w-full h-full object-cover rounded-[2.3rem]"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = 'https://via.placeholder.com/200/0f172a/f472b6?text=MUSIC';
-                }}
-              />
-            </div>
+          <MusicIcon size="xl" className="rounded-[2.5rem]" />
         </div>
 
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight tracking-tight">

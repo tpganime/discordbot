@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { BOT_INVITE_URL, BOT_NAME, SUPPORT_SERVER_URL } from '../constants';
+import MusicIcon from './MusicIcon';
 
 const Footer: React.FC = () => {
   return (
@@ -9,16 +10,7 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="md:col-span-1">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl overflow-hidden bg-slate-900 ring-1 ring-white/10">
-                <img 
-                  src="input_file_1.png" 
-                  alt="Footer Logo" 
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = 'https://via.placeholder.com/40/0f172a/f472b6?text=M';
-                  }}
-                />
-              </div>
+              <MusicIcon size="md" />
               <span className="text-xl font-bold text-white truncate max-w-[200px]">{BOT_NAME}</span>
             </div>
             <p className="text-gray-500 text-sm leading-relaxed mb-6">
