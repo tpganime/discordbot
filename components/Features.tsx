@@ -1,67 +1,79 @@
 
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const FEATURE_LIST = [
   {
-    title: "Free Music Playback",
-    description: "High-quality music streaming from YouTube, Spotify, and more. No premium needed, ever.",
-    icon: "🎵",
-    color: "from-blue-500 to-cyan-500",
-    comingSoon: false
+    title: "Crystal Clear Audio",
+    description: "Lossless music streaming from all major platforms. The sound of premium, totally free.",
+    icon: "🔊",
+    color: "from-blue-500 to-indigo-600"
   },
   {
-    title: "Discord Games",
-    description: "Keep your members engaged with fun interactive games directly in your text channels.",
-    icon: "🎮",
-    color: "from-purple-500 to-pink-500",
-    comingSoon: false
+    title: "Live Gaming Hub",
+    description: "Interactive trivia, casino, and arcade games to spice up your community chats.",
+    icon: "🎲",
+    color: "from-purple-500 to-pink-600"
   },
   {
-    title: "24/7 Reliability",
-    description: "Professional hosting ensures your music never stops. High uptime guaranteed.",
-    icon: "⚡",
-    color: "from-amber-500 to-yellow-500",
-    comingSoon: false
+    title: "Always Online",
+    description: "Ultra-fast hosting on dedicated servers ensures 99.9% uptime for your members.",
+    icon: "🔋",
+    color: "from-emerald-500 to-teal-600"
   },
   {
-    title: "AI Chat Assistant",
-    description: "Smart AI conversations powered by Gemini. Ask questions, get help, or just chat.",
-    icon: "✨",
-    color: "from-indigo-500 to-purple-500",
-    comingSoon: true
+    title: "Smart AI Companion",
+    description: "Gemini-powered bot that talks back, answers help queries, and generates fun content.",
+    icon: "🤖",
+    color: "from-indigo-500 to-violet-600"
   }
 ];
 
 const Features: React.FC = () => {
   return (
-    <section id="features" className="px-6 py-24 bg-slate-900/50">
+    <section id="features" className="px-6 py-32 bg-[#020617] relative">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-black mb-4">Core Features</h2>
-          <p className="text-gray-400 text-lg">Powerful entertainment systems for your community.</p>
+        <div className="text-center mb-20">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl md:text-6xl font-black mb-6 tracking-tighter"
+          >
+            Powerful Plugins
+          </motion.h2>
+          <p className="text-gray-400 text-xl max-w-2xl mx-auto font-medium">Built to transform your server into a high-octane entertainment hub.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-6xl mx-auto">
           {FEATURE_LIST.map((feature, idx) => (
-            <div 
-              key={idx} 
-              className="group p-8 rounded-3xl glass-effect hover:ring-2 hover:ring-indigo-500/50 transition-all duration-300 relative overflow-hidden"
+            <motion.div 
+              key={idx}
+              initial={{ opacity: 0, x: idx % 2 === 0 ? -50 : 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              whileHover={{ 
+                scale: 1.02, 
+                rotateX: idx % 2 === 0 ? 2 : -2, 
+                rotateY: idx < 2 ? -2 : 2 
+              }}
+              className="group p-10 rounded-[3rem] glass-effect relative overflow-hidden tilt-container cursor-default transition-shadow hover:shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
+              style={{ transformStyle: 'preserve-3d' }}
             >
-              {feature.comingSoon && (
-                <div className="absolute top-4 right-4 bg-indigo-600/20 text-indigo-400 text-[10px] font-black uppercase tracking-tighter px-2 py-0.5 rounded-full border border-indigo-500/30">
-                  Coming Soon
-                </div>
-              )}
-              <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${feature.color} flex items-center justify-center text-3xl mb-6 shadow-lg`}>
-                {feature.icon}
+              <div className={`w-20 h-20 rounded-[1.5rem] bg-gradient-to-br ${feature.color} flex items-center justify-center text-4xl mb-8 shadow-2xl relative`}>
+                <span className="relative z-10">{feature.icon}</span>
+                <div className="absolute inset-0 bg-white/20 rounded-[1.5rem] blur-[5px] opacity-0 group-hover:opacity-100 transition-opacity"></div>
               </div>
-              <h3 className="text-xl font-bold mb-3 group-hover:text-indigo-400 transition-colors">
+              <h3 className="text-2xl font-black mb-4 group-hover:text-indigo-400 transition-colors" style={{ transform: 'translateZ(30px)' }}>
                 {feature.title}
               </h3>
-              <p className="text-gray-400 leading-relaxed">
+              <p className="text-gray-400 leading-relaxed text-lg" style={{ transform: 'translateZ(20px)' }}>
                 {feature.description}
               </p>
-            </div>
+              
+              {/* Decorative Corner Glow */}
+              <div className={`absolute -bottom-10 -right-10 w-40 h-40 bg-gradient-to-br ${feature.color} opacity-10 blur-[50px] group-hover:opacity-30 transition-opacity`}></div>
+            </motion.div>
           ))}
         </div>
       </div>

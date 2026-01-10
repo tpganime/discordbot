@@ -1,5 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { getBotResponse } from '../services/geminiService';
 import { BOT_NAME } from '../constants';
 import MusicIcon from './MusicIcon';
@@ -13,7 +14,7 @@ interface Message {
   isEmbed?: boolean;
 }
 
-// Expanded library of 50 NCS-style tracks (Using high-quality placeholders for demo stability)
+// Full 50-song NCS Gaming Library
 const NCS_TRACKS = [
   { title: "Alan Walker - Fade", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", duration: 372 },
   { title: "Deaf Kev - Invincible", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", duration: 425 },
@@ -178,7 +179,6 @@ const InteractiveAI: React.FC = () => {
     
     setIsTyping(true);
 
-    // Command Logic with /tpg prefix
     const lowerText = userText.toLowerCase();
     let botPrefix = "";
 
@@ -211,16 +211,28 @@ const InteractiveAI: React.FC = () => {
   return (
     <section id="ai-demo" className="px-4 md:px-6 py-24 relative overflow-hidden bg-[#020617]">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
           <div className="inline-block px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-400 text-[10px] font-bold uppercase tracking-wider mb-4">
             Bot Preview
           </div>
           <h2 className="text-3xl md:text-5xl font-black mb-4">Live Preview</h2>
           <p className="text-gray-400 text-lg">Use the <code className="text-pink-400">/tpg</code> prefix to control the bot below. Featuring 50+ NCS tracks.</p>
-        </div>
+        </motion.div>
 
-        <div className="relative group max-w-5xl mx-auto">
-          <div className="flex h-[600px] bg-[#313338] rounded-2xl overflow-hidden shadow-2xl border border-white/5 ring-1 ring-black/50">
+        <motion.div 
+          initial={{ opacity: 0, rotateX: 20, scale: 0.95 }}
+          whileInView={{ opacity: 1, rotateX: 0, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, type: "spring" }}
+          className="relative group max-w-5xl mx-auto tilt-container"
+          style={{ transformStyle: 'preserve-3d' }}
+        >
+          <div className="flex h-[600px] bg-[#313338] rounded-2xl overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.8)] border border-white/5 ring-1 ring-black/50">
             
             {/* Server Sidebar */}
             <div className="hidden sm:flex flex-col w-[72px] bg-[#1e1f22] items-center py-3 gap-2 border-r border-black/20">
@@ -265,40 +277,51 @@ const InteractiveAI: React.FC = () => {
               </div>
 
               <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-6 scrollbar-thin scrollbar-thumb-gray-700">
-                {messages.map((m, i) => (
-                  <div key={i} className="flex gap-4 group hover:bg-[#2e3035] -mx-4 px-4 py-1 transition-colors">
-                    <div className="shrink-0 pt-0.5">
-                      {m.avatar === 'bot' ? (
-                        <div className="w-10 h-10 rounded-full overflow-hidden bg-gradient-to-br from-indigo-600 to-pink-600 flex items-center justify-center ring-1 ring-white/10">
-                           <MusicIcon size="sm" className="!bg-transparent !shadow-none !ring-0 !w-6 !h-6" />
-                        </div>
-                      ) : (
-                        <div className="w-10 h-10 rounded-full bg-[#5865f2] flex items-center justify-center text-white font-bold">U</div>
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-0.5">
-                        <span className={`font-bold hover:underline cursor-pointer ${m.isBot ? 'text-pink-400' : 'text-white'}`}>
-                          {m.author}
-                        </span>
-                        {m.isBot && <span className="bg-[#5865f2] text-white text-[10px] font-bold px-1 rounded-[3px] h-3.5 flex items-center mt-0.5">BOT</span>}
-                        <span className="text-[10px] text-gray-400 font-medium">{m.timestamp}</span>
+                <AnimatePresence>
+                  {messages.map((m, i) => (
+                    <motion.div 
+                      key={i}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className="flex gap-4 group hover:bg-[#2e3035] -mx-4 px-4 py-1 transition-colors"
+                    >
+                      <div className="shrink-0 pt-0.5">
+                        {m.avatar === 'bot' ? (
+                          <div className="w-10 h-10 rounded-full overflow-hidden bg-gradient-to-br from-indigo-600 to-pink-600 flex items-center justify-center ring-1 ring-white/10 shadow-lg">
+                             <MusicIcon size="sm" className="!bg-transparent !shadow-none !ring-0 !w-6 !h-6" />
+                          </div>
+                        ) : (
+                          <div className="w-10 h-10 rounded-full bg-[#5865f2] flex items-center justify-center text-white font-bold shadow-lg">U</div>
+                        )}
                       </div>
-                      
-                      {m.isEmbed ? (
-                        <div className="mt-2 pl-3 border-l-4 border-indigo-500 bg-[#2b2d31] rounded-r-md p-4 max-w-lg shadow-md animate-fade-in">
-                          <div className="text-sm text-gray-200 whitespace-pre-wrap leading-relaxed">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-0.5">
+                          <span className={`font-bold hover:underline cursor-pointer ${m.isBot ? 'text-pink-400' : 'text-white'}`}>
+                            {m.author}
+                          </span>
+                          {m.isBot && <span className="bg-[#5865f2] text-white text-[10px] font-bold px-1 rounded-[3px] h-3.5 flex items-center mt-0.5">BOT</span>}
+                          <span className="text-[10px] text-gray-400 font-medium">{m.timestamp}</span>
+                        </div>
+                        
+                        {m.isEmbed ? (
+                          <motion.div 
+                            initial={{ scale: 0.95 }} 
+                            animate={{ scale: 1 }}
+                            className="mt-2 pl-3 border-l-4 border-indigo-500 bg-[#2b2d31] rounded-r-md p-4 max-w-lg shadow-xl"
+                          >
+                            <div className="text-sm text-gray-200 whitespace-pre-wrap leading-relaxed">
+                              {m.text}
+                            </div>
+                          </motion.div>
+                        ) : (
+                          <div className="text-sm text-[#dbdee1] whitespace-pre-wrap leading-relaxed">
                             {m.text}
                           </div>
-                        </div>
-                      ) : (
-                        <div className="text-sm text-[#dbdee1] whitespace-pre-wrap leading-relaxed">
-                          {m.text}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
+                        )}
+                      </div>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
                 {isTyping && (
                   <div className="flex gap-4 -mx-4 px-4 py-1">
                     <div className="w-10 h-10 shrink-0"></div>
@@ -312,46 +335,54 @@ const InteractiveAI: React.FC = () => {
               </div>
 
               {/* Now Playing Bar */}
-              {nowPlaying && (
-                <div className="mx-4 mb-2 p-3 bg-[#232428] rounded-lg flex flex-col gap-2 border border-white/5 animate-slide-up shadow-xl">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-indigo-600 rounded flex items-center justify-center shrink-0 shadow-lg animate-pulse">
-                      <MusicIcon size="sm" className="!bg-transparent !shadow-none !ring-0 !w-6 !h-6" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <div className="text-[10px] text-indigo-400 font-bold uppercase tracking-widest leading-none">NCS Stream</div>
-                        <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
+              <AnimatePresence>
+                {nowPlaying && (
+                  <motion.div 
+                    initial={{ y: 50, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: 50, opacity: 0 }}
+                    className="mx-4 mb-2 p-3 bg-[#232428] rounded-lg flex flex-col gap-2 border border-white/5 shadow-2xl z-20"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-indigo-600 rounded flex items-center justify-center shrink-0 shadow-lg relative overflow-hidden">
+                        <MusicIcon size="sm" className="!bg-transparent !shadow-none !ring-0 !w-6 !h-6" />
+                        {!isPaused && <div className="absolute inset-0 bg-white/10 animate-pulse"></div>}
                       </div>
-                      <div className="text-xs text-white font-bold truncate mt-1">{nowPlaying.title}</div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <div className="text-[10px] text-indigo-400 font-bold uppercase tracking-widest leading-none">NCS Stream</div>
+                          {!isPaused && <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>}
+                        </div>
+                        <div className="text-xs text-white font-bold truncate mt-1">{nowPlaying.title}</div>
+                      </div>
+                      <div className="flex gap-3 mr-2">
+                        <button onClick={togglePause} className="text-gray-400 hover:text-white transition-colors">
+                          {isPaused ? (
+                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                          ) : (
+                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                          )}
+                        </button>
+                        <button onClick={handleStopMusic} className="text-gray-400 hover:text-red-400 transition-colors">
+                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                        </button>
+                      </div>
                     </div>
-                    <div className="flex gap-3 mr-2">
-                      <button onClick={togglePause} className="text-gray-400 hover:text-white transition-colors">
-                        {isPaused ? (
-                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        ) : (
-                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-                        )}
-                      </button>
-                      <button onClick={handleStopMusic} className="text-gray-400 hover:text-red-400 transition-colors">
-                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-                      </button>
+                    <div className="space-y-1">
+                      <div className="h-1 bg-white/10 rounded-full overflow-hidden">
+                        <motion.div 
+                          className="h-full bg-indigo-500" 
+                          style={{ width: `${(playbackTime / nowPlaying.duration) * 100}%` }}
+                        ></motion.div>
+                      </div>
+                      <div className="flex justify-between text-[9px] text-gray-500 font-bold font-mono">
+                        <span>{formatTime(playbackTime)}</span>
+                        <span>{formatTime(nowPlaying.duration)}</span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="space-y-1">
-                    <div className="h-1 bg-white/10 rounded-full overflow-hidden">
-                      <div 
-                        className="h-full bg-indigo-500 transition-all duration-1000" 
-                        style={{ width: `${(playbackTime / nowPlaying.duration) * 100}%` }}
-                      ></div>
-                    </div>
-                    <div className="flex justify-between text-[9px] text-gray-500 font-bold font-mono">
-                      <span>{formatTime(playbackTime)}</span>
-                      <span>{formatTime(nowPlaying.duration)}</span>
-                    </div>
-                  </div>
-                </div>
-              )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               <div className="px-4 pb-6 pt-2 shrink-0">
                 <div className="bg-[#383a40] rounded-lg flex items-center px-4 py-2.5 gap-3 shadow-inner">
@@ -365,8 +396,8 @@ const InteractiveAI: React.FC = () => {
                     className="flex-1 bg-transparent text-[#dbdee1] placeholder-gray-500 focus:outline-none text-[15px]"
                   />
                   <div className="flex gap-3 text-gray-400">
-                    <button className="hover:text-white"><svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22 2H2v20l4-4h16V2zm-9 11h-2v-2h2v2zm0-4h-2V5h2v4z"/></svg></button>
-                    <button className="hover:text-white"><svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></button>
+                    <button className="hover:text-white transition-transform active:scale-125"><svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22 2H2v20l4-4h16V2zm-9 11h-2v-2h2v2zm0-4h-2V5h2v4z"/></svg></button>
+                    <button className="hover:text-white transition-transform active:scale-125"><svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></button>
                   </div>
                 </div>
               </div>
@@ -388,13 +419,9 @@ const InteractiveAI: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
       <style>{`
-        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
-        .animate-slide-up { animation: slideUp 0.3s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .scrollbar-thin::-webkit-scrollbar { width: 6px; }
         .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
         .scrollbar-thin::-webkit-scrollbar-thumb { background: #1e1f22; border-radius: 10px; }
