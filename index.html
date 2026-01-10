@@ -19,7 +19,7 @@
             background-attachment: fixed;
             background-size: cover;
             background-position: center;
-            perspective: 1200px;
+            perspective: 2000px; /* Enhanced perspective */
         }
         .font-mono {
             font-family: 'JetBrains Mono', monospace;
@@ -32,7 +32,12 @@
         }
         .tilt-container {
             transform-style: preserve-3d;
+            will-change: transform;
         }
+        /* Custom 3D Utilities */
+        .preserve-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        
         @keyframes blob {
             0% { transform: translate(0px, 0px) scale(1); }
             33% { transform: translate(30px, -50px) scale(1.1); }

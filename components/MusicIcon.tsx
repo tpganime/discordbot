@@ -17,13 +17,15 @@ const MusicIcon: React.FC<MusicIconProps> = ({ className = "", size = 'md' }) =>
 
   return (
     <motion.div 
-      whileHover={{ scale: 1.05, rotateY: 10, rotateX: -5 }}
-      transition={{ type: "spring", stiffness: 300, damping: 15 }}
-      className={`relative flex items-center justify-center rounded-[2rem] bg-gradient-to-br from-indigo-500 via-indigo-600 to-pink-600 shadow-[0_20px_50px_rgba(79,70,229,0.3)] ring-1 ring-white/20 tilt-container group ${sizeClasses[size]} ${className}`}
-      style={{ transformStyle: 'preserve-3d' }}
+      whileHover={{ scale: 1.05, rotateY: 15, rotateX: -10 }}
+      transition={{ type: "spring", stiffness: 200, damping: 20 }}
+      className={`relative flex items-center justify-center rounded-[2rem] bg-gradient-to-br from-indigo-500 via-indigo-600 to-pink-600 shadow-[0_20px_50px_rgba(79,70,229,0.3)] ring-1 ring-white/20 preserve-3d group ${sizeClasses[size]} ${className}`}
     >
       {/* 3D Depth Layers */}
-      <div className="absolute inset-0 bg-indigo-900/50 rounded-[2rem] translate-z-[-10px]"></div>
+      <div 
+        className="absolute inset-0 bg-indigo-950/80 rounded-[2rem]" 
+        style={{ transform: 'translateZ(-20px)' }}
+      ></div>
       
       <motion.svg 
         animate={{ 
@@ -38,8 +40,8 @@ const MusicIcon: React.FC<MusicIconProps> = ({ className = "", size = 'md' }) =>
         viewBox="0 0 24 24" 
         fill="none" 
         xmlns="http://www.w3.org/2000/svg" 
-        className="w-3/5 h-3/5 text-white filter drop-shadow-[0_5px_15px_rgba(0,0,0,0.4)]"
-        style={{ transform: 'translateZ(20px)' }}
+        className="w-3/5 h-3/5 text-white filter drop-shadow-[0_8px_12px_rgba(0,0,0,0.5)]"
+        style={{ transform: 'translateZ(30px)' }}
       >
         <path 
           d="M9 18V5L21 3V16" 
@@ -65,13 +67,14 @@ const MusicIcon: React.FC<MusicIconProps> = ({ className = "", size = 'md' }) =>
       </motion.svg>
 
       {/* Glossy Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent rounded-[2rem] pointer-events-none opacity-50"></div>
+      <div className="absolute inset-0 bg-gradient-to-tr from-white/30 to-transparent rounded-[2rem] pointer-events-none opacity-40"></div>
       
       {/* Floating Sparkles */}
       <motion.div 
-        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+        animate={{ scale: [1, 1.4, 1], opacity: [0.3, 0.8, 0.3] }}
         transition={{ duration: 3, repeat: Infinity }}
         className="absolute top-4 right-4 w-2 h-2 bg-white rounded-full blur-[2px]"
+        style={{ transform: 'translateZ(40px)' }}
       />
     </motion.div>
   );
