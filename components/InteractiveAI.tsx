@@ -10,7 +10,7 @@ interface Message {
 
 const InteractiveAI: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
-    { text: `Hey there! I'm the upcoming AI module for ${BOT_NAME}. How can I help you?`, isBot: true }
+    { text: `Hey there! I'm the upcoming AI module for ${BOT_NAME}. How can I help you today?`, isBot: true }
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -44,7 +44,7 @@ const InteractiveAI: React.FC = () => {
             Feature Preview
           </div>
           <h2 className="text-3xl md:text-5xl font-black mb-4">Interactive Assistant</h2>
-          <p className="text-gray-400 text-lg">Test our upcoming intelligent personality.</p>
+          <p className="text-gray-400 text-lg">Test our upcoming intelligent assistant.</p>
         </div>
 
         <div className="relative group">
@@ -63,9 +63,9 @@ const InteractiveAI: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <div className="font-bold text-white leading-tight">{BOT_NAME} AI</div>
+                  <div className="font-bold text-white leading-tight">AI Assistant</div>
                   <div className="text-xs text-pink-400 flex items-center gap-1">
-                    Coming Soon
+                    Powered by Gemini
                   </div>
                 </div>
               </div>
@@ -110,7 +110,7 @@ const InteractiveAI: React.FC = () => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                placeholder="Talk to the preview..."
+                placeholder="Type a message..."
                 className="flex-1 bg-slate-900/50 border border-white/10 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-500/50 transition-all text-white placeholder-gray-500"
               />
               <button 

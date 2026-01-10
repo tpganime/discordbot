@@ -29,9 +29,9 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="font-bold text-white mb-6">Bot</h4>
             <ul className="space-y-4 text-sm text-gray-500">
-              <li><a href={BOT_INVITE_URL} className="hover:text-pink-400 transition-colors">Invite {BOT_NAME}</a></li>
+              <li><a href={BOT_INVITE_URL} className="hover:text-pink-400 transition-colors">Invite Bot</a></li>
               <li><a href={SUPPORT_SERVER_URL} className="hover:text-pink-400 transition-colors">Support Server</a></li>
-              <li><a href="#" className="hover:text-pink-400 transition-colors">Commands</a></li>
+              <li><a href="#" className="hover:text-pink-400 transition-colors">Commands List</a></li>
             </ul>
           </div>
 
@@ -40,7 +40,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-4 text-sm text-gray-500">
               <li><a href={SUPPORT_SERVER_URL} className="hover:text-pink-400 transition-colors">Discord Server</a></li>
               <li><a href="#" className="hover:text-pink-400 transition-colors">Documentation</a></li>
-              <li><a href="#" className="hover:text-pink-400 transition-colors">Status</a></li>
+              <li><a href="#" className="hover:text-pink-400 transition-colors">Server Status</a></li>
             </ul>
           </div>
 
@@ -54,8 +54,8 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 text-sm text-gray-600">
-          <p>© 2024 {BOT_NAME}. All rights reserved.</p>
-          <p className="mt-4 md:mt-0">The ultimate music and gaming companion.</p>
+          <p>© 2024 {BOT_NAME}.</p>
+          <p className="mt-4 md:mt-0">Built for high-performance Discord communities.</p>
         </div>
       </div>
     </footer>

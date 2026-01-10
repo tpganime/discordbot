@@ -8,10 +8,10 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ onAdd }) => {
   return (
-    <nav className="sticky top-0 z-50 w-full px-6 py-4">
-      <div className="max-w-7xl mx-auto flex items-center justify-between glass-effect rounded-2xl px-6 py-3 shadow-lg">
+    <nav className="sticky top-0 z-50 w-full px-4 md:px-6 py-4">
+      <div className="max-w-7xl mx-auto flex items-center justify-between glass-effect rounded-2xl px-4 md:px-6 py-3 shadow-lg">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl overflow-hidden bg-slate-800 shadow-lg shadow-pink-500/20 ring-1 ring-white/10">
+          <div className="w-10 h-10 rounded-xl overflow-hidden bg-slate-800 shadow-lg shadow-pink-500/20 ring-1 ring-white/10 flex-shrink-0">
             <img 
               src="input_file_1.png" 
               alt="Logo" 
@@ -21,7 +21,7 @@ const Navbar: React.FC<NavbarProps> = ({ onAdd }) => {
               }}
             />
           </div>
-          <span className="text-lg md:text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400 truncate max-w-[150px] md:max-w-none">
+          <span className="text-sm md:text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400 truncate max-w-[120px] md:max-w-none">
             {BOT_NAME}
           </span>
         </div>
@@ -37,7 +37,7 @@ const Navbar: React.FC<NavbarProps> = ({ onAdd }) => {
           onClick={() => onAdd()}
           target="_blank"
           rel="noopener noreferrer"
-          className="px-5 py-2 bg-gradient-to-r from-indigo-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white rounded-xl text-sm font-bold transition-all shadow-lg active:scale-95"
+          className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white rounded-xl text-xs md:text-sm font-bold transition-all shadow-lg active:scale-95 whitespace-nowrap"
         >
           Add to Server
         </a>
