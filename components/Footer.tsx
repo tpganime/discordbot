@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { BOT_INVITE_URL, BOT_NAME, SUPPORT_SERVER_URL } from '../constants';
 import MusicIcon from './MusicIcon';
 
@@ -39,8 +40,8 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="font-bold text-white mb-6">Legal</h4>
             <ul className="space-y-4 text-sm text-gray-500">
-              <li><a href="#" className="hover:text-pink-400 transition-colors">Terms of Service</a></li>
-              <li><a href="#" className="hover:text-pink-400 transition-colors">Privacy Policy</a></li>
+              <li><Link to="/terms" className="hover:text-pink-400 transition-colors">Terms of Service</Link></li>
+              <li><Link to="/privacy" className="hover:text-pink-400 transition-colors">Privacy Policy</Link></li>
             </ul>
           </div>
         </div>

@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { BOT_INVITE_URL, BOT_NAME, SUPPORT_SERVER_URL } from '../constants';
 import MusicIcon from './MusicIcon';
 
@@ -11,16 +12,16 @@ const Navbar: React.FC<NavbarProps> = ({ onAdd }) => {
   return (
     <nav className="sticky top-0 z-50 w-full px-4 md:px-6 py-4">
       <div className="max-w-7xl mx-auto flex items-center justify-between glass-effect rounded-2xl px-4 md:px-6 py-3 shadow-lg">
-        <div className="flex items-center gap-3">
+        <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
           <MusicIcon size="md" />
           <span className="text-sm md:text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400 truncate max-w-[120px] md:max-w-none">
             {BOT_NAME}
           </span>
-        </div>
+        </Link>
 
         <div className="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-400">
-          <a href="#features" className="hover:text-white transition-colors">Features</a>
-          <a href="#ai-demo" className="hover:text-white transition-colors">AI Chat</a>
+          <Link to="/" onClick={() => setTimeout(() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' }), 100)} className="hover:text-white transition-colors">Features</Link>
+          <Link to="/" onClick={() => setTimeout(() => document.getElementById('ai-demo')?.scrollIntoView({ behavior: 'smooth' }), 100)} className="hover:text-white transition-colors">AI Chat</Link>
           <a href={SUPPORT_SERVER_URL} target="_blank" rel="noreferrer" className="hover:text-white transition-colors">Support</a>
         </div>
 
