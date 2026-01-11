@@ -9,6 +9,7 @@ import InteractiveAI from './components/InteractiveAI';
 import Footer from './components/Footer';
 import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
+import CommandsPage from './pages/CommandsPage';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ScrollToTop = () => {
@@ -42,7 +43,6 @@ const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthorizing, setIsAuthorizing] = useState(false);
 
-  // Simulate realistic growth starting from low numbers
   useEffect(() => {
     const interval = setInterval(() => {
       if (Math.random() > 0.85) setServerCount(prev => prev + 1);
@@ -51,16 +51,11 @@ const App: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleAddBot = () => {
-    // Analytics or local feedback
-  };
-
   const handleLogin = () => {
     setIsAuthorizing(true);
-    // Simulate real Discord OAuth sequence
     setTimeout(() => {
       setUser({
-        username: "Member",
+        username: "Explorer",
         discriminator: "0001",
         avatar: "https://cdn.discordapp.com/embed/avatars/2.png"
       });
@@ -68,9 +63,7 @@ const App: React.FC = () => {
     }, 1800);
   };
 
-  const handleLogout = () => {
-    setUser(null);
-  };
+  const handleLogout = () => setUser(null);
 
   return (
     <Router>
@@ -85,23 +78,20 @@ const App: React.FC = () => {
               className="fixed inset-0 z-[1000] bg-black/95 backdrop-blur-3xl flex flex-col items-center justify-center"
             >
               <motion.div 
-                animate={{ 
-                  scale: [1, 1.1, 1],
-                  rotate: [0, 180, 360]
-                }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                className="w-16 h-16 border-2 border-indigo-500/20 border-t-indigo-500 rounded-full mb-8 shadow-[0_0_30px_rgba(99,102,241,0.3)]"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                className="w-12 h-12 border-2 border-white/5 border-t-white rounded-full mb-8 shadow-[0_0_30px_rgba(255,255,255,0.1)]"
               ></motion.div>
-              <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-white animate-pulse">Discord Authorization</h2>
-              <p className="text-gray-500 text-[9px] mt-4 uppercase tracking-[0.2em]">Syncing session data...</p>
+              <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-white">Discord Login Sequence</h2>
             </motion.div>
           )}
         </AnimatePresence>
 
-        <Navbar onAdd={handleAddBot} onLogin={handleLogin} onLogout={handleLogout} user={user} />
+        <Navbar onAdd={() => {}} onLogin={handleLogin} onLogout={handleLogout} user={user} />
         
         <Routes>
-          <Route path="/" element={<LandingPage onAdd={handleAddBot} onLogin={handleLogin} servers={serverCount} users={userCount} user={user} />} />
+          <Route path="/" element={<LandingPage onAdd={() => {}} onLogin={handleLogin} servers={serverCount} users={userCount} user={user} />} />
+          <Route path="/commands" element={<CommandsPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />
         </Routes>
