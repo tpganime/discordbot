@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar.tsx';
@@ -37,7 +38,7 @@ const LandingPage: React.FC<{ servers: number, users: number, user: User | null 
       <Stats servers={servers} users={users} />
       <div className="relative">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
-        <InteractiveAI />
+        <InteractiveAI user={user} />
         <Features />
       </div>
     </motion.main>
@@ -50,7 +51,17 @@ const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthorizing, setIsAuthorizing] = useState(false);
 
+  // Load user from localStorage on mount
   useEffect(() => {
+    const savedUser = localStorage.getItem('tpg_user_session');
+    if (savedUser) {
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (e) {
+        console.error("Failed to parse saved session", e);
+      }
+    }
+
     const params = new URLSearchParams(window.location.search);
     const code = params.get('code');
 
@@ -60,12 +71,14 @@ const App: React.FC = () => {
       
       // Hyper-fast authorization simulation (300ms)
       setTimeout(() => {
-        setUser({
+        const newUser = {
           username: "OPERATOR_01",
           discriminator: "7777",
           // The specific aesthetic glowing orb from the user's image
           avatar: "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=1000&auto=format&fit=crop" 
-        });
+        };
+        setUser(newUser);
+        localStorage.setItem('tpg_user_session', JSON.stringify(newUser));
         setIsAuthorizing(false);
       }, 300);
     }
@@ -85,6 +98,7 @@ const App: React.FC = () => {
 
   const handleLogout = () => {
     setUser(null);
+    localStorage.removeItem('tpg_user_session');
   };
 
   return (

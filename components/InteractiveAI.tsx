@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { getBotResponse } from '../services/geminiService.ts';
 import { BOT_NAME } from '../constants.tsx';
@@ -11,12 +12,17 @@ interface Message {
   timestamp: string;
 }
 
-const InteractiveAI: React.FC = () => {
+interface InteractiveAIProps {
+  user?: any;
+}
+
+const InteractiveAI: React.FC<InteractiveAIProps> = ({ user }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [isBooting, setIsBooting] = useState(true);
   const [bootText, setBootText] = useState('');
+  const [nowPlaying, setNowPlaying] = useState<string | null>(null);
   
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -43,14 +49,14 @@ const InteractiveAI: React.FC = () => {
             { 
               author: BOT_NAME, 
               avatar: 'bot', 
-              text: `Core active. System initialized with high-fidelity streaming protocols. How can I assist your deployment today, Operator?`, 
+              text: `Core active. System initialized. How can I assist your deployment today, Operator?`, 
               isBot: true, 
               timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
             }
           ]);
-        }, 500); // Faster transition
+        }, 500);
       }
-    }, 80); // Fast boot
+    }, 80);
     return () => clearInterval(bootInterval);
   }, []);
 
@@ -58,16 +64,55 @@ const InteractiveAI: React.FC = () => {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [messages, isTyping, bootText]);
 
-  const handleSend = async () => {
+  const handleSend = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     if (!input.trim() || isTyping || isBooting) return;
+    
     const userText = input.trim();
     setInput('');
     const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     
-    setMessages(prev => [...prev, { author: 'OPERATOR', avatar: 'user', text: userText, isBot: false, timestamp: now }]);
-    setIsTyping(true);
+    // Use user avatar if logged in, otherwise default orb
+    const userAvatar = user?.avatar || "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=1000&auto=format&fit=crop";
     
-    // Call real Gemini API for "real working" feel
+    setMessages(prev => [...prev, { author: user?.username || 'OPERATOR', avatar: userAvatar, text: userText, isBot: false, timestamp: now }]);
+    setIsTyping(true);
+
+    // Enhanced local command handling for "playing songs" simulation
+    const lowerText = userText.toLowerCase();
+    if (lowerText.includes('play ') || lowerText.includes('/play') || lowerText.includes('/tpg play')) {
+      const trackName = userText.split('play ')[1] || 'Core Phonk Mix';
+      setNowPlaying(trackName);
+      
+      setTimeout(() => {
+        setIsTyping(false);
+        setMessages(prev => [...prev, { 
+          author: BOT_NAME, 
+          avatar: 'bot', 
+          text: `💠 **STREAMING INITIALIZED**\n\`\`\`yaml\nTRACK: ${trackName}\nSTATUS: PLAYING\nBITRATE: 1411kbps\nQUALITY: LOSSLESS\n\`\`\`\n🔊 *Audio packet distribution optimized for your current node.*`, 
+          isBot: true, 
+          timestamp: now 
+        }]);
+      }, 800);
+      return;
+    }
+
+    if (lowerText.includes('stop') || lowerText.includes('/stop')) {
+      setNowPlaying(null);
+      setTimeout(() => {
+        setIsTyping(false);
+        setMessages(prev => [...prev, { 
+          author: BOT_NAME, 
+          avatar: 'bot', 
+          text: `⏹️ **SESSION TERMINATED**\nPlayback stack cleared. Node idle.`, 
+          isBot: true, 
+          timestamp: now 
+        }]);
+      }, 400);
+      return;
+    }
+    
+    // Call real Gemini API for other interactions
     const botText = await getBotResponse(userText);
     setIsTyping(false);
     setMessages(prev => [...prev, { author: BOT_NAME, avatar: 'bot', text: botText || "Connection unstable. Retrying...", isBot: true, timestamp: now }]);
@@ -84,12 +129,12 @@ const InteractiveAI: React.FC = () => {
           >
             REALTIME CONSOLE
           </motion.h2>
-          <p className="text-gray-600 uppercase tracking-[0.5em] text-[10px] font-bold">Direct Core Integration</p>
+          <p className="text-gray-600 uppercase tracking-[0.5em] text-[10px] font-bold">Direct Core Interaction</p>
         </div>
 
-        <div className="bg-[#0a0a0a] rounded-[2.5rem] overflow-hidden border border-white/5 flex flex-col h-[650px] shadow-[0_50px_100px_-20px_rgba(0,0,0,1)] ring-1 ring-white/10">
+        <div className="bg-[#0a0a0a] rounded-[2.5rem] overflow-hidden border border-white/5 flex flex-col h-[650px] shadow-[0_50px_100px_-20px_rgba(0,0,0,1)] ring-1 ring-white/10 relative">
           
-          <div className="h-14 bg-[#111] border-b border-white/5 flex items-center px-8 justify-between">
+          <div className="h-14 bg-[#111] border-b border-white/5 flex items-center px-8 justify-between z-30">
             <div className="flex gap-2.5">
               <div className="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/40"></div>
               <div className="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/40"></div>
@@ -99,7 +144,15 @@ const InteractiveAI: React.FC = () => {
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
               CORE_ACTIVE_SSL
             </div>
-            <div className="hidden sm:block text-[10px] font-bold text-white/20 uppercase tracking-widest">Latency: 8ms</div>
+            <div className="hidden sm:flex items-center gap-3 text-[10px] font-bold text-white/20 uppercase tracking-widest">
+              {nowPlaying && (
+                <div className="flex items-center gap-2">
+                   <div className="w-2 h-2 bg-green-500 rounded-full animate-ping"></div>
+                   <span className="text-green-500/60">STREAMING: {nowPlaying}</span>
+                </div>
+              )}
+              <span>8ms</span>
+            </div>
           </div>
 
           <div className="flex-1 flex flex-col bg-[#050505] p-2 relative">
@@ -127,7 +180,7 @@ const InteractiveAI: React.FC = () => {
                         {m.isBot ? (
                           <span className="text-[10px] font-black">TPG</span>
                         ) : (
-                          <img src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=1000&auto=format&fit=crop" className="w-full h-full object-cover" alt="" />
+                          <img src={m.avatar} className="w-full h-full object-cover" alt="" />
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
@@ -159,22 +212,27 @@ const InteractiveAI: React.FC = () => {
               </AnimatePresence>
             </div>
 
-            <div className="p-8 bg-[#0a0a0a]/50 border-t border-white/5 rounded-b-[2rem]">
+            <form onSubmit={handleSend} className="p-8 bg-[#0a0a0a]/50 border-t border-white/5 rounded-b-[2rem] z-20">
               <div className="relative group">
                 <input 
                   type="text" 
                   value={input} 
                   onChange={(e) => setInput(e.target.value)} 
-                  onKeyDown={(e) => e.key === 'Enter' && handleSend()} 
                   disabled={isBooting}
-                  placeholder={isBooting ? "SYNCING..." : "ENTER COMMAND... (e.g. /tpg play phonk)"} 
-                  className="w-full bg-[#050505] border border-white/10 rounded-2xl px-8 py-5 text-white placeholder-gray-800 focus:outline-none focus:border-indigo-500/50 text-xs font-bold uppercase tracking-[0.3em] transition-all group-hover:border-white/20 shadow-inner disabled:opacity-50"
+                  placeholder={isBooting ? "SYNCING..." : "ENTER COMMAND... (e.g. /play phonk)"} 
+                  className="w-full bg-[#050505] border border-white/10 rounded-2xl pl-8 pr-32 py-5 text-white placeholder-gray-800 focus:outline-none focus:border-indigo-500/50 text-xs font-bold uppercase tracking-[0.3em] transition-all group-hover:border-white/20 shadow-inner disabled:opacity-50"
                 />
-                <div className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center gap-3 pointer-events-none">
-                   <div className="text-[10px] text-gray-700 font-black border border-white/5 px-3 py-1.5 rounded-lg bg-black/40">SEND ⏎</div>
-                </div>
+                <button 
+                  type="submit"
+                  disabled={isBooting || !input.trim()}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 z-30 flex items-center"
+                >
+                   <div className="text-[10px] text-indigo-400 font-black border border-indigo-500/30 px-5 py-2 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 transition-all active:scale-95 disabled:opacity-30 disabled:pointer-events-none">
+                     SEND ⏎
+                   </div>
+                </button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -49,10 +50,13 @@ const Navbar: React.FC<NavbarProps> = ({ onLogin, onLogout, user }) => {
                 className="flex items-center gap-3 pl-2 pr-4 py-2 rounded-xl bg-[#111] border border-white/10 hover:border-indigo-500/30 transition-all cursor-pointer group"
                 onClick={onLogout}
               >
-                <img src={user.avatar} className="w-8 h-8 rounded-lg border border-white/10" alt="" />
+                <div className="relative w-9 h-9">
+                  <img src={user.avatar} className="w-full h-full rounded-lg border border-white/10 object-cover shadow-[0_0_10px_rgba(99,102,241,0.3)]" alt="" />
+                  <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-indigo-600 rounded-full border-2 border-[#111] animate-pulse"></div>
+                </div>
                 <div className="hidden md:flex flex-col">
-                  <span className="text-[9px] font-black text-white leading-none group-hover:text-indigo-400 transition-colors">{user.username}</span>
-                  <span className="text-[7px] font-bold text-gray-500 leading-none mt-1">OPERATOR</span>
+                  <span className="text-[10px] font-black text-white leading-none group-hover:text-indigo-400 transition-colors uppercase tracking-widest">{user.username}</span>
+                  <span className="text-[7px] font-bold text-gray-500 leading-none mt-1 uppercase tracking-tighter">OPERATOR_SYNCED</span>
                 </div>
               </div>
             )}
