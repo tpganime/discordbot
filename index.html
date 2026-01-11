@@ -11,16 +11,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-deep: #050505;
+            --bg-deep: #0a0a0a;
         }
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-deep);
             color: #f8fafc;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
         
-        /* Optimized Static Background (No Filters for Max FPS) */
+        /* High performance static background */
         .mesh-bg {
             position: fixed;
             top: 0;
@@ -28,24 +29,22 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #050505 70%);
+            background: linear-gradient(180deg, #111111 0%, #0a0a0a 100%);
         }
 
-        /* Replaced backdrop-filter with solid translucency for performance */
+        /* Removed backdrop-filter entirely to save phone GPU */
         .glass-panel {
-            background: rgba(15, 15, 15, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transform: translate3d(0,0,0);
-            will-change: transform;
+            background: #161616;
+            border: 1px solid #262626;
         }
 
         .font-mono { font-family: 'JetBrains Mono', monospace; }
 
         html { scroll-behavior: smooth; }
 
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
     </style>
 <script type="importmap">
 {
