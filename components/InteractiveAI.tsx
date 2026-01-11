@@ -21,12 +21,12 @@ const InteractiveAI: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const bootSequence = [
-    "INITIALIZING TPG_MUSIC CORE...",
-    "CALIBRATING AUDIO BUFFERS [OK]",
-    "SYNCHRONIZING WITH DISCORD GATEWAY [OK]",
-    "UPLOADING LOSSLESS PROTOCOLS... 100%",
-    "SYSTEM STATUS: OPTIMAL",
-    "AWAITING OPERATOR INPUT..."
+    "TPG_MUSIC CORE v5.2.0-STABLE",
+    "NODE_SYNC: ATTACHED",
+    "AUTH_GATEWAY: VERIFIED",
+    "BUFFER_CALIBRATION: [OK]",
+    "REALTIME_SSL: ESTABLISHED",
+    "AWAITING INPUT..."
   ];
 
   useEffect(() => {
@@ -43,14 +43,14 @@ const InteractiveAI: React.FC = () => {
             { 
               author: BOT_NAME, 
               avatar: 'bot', 
-              text: `Core online. Welcome, Operator. How shall we calibrate the audio today?`, 
+              text: `Core active. System initialized with high-fidelity streaming protocols. How can I assist your deployment today, Operator?`, 
               isBot: true, 
               timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
             }
           ]);
-        }, 800);
+        }, 500); // Faster transition
       }
-    }, 150);
+    }, 80); // Fast boot
     return () => clearInterval(bootInterval);
   }, []);
 
@@ -67,10 +67,10 @@ const InteractiveAI: React.FC = () => {
     setMessages(prev => [...prev, { author: 'OPERATOR', avatar: 'user', text: userText, isBot: false, timestamp: now }]);
     setIsTyping(true);
     
-    // Using Gemini Flash 2.0 (via model mapping) for lightning fast responses
+    // Call real Gemini API for "real working" feel
     const botText = await getBotResponse(userText);
     setIsTyping(false);
-    setMessages(prev => [...prev, { author: BOT_NAME, avatar: 'bot', text: botText || "Signal lost. Reconnecting to core...", isBot: true, timestamp: now }]);
+    setMessages(prev => [...prev, { author: BOT_NAME, avatar: 'bot', text: botText || "Connection unstable. Retrying...", isBot: true, timestamp: now }]);
   };
 
   return (
@@ -82,9 +82,9 @@ const InteractiveAI: React.FC = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             className="text-4xl md:text-6xl font-black mb-4 uppercase tracking-tighter text-gradient"
           >
-            LIVE CONSOLE
+            REALTIME CONSOLE
           </motion.h2>
-          <p className="text-gray-600 uppercase tracking-[0.5em] text-[10px] font-bold">Real-time Core Interaction</p>
+          <p className="text-gray-600 uppercase tracking-[0.5em] text-[10px] font-bold">Direct Core Integration</p>
         </div>
 
         <div className="bg-[#0a0a0a] rounded-[2.5rem] overflow-hidden border border-white/5 flex flex-col h-[650px] shadow-[0_50px_100px_-20px_rgba(0,0,0,1)] ring-1 ring-white/10">
@@ -95,22 +95,22 @@ const InteractiveAI: React.FC = () => {
               <div className="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/40"></div>
               <div className="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/40"></div>
             </div>
-            <div className="text-[10px] font-black tracking-[0.3em] text-gray-500 uppercase flex items-center gap-3">
+            <div className="text-[10px] font-black tracking-[0.3em] text-indigo-400 uppercase flex items-center gap-3">
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
               CORE_ACTIVE_SSL
             </div>
-            <div className="text-[10px] font-bold text-white/20">v5.2.0-STABLE</div>
+            <div className="hidden sm:block text-[10px] font-bold text-white/20 uppercase tracking-widest">Latency: 8ms</div>
           </div>
 
           <div className="flex-1 flex flex-col bg-[#050505] p-2 relative">
-            <div ref={scrollRef} className="flex-1 overflow-y-auto p-8 space-y-8 scrollbar-hide">
-              <AnimatePresence>
+            <div ref={scrollRef} className="flex-1 overflow-y-auto p-8 space-y-10 scrollbar-hide">
+              <AnimatePresence mode="popLayout">
                 {isBooting ? (
                   <motion.div 
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="font-mono text-xs text-indigo-400/80 whitespace-pre-wrap leading-relaxed bg-[#0a0a0a] p-6 rounded-2xl border border-white/5"
+                    className="font-mono text-[11px] text-indigo-500/80 whitespace-pre-wrap leading-relaxed bg-[#0a0a0a] p-8 rounded-3xl border border-white/5 shadow-inner"
                   >
                     {bootText}
                     <span className="inline-block w-2 h-4 bg-indigo-500 ml-1 animate-pulse"></span>
@@ -119,19 +119,23 @@ const InteractiveAI: React.FC = () => {
                   messages.map((m, i) => (
                     <motion.div 
                       key={i} 
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      className={`flex gap-5`}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="flex gap-6 group"
                     >
-                      <div className={`shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center text-white text-[10px] font-black border border-white/5 shadow-xl transition-all ${m.isBot ? 'bg-indigo-600/20 text-indigo-400 border-indigo-500/30' : 'bg-[#1a1a1a] border-white/10'}`}>
-                        {m.isBot ? 'TPG' : 'USR'}
+                      <div className={`shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center overflow-hidden border border-white/5 shadow-2xl transition-all ${m.isBot ? 'bg-indigo-600 text-white' : 'bg-[#111]'}`}>
+                        {m.isBot ? (
+                          <span className="text-[10px] font-black">TPG</span>
+                        ) : (
+                          <img src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=1000&auto=format&fit=crop" className="w-full h-full object-cover" alt="" />
+                        )}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-4 mb-2">
-                          <span className={`font-black text-[11px] tracking-widest uppercase ${m.isBot ? 'text-indigo-400' : 'text-white'}`}>{m.author}</span>
+                          <span className={`font-black text-[12px] tracking-widest uppercase ${m.isBot ? 'text-indigo-400' : 'text-white'}`}>{m.author}</span>
                           <span className="text-[9px] font-bold text-gray-700 uppercase">{m.timestamp}</span>
                         </div>
-                        <div className={`text-sm leading-relaxed font-medium p-5 rounded-2xl border transition-all ${m.isBot ? 'bg-indigo-600/5 border-indigo-500/10 text-gray-300' : 'bg-[#111]/40 border-white/5 text-gray-400'} whitespace-pre-wrap font-mono`}>
+                        <div className={`text-sm leading-relaxed font-medium p-6 rounded-3xl border transition-all ${m.isBot ? 'bg-indigo-600/5 border-indigo-500/10 text-gray-300' : 'bg-[#111]/40 border-white/5 text-gray-400'} whitespace-pre-wrap font-mono shadow-sm group-hover:border-indigo-500/20`}>
                           {m.text}
                         </div>
                       </div>
@@ -142,14 +146,14 @@ const InteractiveAI: React.FC = () => {
                   <motion.div 
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="flex items-center gap-3 px-16"
+                    className="flex items-center gap-4 px-16"
                   >
-                    <span className="flex gap-1.5">
+                    <span className="flex gap-2">
                       <span className="w-2 h-2 bg-indigo-500 rounded-full animate-bounce"></span>
                       <span className="w-2 h-2 bg-indigo-500 rounded-full animate-bounce [animation-delay:0.1s]"></span>
                       <span className="w-2 h-2 bg-indigo-500 rounded-full animate-bounce [animation-delay:0.2s]"></span>
                     </span>
-                    <span className="text-indigo-500/60 text-[10px] uppercase font-black tracking-widest">Processing Core Data...</span>
+                    <span className="text-indigo-500/60 text-[10px] uppercase font-black tracking-[0.3em]">Processing Core Data...</span>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -163,11 +167,11 @@ const InteractiveAI: React.FC = () => {
                   onChange={(e) => setInput(e.target.value)} 
                   onKeyDown={(e) => e.key === 'Enter' && handleSend()} 
                   disabled={isBooting}
-                  placeholder={isBooting ? "SYSTEM BOOTING..." : "INPUT COMMAND... (e.g. /tpg play phonk)"} 
-                  className="w-full bg-[#050505] border border-white/10 rounded-2xl px-8 py-5 text-white placeholder-gray-800 focus:outline-none focus:border-indigo-500/50 text-xs font-bold uppercase tracking-widest transition-all group-hover:border-white/20 shadow-inner disabled:opacity-50"
+                  placeholder={isBooting ? "SYNCING..." : "ENTER COMMAND... (e.g. /tpg play phonk)"} 
+                  className="w-full bg-[#050505] border border-white/10 rounded-2xl px-8 py-5 text-white placeholder-gray-800 focus:outline-none focus:border-indigo-500/50 text-xs font-bold uppercase tracking-[0.3em] transition-all group-hover:border-white/20 shadow-inner disabled:opacity-50"
                 />
                 <div className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center gap-3 pointer-events-none">
-                   <div className="text-[10px] text-gray-700 font-black border border-white/5 px-3 py-1.5 rounded-lg bg-black/50">ENTER ⏎</div>
+                   <div className="text-[10px] text-gray-700 font-black border border-white/5 px-3 py-1.5 rounded-lg bg-black/40">SEND ⏎</div>
                 </div>
               </div>
             </div>

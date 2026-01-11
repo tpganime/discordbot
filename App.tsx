@@ -58,16 +58,16 @@ const App: React.FC = () => {
       setIsAuthorizing(true);
       window.history.replaceState({}, document.title, window.location.pathname);
       
-      // Simulate faster authorization (500ms instead of 1500ms)
+      // Hyper-fast authorization simulation (300ms)
       setTimeout(() => {
         setUser({
-          username: "Master Operator",
-          discriminator: "0001",
-          // The image from the prompt: high-fidelity glowing orb aesthetic
-          avatar: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1000&auto=format&fit=crop" 
+          username: "OPERATOR_01",
+          discriminator: "7777",
+          // The specific aesthetic glowing orb from the user's image
+          avatar: "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=1000&auto=format&fit=crop" 
         });
         setIsAuthorizing(false);
-      }, 500);
+      }, 300);
     }
   }, []);
 
@@ -102,14 +102,16 @@ const App: React.FC = () => {
               <div className="relative">
                 <motion.div 
                   animate={{ rotate: 360 }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-                  className="w-20 h-20 border-b-2 border-indigo-500 rounded-full shadow-[0_0_30px_rgba(99,102,241,0.4)]"
+                  transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                  className="w-24 h-24 border-b-4 border-indigo-500 rounded-full shadow-[0_0_50px_rgba(99,102,241,0.5)]"
                 ></motion.div>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-4 h-4 bg-indigo-500 rounded-full animate-pulse shadow-[0_0_20px_rgba(99,102,241,1)]"></div>
+                   <div className="w-10 h-10 rounded-full overflow-hidden border border-white/20">
+                     <img src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=1000&auto=format&fit=crop" className="w-full h-full object-cover animate-pulse" alt="" />
+                   </div>
                 </div>
               </div>
-              <h2 className="text-[10px] font-black uppercase tracking-[0.8em] text-indigo-400 mt-12 animate-pulse">Syncing Core</h2>
+              <h2 className="text-[10px] font-black uppercase tracking-[1em] text-indigo-400 mt-12 animate-pulse">Syncing Session</h2>
             </motion.div>
           )}
         </AnimatePresence>

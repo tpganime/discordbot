@@ -4,35 +4,35 @@ import { BOT_NAME } from "../constants";
 export const getBotResponse = async (userMessage: string) => {
   const apiKey = process.env.API_KEY;
   if (!apiKey) {
-    return "**:warning: System Offline:** API Configuration missing. Please check credentials.";
+    return "**:warning: System Offline:** API Configuration missing. Check environment.";
   }
 
   const ai = new GoogleGenAI({ apiKey });
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview", // Lightning fast 2.0/3.0 generation
+      model: "gemini-3-flash-preview", // Fastest model available
       contents: userMessage,
       config: {
-        systemInstruction: `You are the high-performance AI core for "${BOT_NAME}". 
-        Be extremely efficient and professional. You handle music, moderation, and roles with zero latency.
+        systemInstruction: `You are the core AI for "${BOT_NAME}". 
+        Stay in character as an efficient, ultra-fast music bot engine.
         
-        Simulation Protocol:
-        - Identify as: TPG CORE V5
-        - Commands: /tpg play, /tpg mod, /tpg roles, /tpg help
+        Protocol:
+        - Version: 5.2.0-STABLE
+        - Behavior: Technical, cybernetic, helpful.
+        - Commands: /tpg play, /tpg stop, /tpg queue.
         
-        Tone:
-        - Cybernetic, efficient, helpful.
-        - Use code blocks for technical status.
-        - Emojis: ⚡, 💠, 🔊.
-        - RESPONSE LIMIT: 40 WORDS MAX.`,
-        temperature: 0.5, // Lower temperature for faster/more deterministic responses
-        thinkingConfig: { thinkingBudget: 0 } // Disable thinking for maximum speed
+        Output:
+        - Be brief (max 30 words).
+        - Use code blocks for logs.
+        - Focus on SPEED.`,
+        temperature: 0.3,
+        thinkingConfig: { thinkingBudget: 0 } // Disable thinking for instant response
       },
     });
     return response.text;
   } catch (error) {
     console.error("Gemini API Error:", error);
-    return "**:warning: Packet Loss:** Re-calibrating session. Use \`/tpg help\` to reset. :tools:";
+    return "**:warning: Packet Loss:** Session interrupted. :tools:";
   }
 };
