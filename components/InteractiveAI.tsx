@@ -1,7 +1,6 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { getBotResponse } from '../services/geminiService.ts';
-import { BOT_NAME } from '../constants.tsx';
+import { BOT_NAME, SUPPORT_SERVER_URL } from '../constants.tsx';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Message {
@@ -11,6 +10,21 @@ interface Message {
   isBot: boolean;
   timestamp: string;
 }
+
+interface Track {
+  title: string;
+  artist: string;
+  url: string;
+}
+
+const NCS_SONGS: Track[] = [
+  { title: "Fade", artist: "Alan Walker", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+  { title: "Spectre", artist: "Alan Walker", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
+  { title: "Force", artist: "Alan Walker", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" },
+  { title: "High", artist: "JPB", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" },
+  { title: "Sky High", artist: "Elektronomia", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3" },
+  { title: "Cloud 9", artist: "Itro & Tobu", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3" }
+];
 
 interface InteractiveAIProps {
   user?: any;
@@ -22,20 +36,29 @@ const InteractiveAI: React.FC<InteractiveAIProps> = ({ user }) => {
   const [isTyping, setIsTyping] = useState(false);
   const [isBooting, setIsBooting] = useState(true);
   const [bootText, setBootText] = useState('');
-  const [nowPlaying, setNowPlaying] = useState<string | null>(null);
+  const [nowPlaying, setNowPlaying] = useState<Track | null>(null);
+  const [isLooping, setIsLooping] = useState(false);
+  const [volume, setVolume] = useState(50);
+  const [isPaused, setIsPaused] = useState(false);
   
   const scrollRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const bootSequence = [
     "TPG_MUSIC CORE v5.2.0-STABLE",
-    "NODE_SYNC: ATTACHED",
+    "AUDIO_ENGINE: INITIALIZING NCS_PROTOCOLS",
+    "NODE_SYNC: ATTACHED (8ms)",
     "AUTH_GATEWAY: VERIFIED",
     "BUFFER_CALIBRATION: [OK]",
     "REALTIME_SSL: ESTABLISHED",
-    "AWAITING INPUT..."
+    "SYSTEM READY."
   ];
 
   useEffect(() => {
+    const audio = new Audio();
+    audio.volume = volume / 100;
+    audioRef.current = audio;
+    
     let currentLine = 0;
     const bootInterval = setInterval(() => {
       if (currentLine < bootSequence.length) {
@@ -45,24 +68,172 @@ const InteractiveAI: React.FC<InteractiveAIProps> = ({ user }) => {
         clearInterval(bootInterval);
         setTimeout(() => {
           setIsBooting(false);
-          setMessages([
-            { 
-              author: BOT_NAME, 
-              avatar: 'bot', 
-              text: `Core active. System initialized. How can I assist your deployment today, Operator?`, 
-              isBot: true, 
-              timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
-            }
-          ]);
+          addBotMessage(`Core active. System initialized. I am ready to play NCS high-fidelity tracks. Try \`/tpg play\` to start the engine.`);
         }, 500);
       }
     }, 80);
-    return () => clearInterval(bootInterval);
+
+    return () => {
+      clearInterval(bootInterval);
+      audio.pause();
+      audio.src = "";
+    };
   }, []);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume / 100;
+    }
+  }, [volume]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.loop = isLooping;
+    }
+  }, [isLooping]);
 
   useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [messages, isTyping, bootText]);
+
+  const addBotMessage = (text: string) => {
+    const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    setMessages(prev => [...prev, { author: BOT_NAME, avatar: 'bot', text, isBot: true, timestamp: now }]);
+  };
+
+  const processCommand = (cmd: string): boolean => {
+    const lower = cmd.toLowerCase().trim();
+    const parts = lower.split(' ');
+    const trigger = parts[0];
+    const sub = parts[1];
+    const args = parts.slice(2);
+
+    // Support both /tpg [cmd] and /[cmd] styles
+    const commandName = trigger === '/tpg' ? sub : trigger.replace('/', '');
+
+    if (commandName === 'support') {
+      addBotMessage(`💠 **SUPPORT SYSTEM**\nDirect Node: ${SUPPORT_SERVER_URL}\nDeployment specialists are standing by to calibrate your server.`);
+      return true;
+    }
+
+    if (commandName === 'play') {
+      const search = trigger === '/tpg' ? parts.slice(2).join(' ') : parts.slice(1).join(' ');
+      let track = NCS_SONGS.find(s => s.title.toLowerCase().includes(search) || s.artist.toLowerCase().includes(search));
+      if (!track) track = NCS_SONGS[Math.floor(Math.random() * NCS_SONGS.length)];
+      
+      setNowPlaying(track);
+      setIsPaused(false);
+      if (audioRef.current) {
+        audioRef.current.src = track.url;
+        audioRef.current.play().catch(e => {
+          console.error("Playback failed:", e);
+          addBotMessage(`❌ **AUDIO ERROR**\nCould not fetch audio packets. Try another track.`);
+        });
+      }
+      addBotMessage(`💠 **STREAMING INITIALIZED**\n\`\`\`yaml\nTRACK: ${track.title}\nARTIST: ${track.artist}\nSTATUS: PLAYING\nQUALITY: LOSSLESS (1411kbps)\n\`\`\`\n🔊 *Now playing high-fidelity NCS audio.*`);
+      return true;
+    }
+
+    if (commandName === 'stop') {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+      setNowPlaying(null);
+      setIsPaused(false);
+      addBotMessage(`⏹️ **SESSION TERMINATED**\nPlayback stack cleared. Node returned to idle state.`);
+      return true;
+    }
+
+    if (commandName === 'pause') {
+      if (audioRef.current && !audioRef.current.paused) {
+        audioRef.current.pause();
+        setIsPaused(true);
+        addBotMessage(`⏸️ **STREAM SUSPENDED**\nAudio buffer preserved. Use \`/tpg resume\` to restore.`);
+      } else {
+        addBotMessage(`⚠️ **IDLE**\nNo active stream to suspend.`);
+      }
+      return true;
+    }
+
+    if (commandName === 'resume') {
+      if (audioRef.current && isPaused) {
+        audioRef.current.play();
+        setIsPaused(false);
+        addBotMessage(`▶️ **STREAM RESTORED**\nSynchronizing audio packets with core nodes...`);
+      } else {
+        addBotMessage(`⚠️ **ACTIVE**\nCore engine is already distributing audio or node is empty.`);
+      }
+      return true;
+    }
+
+    if (commandName === 'loop') {
+      setIsLooping(!isLooping);
+      addBotMessage(`🔄 **LOOP MODE: ${!isLooping ? 'ENABLED' : 'DISABLED'}**\nTrack repetition protocols updated.`);
+      return true;
+    }
+
+    if (commandName === 'queue') {
+      const list = NCS_SONGS.map((s, i) => `${i + 1}. ${s.title} - ${s.artist}`).join('\n');
+      addBotMessage(`📜 **CORE STACK**\n\`\`\`\n${list}\n\`\`\``);
+      return true;
+    }
+
+    if (commandName === 'disconnect') {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.src = "";
+      }
+      setNowPlaying(null);
+      addBotMessage(`🔌 **NODE DECOUPLED**\nVoice channel connection closed. All buffers purged.`);
+      return true;
+    }
+
+    if (commandName === 'replay') {
+      if (audioRef.current && nowPlaying) {
+        audioRef.current.currentTime = 0;
+        audioRef.current.play();
+        addBotMessage(`⏪ **REPLAYING**\nTrack restarted from packet zero.`);
+      } else {
+        addBotMessage(`❌ **NO DATA**\nInitialize a stream first using \`/tpg play\`.`);
+      }
+      return true;
+    }
+
+    if (commandName === 'skip') {
+      const next = NCS_SONGS[Math.floor(Math.random() * NCS_SONGS.length)];
+      setNowPlaying(next);
+      if (audioRef.current) {
+        audioRef.current.src = next.url;
+        audioRef.current.play();
+      }
+      addBotMessage(`⏭️ **TRACK SKIPPED**\nNow syncing: **${next.title}** by **${next.artist}**`);
+      return true;
+    }
+
+    if (commandName === 'track') {
+      if (!nowPlaying) {
+        addBotMessage(`❌ **NO TRACK ACTIVE**`);
+      } else {
+        addBotMessage(`🎵 **TRACK METADATA**\nTitle: ${nowPlaying.title}\nArtist: ${nowPlaying.artist}\nCodec: PCM/Lossless\nBitrate: 1411kbps`);
+      }
+      return true;
+    }
+
+    if (commandName === 'set-volume' || commandName === 'volume') {
+      const volStr = trigger === '/tpg' ? parts[2] : parts[1];
+      const vol = parseInt(volStr);
+      if (!isNaN(vol) && vol >= 0 && vol <= 100) {
+        setVolume(vol);
+        addBotMessage(`🔊 **VOLUME CALIBRATED: ${vol}%**\nOutput gain adjusted globally.`);
+      } else {
+        addBotMessage(`❌ **INVALID VALUE**\nUsage: /tpg set-volume [0-100]`);
+      }
+      return true;
+    }
+
+    return false;
+  };
 
   const handleSend = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -72,50 +243,28 @@ const InteractiveAI: React.FC<InteractiveAIProps> = ({ user }) => {
     setInput('');
     const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     
-    // Use user avatar if logged in, otherwise default orb
+    // Always use user's discord profile pic if available
     const userAvatar = user?.avatar || "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=1000&auto=format&fit=crop";
     
-    setMessages(prev => [...prev, { author: user?.username || 'OPERATOR', avatar: userAvatar, text: userText, isBot: false, timestamp: now }]);
+    setMessages(prev => [...prev, { 
+      author: user?.username || 'OPERATOR', 
+      avatar: userAvatar, 
+      text: userText, 
+      isBot: false, 
+      timestamp: now 
+    }]);
+    
     setIsTyping(true);
 
-    // Enhanced local command handling for "playing songs" simulation
-    const lowerText = userText.toLowerCase();
-    if (lowerText.includes('play ') || lowerText.includes('/play') || lowerText.includes('/tpg play')) {
-      const trackName = userText.split('play ')[1] || 'Core Phonk Mix';
-      setNowPlaying(trackName);
-      
-      setTimeout(() => {
-        setIsTyping(false);
-        setMessages(prev => [...prev, { 
-          author: BOT_NAME, 
-          avatar: 'bot', 
-          text: `💠 **STREAMING INITIALIZED**\n\`\`\`yaml\nTRACK: ${trackName}\nSTATUS: PLAYING\nBITRATE: 1411kbps\nQUALITY: LOSSLESS\n\`\`\`\n🔊 *Audio packet distribution optimized for your current node.*`, 
-          isBot: true, 
-          timestamp: now 
-        }]);
-      }, 800);
-      return;
-    }
-
-    if (lowerText.includes('stop') || lowerText.includes('/stop')) {
-      setNowPlaying(null);
-      setTimeout(() => {
-        setIsTyping(false);
-        setMessages(prev => [...prev, { 
-          author: BOT_NAME, 
-          avatar: 'bot', 
-          text: `⏹️ **SESSION TERMINATED**\nPlayback stack cleared. Node idle.`, 
-          isBot: true, 
-          timestamp: now 
-        }]);
-      }, 400);
+    const wasCommand = processCommand(userText);
+    if (wasCommand) {
+      setIsTyping(false);
       return;
     }
     
-    // Call real Gemini API for other interactions
     const botText = await getBotResponse(userText);
     setIsTyping(false);
-    setMessages(prev => [...prev, { author: BOT_NAME, avatar: 'bot', text: botText || "Connection unstable. Retrying...", isBot: true, timestamp: now }]);
+    addBotMessage(botText || "Connection unstable. Packet loss detected.");
   };
 
   return (
@@ -129,7 +278,7 @@ const InteractiveAI: React.FC<InteractiveAIProps> = ({ user }) => {
           >
             REALTIME CONSOLE
           </motion.h2>
-          <p className="text-gray-600 uppercase tracking-[0.5em] text-[10px] font-bold">Direct Core Interaction</p>
+          <p className="text-gray-600 uppercase tracking-[0.5em] text-[10px] font-bold">Direct Core Integration</p>
         </div>
 
         <div className="bg-[#0a0a0a] rounded-[2.5rem] overflow-hidden border border-white/5 flex flex-col h-[650px] shadow-[0_50px_100px_-20px_rgba(0,0,0,1)] ring-1 ring-white/10 relative">
@@ -144,14 +293,21 @@ const InteractiveAI: React.FC<InteractiveAIProps> = ({ user }) => {
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
               CORE_ACTIVE_SSL
             </div>
-            <div className="hidden sm:flex items-center gap-3 text-[10px] font-bold text-white/20 uppercase tracking-widest">
+            <div className="hidden sm:flex items-center gap-5 text-[10px] font-bold text-white/20 uppercase tracking-widest">
               {nowPlaying && (
-                <div className="flex items-center gap-2">
-                   <div className="w-2 h-2 bg-green-500 rounded-full animate-ping"></div>
-                   <span className="text-green-500/60">STREAMING: {nowPlaying}</span>
+                <div className="flex items-center gap-3">
+                   <div className="flex gap-1 h-3 items-end">
+                      <motion.div animate={{ height: isPaused ? 4 : [4, 12, 6, 12, 4] }} transition={{ repeat: Infinity, duration: 0.8 }} className="w-1 bg-indigo-500"></motion.div>
+                      <motion.div animate={{ height: isPaused ? 4 : [8, 4, 10, 4, 8] }} transition={{ repeat: Infinity, duration: 0.6 }} className="w-1 bg-indigo-500"></motion.div>
+                      <motion.div animate={{ height: isPaused ? 4 : [12, 8, 4, 8, 12] }} transition={{ repeat: Infinity, duration: 0.7 }} className="w-1 bg-indigo-500"></motion.div>
+                   </div>
+                   <span className="text-indigo-400/80">{isPaused ? 'PAUSED' : 'PLAYING'}: {nowPlaying.title}</span>
                 </div>
               )}
-              <span>8ms</span>
+              <div className="flex items-center gap-2">
+                <span>VOL: {volume}%</span>
+                {isLooping && <span className="text-indigo-500">LOOP</span>}
+              </div>
             </div>
           </div>
 
@@ -180,7 +336,7 @@ const InteractiveAI: React.FC<InteractiveAIProps> = ({ user }) => {
                         {m.isBot ? (
                           <span className="text-[10px] font-black">TPG</span>
                         ) : (
-                          <img src={m.avatar} className="w-full h-full object-cover" alt="" />
+                          <img src={m.avatar} className="w-full h-full object-cover" alt="User Profile" />
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
@@ -206,7 +362,7 @@ const InteractiveAI: React.FC<InteractiveAIProps> = ({ user }) => {
                       <span className="w-2 h-2 bg-indigo-500 rounded-full animate-bounce [animation-delay:0.1s]"></span>
                       <span className="w-2 h-2 bg-indigo-500 rounded-full animate-bounce [animation-delay:0.2s]"></span>
                     </span>
-                    <span className="text-indigo-500/60 text-[10px] uppercase font-black tracking-[0.3em]">Processing Core Data...</span>
+                    <span className="text-indigo-500/60 text-[10px] uppercase font-black tracking-[0.3em]">Core Processing...</span>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -219,7 +375,7 @@ const InteractiveAI: React.FC<InteractiveAIProps> = ({ user }) => {
                   value={input} 
                   onChange={(e) => setInput(e.target.value)} 
                   disabled={isBooting}
-                  placeholder={isBooting ? "SYNCING..." : "ENTER COMMAND... (e.g. /play phonk)"} 
+                  placeholder={isBooting ? "SYNCING..." : "ENTER COMMAND... (e.g. /tpg play spectre)"} 
                   className="w-full bg-[#050505] border border-white/10 rounded-2xl pl-8 pr-32 py-5 text-white placeholder-gray-800 focus:outline-none focus:border-indigo-500/50 text-xs font-bold uppercase tracking-[0.3em] transition-all group-hover:border-white/20 shadow-inner disabled:opacity-50"
                 />
                 <button 
