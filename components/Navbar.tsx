@@ -30,7 +30,6 @@ const Navbar: React.FC<NavbarProps> = ({ onAdd, onLogin, onLogout, user }) => {
 
         <div className="hidden lg:flex items-center gap-10 px-10 py-4 rounded-full bg-[#111] border border-white/5 shadow-xl">
           <a href="#features" className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 hover:text-white transition-colors">Infra</a>
-          <a href="#ai-demo" className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 hover:text-white transition-colors">Live</a>
           <a href={SUPPORT_SERVER_URL} target="_blank" rel="noreferrer" className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 hover:text-white transition-colors">Support</a>
         </div>
 

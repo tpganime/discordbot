@@ -5,8 +5,8 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Features from './components/Features';
 import Stats from './components/Stats';
-import InteractiveAI from './components/InteractiveAI';
 import Footer from './components/Footer';
+import InteractiveAI from './components/InteractiveAI';
 import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
 import CommandsPage from './pages/CommandsPage';
@@ -32,8 +32,9 @@ const LandingPage: React.FC<{ onAdd: () => void, onLogin: () => void, servers: n
     <main>
       <Hero onAdd={onAdd} onLogin={onLogin} user={user} />
       <Stats servers={servers} users={users} />
-      <Features />
+      {/* Integrating InteractiveAI component into the main landing page */}
       <InteractiveAI />
+      <Features />
     </main>
   );
 };

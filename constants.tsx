@@ -1,7 +1,7 @@
 
 export const BOT_INVITE_URL = "https://discord.com/oauth2/authorize?client_id=964115363941974076&scope=applications.commands%20bot&permissions=8";
-export const BOT_NAME = "─・𒀛TPG ｜MUSIC";
-export const BOT_TAGLINE = "High-quality music and gaming companion for your Discord server.";
+export const BOT_NAME = "─・𒀛TPG ｜YOUR ALL-IN-ONE COMPANION";
+export const BOT_TAGLINE = "Your definitive Discord utility. Advanced Music, Role Management, and Pro Moderation Suite.";
 export const SUPPORT_SERVER_URL = "https://discord.gg/XqJwKFPny5";
 
 // Dynamically generate the login URL based on the current environment

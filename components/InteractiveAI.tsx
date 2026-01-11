@@ -13,7 +13,7 @@ interface Message {
 
 const InteractiveAI: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
-    { author: BOT_NAME, avatar: 'bot', text: `Try \`/tpg play\` to start the music engine.`, isBot: true, timestamp: '12:00 PM' }
+    { author: "SYSTEM", avatar: 'bot', text: `Core initialized. Listening for commands. Try \`/tpg play\``, isBot: true, timestamp: '12:00' }
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -28,56 +28,66 @@ const InteractiveAI: React.FC = () => {
     if (!input.trim() || isTyping) return;
     const userText = input.trim();
     setInput('');
-    setMessages(prev => [...prev, { author: 'User', avatar: 'user', text: userText, isBot: false, timestamp: 'Now' }]);
+    setMessages(prev => [...prev, { author: 'OPERATOR', avatar: 'user', text: userText, isBot: false, timestamp: 'Now' }]);
     setIsTyping(true);
     
     const botText = await getBotResponse(userText);
     setIsTyping(false);
-    setMessages(prev => [...prev, { author: BOT_NAME, avatar: 'bot', text: botText || "Processed.", isBot: true, timestamp: 'Now' }]);
+    setMessages(prev => [...prev, { author: BOT_NAME, avatar: 'bot', text: botText || "Operational error.", isBot: true, timestamp: 'Now' }]);
   };
 
   return (
-    <section id="ai-demo" className="px-4 py-20 bg-black">
+    <section id="ai-demo" className="px-4 py-24 bg-black">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-10">
-          <h2 className="text-3xl font-black mb-2 uppercase tracking-tighter">Live Preview</h2>
-          <p className="text-gray-500 uppercase tracking-widest text-[10px] font-bold">Low Latency Command Processing</p>
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-black mb-4 uppercase tracking-tighter">LIVE CONSOLE</h2>
+          <p className="text-gray-600 uppercase tracking-[0.5em] text-[10px] font-black">All-In-One Interaction Hub</p>
         </div>
 
-        <div className="bg-[#1e1f22] rounded-2xl overflow-hidden border border-white/5 flex h-[500px]">
-          <div className="hidden md:flex w-56 bg-[#2b2d31] flex-col p-4">
-            <div className="text-white font-bold text-xs uppercase tracking-widest mb-4 opacity-50">Channels</div>
-            <div className="px-3 py-2 rounded bg-[#3f4147] text-white text-sm font-medium"># general</div>
+        {/* 3D Console Shell */}
+        <div className="bg-[#111] rounded-[2rem] overflow-hidden border border-white/10 flex flex-col h-[550px] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)] border-b-8 border-b-indigo-900/30">
+          
+          {/* Header */}
+          <div className="h-12 bg-[#1a1a1a] border-b border-white/5 flex items-center px-6 justify-between">
+            <div className="flex gap-2">
+              <div className="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-green-500/50"></div>
+            </div>
+            <div className="text-[9px] font-black tracking-widest text-gray-500 uppercase">AS-CMD_MODULE v4.0</div>
           </div>
 
-          <div className="flex-1 flex flex-col bg-[#313338]">
-            <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4">
+          <div className="flex-1 flex flex-col bg-[#0d0d0d]">
+            <div ref={scrollRef} className="flex-1 overflow-y-auto p-6 space-y-6 scrollbar-hide">
               {messages.map((m, i) => (
-                <div key={i} className="flex gap-3">
-                  <div className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white text-[10px] font-bold ${m.isBot ? 'bg-indigo-600' : 'bg-gray-700'}`}>
-                    {m.isBot ? 'B' : 'U'}
+                <div key={i} className="flex gap-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                  <div className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-white text-[10px] font-black border border-white/10 ${m.isBot ? 'bg-indigo-600' : 'bg-[#222]'}`}>
+                    {m.isBot ? 'SYS' : 'USR'}
                   </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className={`font-bold text-xs ${m.isBot ? 'text-indigo-400' : 'text-white'}`}>{m.author}</span>
-                      <span className="text-[9px] text-gray-500">{m.timestamp}</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-3 mb-1">
+                      <span className={`font-black text-[10px] tracking-widest uppercase ${m.isBot ? 'text-indigo-400' : 'text-white'}`}>{m.author}</span>
+                      <span className="text-[8px] font-bold text-gray-600 uppercase">{m.timestamp}</span>
                     </div>
-                    <div className="text-xs text-gray-300 leading-relaxed">{m.text}</div>
+                    <div className="text-xs md:text-sm text-gray-400 leading-relaxed font-medium bg-[#1a1a1a]/30 p-3 rounded-lg border border-white/5">{m.text}</div>
                   </div>
                 </div>
               ))}
-              {isTyping && <div className="text-gray-500 text-[10px] uppercase font-bold px-11">Processing...</div>}
+              {isTyping && <div className="text-indigo-500 text-[10px] uppercase font-black px-14 animate-pulse">PROCESSING DATA...</div>}
             </div>
 
-            <div className="p-4">
-              <input 
-                type="text" 
-                value={input} 
-                onChange={(e) => setInput(e.target.value)} 
-                onKeyDown={(e) => e.key === 'Enter' && handleSend()} 
-                placeholder={`Message #general`} 
-                className="w-full bg-[#383a40] rounded-lg px-4 py-2.5 text-gray-200 placeholder-gray-500 focus:outline-none text-xs"
-              />
+            <div className="p-6 bg-[#111] border-t border-white/5">
+              <div className="relative">
+                <input 
+                  type="text" 
+                  value={input} 
+                  onChange={(e) => setInput(e.target.value)} 
+                  onKeyDown={(e) => e.key === 'Enter' && handleSend()} 
+                  placeholder={`ENTER PROTOCOL COMMAND...`} 
+                  className="w-full bg-[#050505] border border-white/10 rounded-xl px-6 py-4 text-white placeholder-gray-700 focus:outline-none focus:border-indigo-500/50 text-[10px] font-black uppercase tracking-widest transition-all"
+                />
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] text-gray-600 font-black">⏎</div>
+              </div>
             </div>
           </div>
         </div>

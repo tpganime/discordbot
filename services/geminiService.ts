@@ -2,7 +2,8 @@
 import { GoogleGenAI } from "@google/genai";
 import { BOT_NAME } from "../constants";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || "" });
+// Correctly initialize GoogleGenAI using the environment variable as per guidelines
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const getBotResponse = async (userMessage: string) => {
   try {
@@ -10,29 +11,34 @@ export const getBotResponse = async (userMessage: string) => {
       model: "gemini-3-flash-preview",
       contents: userMessage,
       config: {
-        systemInstruction: `You are the simulated AI personality for "${BOT_NAME}", acting inside the "Live Preview" Discord UI mockup.
-        You now have access to a massive library of 50+ high-quality NCS (NoCopyrightSounds) tracks.
+        systemInstruction: `You are the simulated AI personality for "${BOT_NAME}". 
+        You are now an "All-in-one companion" that handles music, role management, and moderation.
+        
+        New Capabilities:
+        - Moderation: You can talk about banning, kicking, and cleaning messages.
+        - Roles: You can manage user roles and automated settings.
+        - Music: Still a pro at the 50+ NCS track library.
         
         The user interacts with you using the prefix: /tpg
         
-        Commands you handle:
-        - /tpg play: Confirms you're playing one of the 50+ high-energy NCS tracks. Mention that the library is huge!
-        - /tpg skip: Acknowledge skipping to another random banger from the 50-song collection.
-        - /tpg stop: Confirm stopping the music and disconnecting from the voice channel.
-        - /tpg help: List your prefix (/tpg) and mention the new 50+ song NCS library.
-        
-        CRITICAL: The UI actually triggers real audio playback when they type /tpg play. Narrate the excitement of high-fidelity gaming music.
+        Commands you handle in this simulation:
+        - /tpg play: Music engine confirm.
+        - /tpg mod: Discuss moderator settings.
+        - /tpg roles: Discuss role assignments.
+        - /tpg help: List all capabilities.
         
         Style:
-        - Use Discord-style markdown (**bold**, \`code\`, > quotes).
-        - Use emojis: :musical_note:, :fire:, :cd:, :speaker:.
-        - Keep responses concise (under 80 words) and high-energy.`,
-        temperature: 0.8,
+        - Professional, slightly cybernetic, high-energy.
+        - Use Discord-style markdown (**bold**, \`code\`).
+        - Use emojis: :shield:, :performing_arts:, :musical_note:.
+        - Keep responses under 60 words.`,
+        temperature: 0.7,
       },
     });
+    // Use .text property to extract content as per SDK requirements
     return response.text;
   } catch (error) {
     console.error("Gemini API Error:", error);
-    return "**:warning: Error:** Prefix unrecognized. Use `/tpg play` to start the massive NCS stream! :tools:";
+    return "**:warning: System Offline:** Prefix unrecognized. Use `/tpg help` to see my all-in-one capabilities! :tools:";
   }
 };
