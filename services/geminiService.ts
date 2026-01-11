@@ -1,8 +1,7 @@
 
 import { GoogleGenAI } from "@google/genai";
-import { BOT_NAME } from "../constants";
+import { BOT_NAME } from "../constants.tsx";
 
-// Correctly initialize GoogleGenAI using the environment variable as per guidelines
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const getBotResponse = async (userMessage: string) => {
@@ -35,7 +34,6 @@ export const getBotResponse = async (userMessage: string) => {
         temperature: 0.7,
       },
     });
-    // Use .text property to extract content as per SDK requirements
     return response.text;
   } catch (error) {
     console.error("Gemini API Error:", error);

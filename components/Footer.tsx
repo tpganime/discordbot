@@ -1,8 +1,8 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { BOT_INVITE_URL, BOT_NAME, SUPPORT_SERVER_URL } from '../constants';
-import MusicIcon from './MusicIcon';
+import { BOT_INVITE_URL, BOT_NAME, SUPPORT_SERVER_URL } from '../constants.tsx';
+import MusicIcon from './MusicIcon.tsx';
 
 const Footer: React.FC = () => {
   return (
@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
               </span>
             </div>
             <p className="text-gray-500 text-[10px] uppercase tracking-widest leading-relaxed mb-6 font-bold">
-              The next generation of Discord entertainment. High-fidelity audio and lossless streaming built for the modern era.
+              The ultimate evolution of Discord audio. Experience crystal clear, lossless music streaming powered by the TPG infrastructure.
             </p>
           </div>
 
@@ -50,7 +50,7 @@ const Footer: React.FC = () => {
           <p>© 2024 {BOT_NAME}. ALL RIGHTS RESERVED.</p>
           <div className="flex gap-8 mt-4 md:mt-0">
              <span>01 // AUDIO</span>
-             <span>02 // VISION</span>
+             <span>02 // LOSSLESS</span>
           </div>
         </div>
       </div>

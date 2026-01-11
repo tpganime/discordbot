@@ -1,16 +1,15 @@
 
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Features from './components/Features';
-import Stats from './components/Stats';
-import Footer from './components/Footer';
-import InteractiveAI from './components/InteractiveAI';
-import PrivacyPage from './pages/PrivacyPage';
-import TermsPage from './pages/TermsPage';
-import CommandsPage from './pages/CommandsPage';
-import { DISCORD_LOGIN_URL } from './constants';
+import Navbar from './components/Navbar.tsx';
+import Hero from './components/Hero.tsx';
+import Features from './components/Features.tsx';
+import Stats from './components/Stats.tsx';
+import Footer from './components/Footer.tsx';
+import PrivacyPage from './pages/PrivacyPage.tsx';
+import TermsPage from './pages/TermsPage.tsx';
+import CommandsPage from './pages/CommandsPage.tsx';
+import { DISCORD_LOGIN_URL } from './constants.tsx';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ScrollToTop = () => {
@@ -32,8 +31,6 @@ const LandingPage: React.FC<{ onAdd: () => void, onLogin: () => void, servers: n
     <main>
       <Hero onAdd={onAdd} onLogin={onLogin} user={user} />
       <Stats servers={servers} users={users} />
-      {/* Integrating InteractiveAI component into the main landing page */}
-      <InteractiveAI />
       <Features />
     </main>
   );
@@ -45,17 +42,14 @@ const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthorizing, setIsAuthorizing] = useState(false);
 
-  // Real OAuth Detection
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const code = params.get('code');
 
     if (code) {
       setIsAuthorizing(true);
-      // Clean the URL
       window.history.replaceState({}, document.title, window.location.pathname);
       
-      // Simulate fetching user data from backend using the code
       setTimeout(() => {
         setUser({
           username: "Discord User",
@@ -76,7 +70,6 @@ const App: React.FC = () => {
   }, []);
 
   const handleLogin = () => {
-    // Redirect to real Discord OAuth link
     window.location.href = DISCORD_LOGIN_URL;
   };
 

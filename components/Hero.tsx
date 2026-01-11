@@ -1,8 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-// Added SUPPORT_SERVER_URL to imports to fix the reference error on line 69
-import { BOT_INVITE_URL, BOT_TAGLINE, SUPPORT_SERVER_URL } from '../constants';
+import { BOT_INVITE_URL, BOT_TAGLINE, SUPPORT_SERVER_URL } from '../constants.tsx';
 
 interface HeroProps {
   onAdd: () => void;
@@ -23,7 +22,7 @@ const Hero: React.FC<HeroProps> = ({ onAdd, onLogin, user }) => {
           className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-[#111] border border-white/10 text-indigo-400 text-[10px] font-black uppercase tracking-[0.4em] mb-12 shadow-2xl animate-float"
         >
           <span className="w-2 h-2 rounded-full bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,1)]"></span>
-          {user ? `Welcome back, ${user.username}` : "Definitive Community Core"}
+          {user ? `Welcome back, ${user.username}` : "High Fidelity Core Active"}
         </motion.div>
 
         {/* 3D Layered Title */}
@@ -33,13 +32,13 @@ const Hero: React.FC<HeroProps> = ({ onAdd, onLogin, user }) => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="relative mb-12"
         >
-          <h1 className="text-4xl md:text-[100px] lg:text-[110px] font-[900] tracking-tighter leading-[0.9] text-white uppercase select-none">
-            <span className="relative z-10 text-indigo-600">ALL-IN-ONE</span><br />
-            <span className="relative z-10">COMPANION</span>
+          <h1 className="text-6xl md:text-[130px] lg:text-[160px] font-[900] tracking-tighter leading-[0.8] text-white uppercase select-none">
+            <span className="relative z-10">TPG</span><br />
+            <span className="relative z-10 text-indigo-600">MUSIC</span>
             
             {/* Desktop Background Depth Layer */}
             <span className="absolute inset-0 top-2 left-1 text-white/5 blur-[2px] hidden lg:block -z-10 select-none">
-              ALL-IN-ONE<br />COMPANION
+              TPG<br />MUSIC
             </span>
           </h1>
         </motion.div>
@@ -51,7 +50,7 @@ const Hero: React.FC<HeroProps> = ({ onAdd, onLogin, user }) => {
           className="max-w-2xl mx-auto text-[10px] md:text-sm text-gray-400 mb-16 leading-relaxed uppercase tracking-[0.3em] font-bold"
         >
           {BOT_TAGLINE} <br/>
-          <span className="text-white/20">A professional-grade infrastructure for modern Discord communities.</span>
+          <span className="text-white/20">The premier choice for crystal-clear audio and zero-latency streaming.</span>
         </motion.p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">

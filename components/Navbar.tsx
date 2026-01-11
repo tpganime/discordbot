@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BOT_INVITE_URL, BOT_NAME, SUPPORT_SERVER_URL } from '../constants';
+import { BOT_INVITE_URL, BOT_NAME, SUPPORT_SERVER_URL } from '../constants.tsx';
 
 interface User {
   username: string;

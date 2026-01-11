@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { getBotResponse } from '../services/geminiService';
-import { BOT_NAME } from '../constants';
+import { getBotResponse } from '../services/geminiService.ts';
+import { BOT_NAME } from '../constants.tsx';
 
 interface Message {
   author: string;
@@ -44,10 +44,8 @@ const InteractiveAI: React.FC = () => {
           <p className="text-gray-600 uppercase tracking-[0.5em] text-[10px] font-black">All-In-One Interaction Hub</p>
         </div>
 
-        {/* 3D Console Shell */}
         <div className="bg-[#111] rounded-[2rem] overflow-hidden border border-white/10 flex flex-col h-[550px] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)] border-b-8 border-b-indigo-900/30">
           
-          {/* Header */}
           <div className="h-12 bg-[#1a1a1a] border-b border-white/5 flex items-center px-6 justify-between">
             <div className="flex gap-2">
               <div className="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
