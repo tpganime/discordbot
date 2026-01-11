@@ -10,6 +10,13 @@ interface HeroProps {
 }
 
 const Hero: React.FC<HeroProps> = ({ onAdd, onLogin, user }) => {
+  const scrollToDemo = () => {
+    const element = document.getElementById('ai-demo');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center px-6 pt-24 pb-12 overflow-hidden">
       <div className="max-w-7xl mx-auto text-center relative z-10">
@@ -66,10 +73,10 @@ const Hero: React.FC<HeroProps> = ({ onAdd, onLogin, user }) => {
           <motion.button 
             whileHover={{ y: -4 }}
             whileTap={{ scale: 0.98 }}
-            onClick={user ? () => window.open(SUPPORT_SERVER_URL) : onLogin}
+            onClick={scrollToDemo}
             className="w-full sm:w-auto px-12 py-5 rounded-xl border border-white/10 bg-[#111] font-black text-[10px] uppercase tracking-[0.4em] text-white transition-all shadow-xl border-b-4 border-black"
           >
-            {user ? "Dashboard" : "Control Center"}
+            Live Preview
           </motion.button>
         </div>
       </div>

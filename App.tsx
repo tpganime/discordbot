@@ -6,6 +6,7 @@ import Hero from './components/Hero.tsx';
 import Features from './components/Features.tsx';
 import Stats from './components/Stats.tsx';
 import Footer from './components/Footer.tsx';
+import InteractiveAI from './components/InteractiveAI.tsx';
 import PrivacyPage from './pages/PrivacyPage.tsx';
 import TermsPage from './pages/TermsPage.tsx';
 import CommandsPage from './pages/CommandsPage.tsx';
@@ -31,6 +32,7 @@ const LandingPage: React.FC<{ onAdd: () => void, onLogin: () => void, servers: n
     <main>
       <Hero onAdd={onAdd} onLogin={onLogin} user={user} />
       <Stats servers={servers} users={users} />
+      <InteractiveAI />
       <Features />
     </main>
   );
