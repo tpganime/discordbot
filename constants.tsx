@@ -6,6 +6,9 @@ export const BOT_NAME = "TPG ｜MUSIC";
 export const BOT_TAGLINE = "The premier choice for crystal-clear audio and zero-latency streaming. Experience the future of Discord audio.";
 export const SUPPORT_SERVER_URL = "https://discord.gg/XqJwKFPny5";
 
-// Dynamically generate the login URL based on the current environment
-const REDIRECT_URI = encodeURIComponent(window.location.origin + window.location.pathname);
+// Use the specific Vercel URL provided by the user for the redirect URI
+// This must match exactly what is configured in the Discord Developer Portal
+const BASE_URL = "https://discordbot-eta-two.vercel.app/";
+const REDIRECT_URI = encodeURIComponent(BASE_URL);
+
 export const DISCORD_LOGIN_URL = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}&scope=identify+guilds`;
