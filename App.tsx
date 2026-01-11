@@ -1,16 +1,16 @@
 
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import Navbar from './components/Navbar.tsx';
-import Hero from './components/Hero.tsx';
-import Features from './components/Features.tsx';
-import Stats from './components/Stats.tsx';
-import Footer from './components/Footer.tsx';
-import InteractiveAI from './components/InteractiveAI.tsx';
-import PrivacyPage from './pages/PrivacyPage.tsx';
-import TermsPage from './pages/TermsPage.tsx';
-import CommandsPage from './pages/CommandsPage.tsx';
-import { DISCORD_LOGIN_URL } from './constants.tsx';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import Features from './components/Features';
+import Stats from './components/Stats';
+import Footer from './components/Footer';
+import InteractiveAI from './components/InteractiveAI';
+import PrivacyPage from './pages/PrivacyPage';
+import TermsPage from './pages/TermsPage';
+import CommandsPage from './pages/CommandsPage';
+import { DISCORD_LOGIN_URL } from './constants';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ScrollToTop = () => {

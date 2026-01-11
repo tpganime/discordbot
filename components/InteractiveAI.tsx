@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { getBotResponse } from '../services/geminiService.ts';
-import { BOT_NAME } from '../constants.tsx';
+import { getBotResponse } from '../services/geminiService';
+import { BOT_NAME } from '../constants';
 
 interface Message {
   author: string;

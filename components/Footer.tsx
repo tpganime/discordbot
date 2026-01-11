@@ -1,8 +1,8 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { BOT_INVITE_URL, BOT_NAME, SUPPORT_SERVER_URL } from '../constants.tsx';
-import MusicIcon from './MusicIcon.tsx';
+import { BOT_INVITE_URL, BOT_NAME, SUPPORT_SERVER_URL } from '../constants';
+import MusicIcon from './MusicIcon';
 
 const Footer: React.FC = () => {
   return (

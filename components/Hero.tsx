@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { BOT_INVITE_URL, BOT_TAGLINE, SUPPORT_SERVER_URL } from '../constants.tsx';
+import { BOT_INVITE_URL, BOT_TAGLINE, SUPPORT_SERVER_URL } from '../constants';
 
 interface HeroProps {
   onAdd: () => void;
@@ -28,7 +28,7 @@ const Hero: React.FC<HeroProps> = ({ onAdd, onLogin, user }) => {
           transition={{ duration: 0.5 }}
           className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-[#111] border border-white/10 text-indigo-400 text-[10px] font-black uppercase tracking-[0.4em] mb-12 shadow-2xl animate-float"
         >
-          <span className="w-2 h-2 rounded-full bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,1)]"></span>
+          <span className="w-2 h-2 rounded-full bg-indigo-500 shadow-[0_0_10_rgba(99,102,241,1)]"></span>
           {user ? `Welcome back, ${user.username}` : "High Fidelity Core Active"}
         </motion.div>
 

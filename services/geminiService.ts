@@ -1,10 +1,15 @@
 
 import { GoogleGenAI } from "@google/genai";
-import { BOT_NAME } from "../constants.tsx";
-
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+import { BOT_NAME } from "../constants";
 
 export const getBotResponse = async (userMessage: string) => {
+  const apiKey = process.env.API_KEY;
+  if (!apiKey) {
+    return "**:warning: System Offline:** API Configuration missing. Please check credentials.";
+  }
+
+  const ai = new GoogleGenAI({ apiKey });
+
   try {
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
