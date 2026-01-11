@@ -12,17 +12,15 @@
     <style>
         :root {
             --bg-deep: #050505;
-            --accent-glow: rgba(99, 102, 241, 0.1);
         }
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-deep);
             color: #f8fafc;
             overflow-x: hidden;
-            perspective: 1500px;
         }
         
-        /* Optimized Mesh Background (Less Blur = Better FPS) */
+        /* Optimized Static Background (No Filters for Max FPS) */
         .mesh-bg {
             position: fixed;
             top: 0;
@@ -30,23 +28,15 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: 
-                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.1) 0, transparent 50%), 
-                radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.1) 0, transparent 50%);
-            filter: blur(40px);
-            will-change: filter;
+            background: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #050505 70%);
         }
 
+        /* Replaced backdrop-filter with solid translucency for performance */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.2);
+            background: rgba(15, 15, 15, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transform: translate3d(0,0,0);
             will-change: transform;
-        }
-
-        .text-glow {
-            text-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
         }
 
         .font-mono { font-family: 'JetBrains Mono', monospace; }
@@ -56,7 +46,6 @@
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #050505; }
         ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #333; }
     </style>
 <script type="importmap">
 {

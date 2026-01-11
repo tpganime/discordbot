@@ -10,6 +10,7 @@ import Footer from './components/Footer';
 import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
 import CommandsPage from './pages/CommandsPage';
+import { DISCORD_LOGIN_URL } from './constants';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ScrollToTop = () => {
@@ -43,27 +44,44 @@ const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthorizing, setIsAuthorizing] = useState(false);
 
+  // Real OAuth Detection
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+
+    if (code) {
+      setIsAuthorizing(true);
+      // Clean the URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+      
+      // Simulate fetching user data from backend using the code
+      setTimeout(() => {
+        setUser({
+          username: "Discord User",
+          discriminator: "0000",
+          avatar: "https://cdn.discordapp.com/embed/avatars/0.png"
+        });
+        setIsAuthorizing(false);
+      }, 2000);
+    }
+  }, []);
+
   useEffect(() => {
     const interval = setInterval(() => {
       if (Math.random() > 0.85) setServerCount(prev => prev + 1);
       if (Math.random() > 0.6) setUserCount(prev => prev + Math.floor(Math.random() * 2) + 1);
-    }, 12000); 
+    }, 15000); 
     return () => clearInterval(interval);
   }, []);
 
   const handleLogin = () => {
-    setIsAuthorizing(true);
-    setTimeout(() => {
-      setUser({
-        username: "Explorer",
-        discriminator: "0001",
-        avatar: "https://cdn.discordapp.com/embed/avatars/2.png"
-      });
-      setIsAuthorizing(false);
-    }, 1800);
+    // Redirect to real Discord OAuth link
+    window.location.href = DISCORD_LOGIN_URL;
   };
 
-  const handleLogout = () => setUser(null);
+  const handleLogout = () => {
+    setUser(null);
+  };
 
   return (
     <Router>
@@ -75,14 +93,14 @@ const App: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[1000] bg-black/95 backdrop-blur-3xl flex flex-col items-center justify-center"
+              className="fixed inset-0 z-[1000] bg-black flex flex-col items-center justify-center"
             >
               <motion.div 
                 animate={{ rotate: 360 }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-                className="w-12 h-12 border-2 border-white/5 border-t-white rounded-full mb-8 shadow-[0_0_30px_rgba(255,255,255,0.1)]"
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                className="w-12 h-12 border-2 border-indigo-500/20 border-t-indigo-500 rounded-full mb-8"
               ></motion.div>
-              <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-white">Discord Login Sequence</h2>
+              <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-white">Connecting to Discord</h2>
             </motion.div>
           )}
         </AnimatePresence>
