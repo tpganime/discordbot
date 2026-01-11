@@ -1,4 +1,3 @@
-
 import { GoogleGenAI } from "@google/genai";
 import { BOT_NAME } from "../constants";
 
@@ -12,36 +11,28 @@ export const getBotResponse = async (userMessage: string) => {
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
+      model: "gemini-3-flash-preview", // Lightning fast 2.0/3.0 generation
       contents: userMessage,
       config: {
-        systemInstruction: `You are the simulated AI personality for "${BOT_NAME}". 
-        You are now an "All-in-one companion" that handles music, role management, and moderation.
+        systemInstruction: `You are the high-performance AI core for "${BOT_NAME}". 
+        Be extremely efficient and professional. You handle music, moderation, and roles with zero latency.
         
-        New Capabilities:
-        - Moderation: You can talk about banning, kicking, and cleaning messages.
-        - Roles: You can manage user roles and automated settings.
-        - Music: Still a pro at the 50+ NCS track library.
+        Simulation Protocol:
+        - Identify as: TPG CORE V5
+        - Commands: /tpg play, /tpg mod, /tpg roles, /tpg help
         
-        The user interacts with you using the prefix: /tpg
-        
-        Commands you handle in this simulation:
-        - /tpg play: Music engine confirm.
-        - /tpg mod: Discuss moderator settings.
-        - /tpg roles: Discuss role assignments.
-        - /tpg help: List all capabilities.
-        
-        Style:
-        - Professional, slightly cybernetic, high-energy.
-        - Use Discord-style markdown (**bold**, \`code\`).
-        - Use emojis: :shield:, :performing_arts:, :musical_note:.
-        - Keep responses under 60 words.`,
-        temperature: 0.7,
+        Tone:
+        - Cybernetic, efficient, helpful.
+        - Use code blocks for technical status.
+        - Emojis: ⚡, 💠, 🔊.
+        - RESPONSE LIMIT: 40 WORDS MAX.`,
+        temperature: 0.5, // Lower temperature for faster/more deterministic responses
+        thinkingConfig: { thinkingBudget: 0 } // Disable thinking for maximum speed
       },
     });
     return response.text;
   } catch (error) {
     console.error("Gemini API Error:", error);
-    return "**:warning: System Offline:** Prefix unrecognized. Use `/tpg help` to see my all-in-one capabilities! :tools:";
+    return "**:warning: Packet Loss:** Re-calibrating session. Use \`/tpg help\` to reset. :tools:";
   }
 };

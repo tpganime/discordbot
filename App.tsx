@@ -58,14 +58,16 @@ const App: React.FC = () => {
       setIsAuthorizing(true);
       window.history.replaceState({}, document.title, window.location.pathname);
       
+      // Simulate faster authorization (500ms instead of 1500ms)
       setTimeout(() => {
         setUser({
-          username: "Discord User",
-          discriminator: "0000",
-          avatar: "https://cdn.discordapp.com/embed/avatars/0.png"
+          username: "Master Operator",
+          discriminator: "0001",
+          // The image from the prompt: high-fidelity glowing orb aesthetic
+          avatar: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1000&auto=format&fit=crop" 
         });
         setIsAuthorizing(false);
-      }, 1500);
+      }, 500);
     }
   }, []);
 
@@ -97,12 +99,17 @@ const App: React.FC = () => {
               exit={{ opacity: 0 }}
               className="fixed inset-0 z-[1000] bg-[#050505] flex flex-col items-center justify-center"
             >
-              <motion.div 
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                className="w-12 h-12 border-2 border-indigo-500/20 border-t-indigo-500 rounded-full mb-8 shadow-[0_0_15px_rgba(99,102,241,0.3)]"
-              ></motion.div>
-              <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-indigo-400">Authenticating Pulse</h2>
+              <div className="relative">
+                <motion.div 
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                  className="w-20 h-20 border-b-2 border-indigo-500 rounded-full shadow-[0_0_30px_rgba(99,102,241,0.4)]"
+                ></motion.div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-4 h-4 bg-indigo-500 rounded-full animate-pulse shadow-[0_0_20px_rgba(99,102,241,1)]"></div>
+                </div>
+              </div>
+              <h2 className="text-[10px] font-black uppercase tracking-[0.8em] text-indigo-400 mt-12 animate-pulse">Syncing Core</h2>
             </motion.div>
           )}
         </AnimatePresence>

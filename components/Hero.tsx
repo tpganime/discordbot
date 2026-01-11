@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { BOT_INVITE_URL, BOT_TAGLINE, BOT_NAME } from '../constants.tsx';
@@ -27,11 +26,23 @@ const Hero: React.FC<HeroProps> = ({ user }) => {
           transition={{ duration: 0.5 }}
           className="inline-flex items-center gap-3 px-6 py-2 rounded-full glass-effect text-indigo-400 text-[10px] font-black uppercase tracking-[0.4em] mb-12 shadow-2xl"
         >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
-          </span>
-          {user ? `Operator Connected: ${user.username}` : "Audio Engine v5.2.0 Active"}
+          {user ? (
+            <div className="flex items-center gap-3">
+              <div className="relative w-5 h-5">
+                <img src={user.avatar} className="w-full h-full rounded-full object-cover shadow-[0_0_10px_rgba(99,102,241,1)]" alt="user" />
+                <span className="absolute -bottom-0.5 -right-0.5 block w-2 h-2 bg-green-500 rounded-full border-2 border-black"></span>
+              </div>
+              <span>Operator Connected: {user.username}</span>
+            </div>
+          ) : (
+            <>
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+              </span>
+              <span>Audio Engine v5.2.0 Active</span>
+            </>
+          )}
         </motion.div>
 
         <motion.div 
@@ -42,7 +53,7 @@ const Hero: React.FC<HeroProps> = ({ user }) => {
         >
           <h1 className="text-6xl md:text-[140px] lg:text-[180px] font-[900] tracking-tighter leading-[0.85] text-white uppercase select-none">
             <span className="relative z-10 text-gradient">TPG</span><br />
-            <span className="relative z-10 text-indigo-600 drop-shadow-[0_0_25px_rgba(79,70,229,0.5)]">MUSIC</span>
+            <span className="relative z-10 text-indigo-600 drop-shadow-[0_0_35px_rgba(79,70,229,0.6)]">MUSIC</span>
           </h1>
           
           <div className="absolute inset-0 top-4 left-2 text-white/5 blur-[4px] hidden lg:block -z-10 select-none pointer-events-none">
@@ -81,7 +92,11 @@ const Hero: React.FC<HeroProps> = ({ user }) => {
         </div>
       </div>
       
-      {/* Dynamic Glow Orbs */}
+      {/* Background Aesthetic Matching the Provided Orb */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-10 pointer-events-none">
+          <div className="w-full h-full rounded-full bg-gradient-to-br from-blue-600 via-purple-600 to-transparent blur-[120px] animate-pulse"></div>
+      </div>
+      
       <div className="absolute top-1/2 -left-40 w-[600px] h-[600px] bg-indigo-600/5 rounded-full blur-[120px] pointer-events-none"></div>
       <div className="absolute bottom-1/4 -right-40 w-[600px] h-[600px] bg-indigo-600/5 rounded-full blur-[120px] pointer-events-none"></div>
     </section>
