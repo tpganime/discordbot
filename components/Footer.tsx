@@ -47,7 +47,7 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 text-[10px] font-bold uppercase tracking-[0.4em] text-gray-700">
-          <p>© 2024 {BOT_NAME}. ALL RIGHTS RESERVED.</p>
+          <p>© 2026 {BOT_NAME}. ALL RIGHTS RESERVED.</p>
           <div className="flex gap-8 mt-4 md:mt-0">
              <span>01 // AUDIO</span>
              <span>02 // LOSSLESS</span>
