@@ -35,6 +35,7 @@ const CommandCategory = ({ title, icon, commands }: { title: string, icon: strin
 );
 
 const ECONOMY_COMMANDS = [
+  { cmd: "/lb", desc: "View the global leaderboard" },
   { cmd: "daily", desc: "Claim your daily reward" },
   { cmd: "pray", desc: "Pray for good fortune" },
   { cmd: "profile", desc: "View your user profile" },
@@ -43,7 +44,6 @@ const ECONOMY_COMMANDS = [
   { cmd: "s <all/amt>", desc: "Slots gamble" },
   { cmd: "h", desc: "Heads or tails" },
   { cmd: "give @user <all/amt>", desc: "Transfer funds to another user" },
-  { cmd: "lb", desc: "View the global leaderboard" },
   { cmd: "ttt @user <bet>", desc: "Play Tic-Tac-Toe with a bet" }
 ];
 

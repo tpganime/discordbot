@@ -1,6 +1,8 @@
 
 import React from 'react';
 
+import { BOT_LOGO_URL } from '../constants.tsx';
+
 interface MusicIconProps {
   className?: string;
   size?: 'sm' | 'md' | 'lg' | 'xl';
@@ -15,8 +17,13 @@ const MusicIcon: React.FC<MusicIconProps> = ({ className = "", size = 'md' }) =>
   };
 
   return (
-    <div className={`rounded-xl bg-indigo-600 flex items-center justify-center text-white font-black ${sizeClasses[size]} ${className}`}>
-      M
+    <div className={`rounded-xl overflow-hidden flex items-center justify-center ${sizeClasses[size]} ${className}`}>
+      <img 
+        src={BOT_LOGO_URL} 
+        alt="Bot Logo" 
+        className="w-full h-full object-cover"
+        referrerPolicy="no-referrer"
+      />
     </div>
   );
 };

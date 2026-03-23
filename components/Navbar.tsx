@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BOT_INVITE_URL, BOT_NAME, SUPPORT_SERVER_URL } from '../constants.tsx';
+import { BOT_INVITE_URL, BOT_NAME, SUPPORT_SERVER_URL, BOT_LOGO_URL } from '../constants.tsx';
 
 interface NavbarProps {
 }
@@ -12,8 +12,13 @@ const Navbar: React.FC<NavbarProps> = () => {
     <nav className="fixed top-6 left-0 right-0 z-[100] px-6 pointer-events-none">
       <div className="max-w-7xl mx-auto flex items-center justify-between pointer-events-auto">
         <Link to="/" className="flex items-center gap-4 group">
-          <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center font-black text-white text-sm shadow-[0_0_15px_rgba(79,70,229,0.4)] group-hover:scale-110 transition-transform">
-            F
+          <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center shadow-[0_0_15px_rgba(79,70,229,0.4)] group-hover:scale-110 transition-transform">
+            <img 
+              src={BOT_LOGO_URL} 
+              alt="Logo" 
+              className="w-full h-full object-cover"
+              referrerPolicy="no-referrer"
+            />
           </div>
           <span className="text-[11px] font-black tracking-[0.4em] text-white uppercase hidden sm:block">
             {BOT_NAME}
