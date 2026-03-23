@@ -4,19 +4,16 @@ import { motion } from 'framer-motion';
 
 interface StatsProps {
   servers: number;
-  users: number;
 }
 
-const Stats: React.FC<StatsProps> = ({ servers, users }) => {
+const Stats: React.FC<StatsProps> = ({ servers }) => {
   return (
     <section className="px-6 py-20 bg-black">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {[
             { label: "Nodes Connected", value: servers, color: "text-indigo-500" },
-            { label: "Active Identities", value: users, color: "text-white" },
-            { label: "Uptime Sync", value: "99.9%", color: "text-indigo-400" },
-            { label: "Core Latency", value: "8ms", color: "text-indigo-200" }
+            { label: "Uptime Sync", value: "99.9%", color: "text-indigo-400" }
           ].map((stat, i) => (
             <motion.div 
               key={i}

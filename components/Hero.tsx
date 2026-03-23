@@ -3,19 +3,9 @@ import { motion } from 'framer-motion';
 import { BOT_INVITE_URL, BOT_TAGLINE, BOT_NAME } from '../constants.tsx';
 
 interface HeroProps {
-  onAdd: () => void;
-  onLogin: () => void;
-  user: any;
 }
 
-const Hero: React.FC<HeroProps> = ({ user }) => {
-  const scrollToDemo = () => {
-    const element = document.getElementById('ai-demo');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
+const Hero: React.FC<HeroProps> = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center px-6 pt-24 pb-12 overflow-hidden">
       <div className="max-w-7xl mx-auto text-center relative z-10">
@@ -26,23 +16,11 @@ const Hero: React.FC<HeroProps> = ({ user }) => {
           transition={{ duration: 0.5 }}
           className="inline-flex items-center gap-3 px-6 py-2 rounded-full glass-effect text-indigo-400 text-[10px] font-black uppercase tracking-[0.4em] mb-12 shadow-2xl"
         >
-          {user ? (
-            <div className="flex items-center gap-3">
-              <div className="relative w-5 h-5">
-                <img src={user.avatar} className="w-full h-full rounded-full object-cover shadow-[0_0_10px_rgba(99,102,241,1)]" alt="user" />
-                <span className="absolute -bottom-0.5 -right-0.5 block w-2 h-2 bg-green-500 rounded-full border-2 border-black"></span>
-              </div>
-              <span>Operator Connected: {user.username}</span>
-            </div>
-          ) : (
-            <>
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
-              </span>
-              <span>Audio Engine v5.2.0 Active</span>
-            </>
-          )}
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+          </span>
+          <span>Audio Engine v5.2.0 Active</span>
         </motion.div>
 
         <motion.div 
@@ -52,12 +30,12 @@ const Hero: React.FC<HeroProps> = ({ user }) => {
           className="relative mb-12"
         >
           <h1 className="text-6xl md:text-[140px] lg:text-[180px] font-[900] tracking-tighter leading-[0.85] text-white uppercase select-none">
-            <span className="relative z-10 text-gradient">TPG</span><br />
-            <span className="relative z-10 text-indigo-600 drop-shadow-[0_0_35px_rgba(79,70,229,0.6)]">MUSIC</span>
+            <span className="relative z-10 text-gradient">FUSION</span><br />
+            <span className="relative z-10 text-indigo-600 drop-shadow-[0_0_35px_rgba(79,70,229,0.6)]">BOT</span>
           </h1>
           
           <div className="absolute inset-0 top-4 left-2 text-white/5 blur-[4px] hidden lg:block -z-10 select-none pointer-events-none">
-             TPG<br />MUSIC
+             FUSION<br />BOT
           </div>
         </motion.div>
         
@@ -80,15 +58,6 @@ const Hero: React.FC<HeroProps> = ({ user }) => {
           >
             Deploy Bot
           </motion.a>
-          
-          <motion.button 
-            whileHover={{ y: -4, scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={scrollToDemo}
-            className="w-full sm:w-auto px-14 py-5 rounded-2xl border border-white/10 bg-[#111]/50 backdrop-blur-md font-black text-[11px] uppercase tracking-[0.4em] text-white transition-all shadow-xl border-b-4 border-black"
-          >
-            Live Console
-          </motion.button>
         </div>
       </div>
       

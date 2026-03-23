@@ -20,19 +20,51 @@ const CommandItem = ({ cmd, desc }: { cmd: string, desc: string }) => (
   </motion.div>
 );
 
-const COMMANDS = [
-  { cmd: "/tpg support", desc: "Access the official community support link" },
-  { cmd: "/tpg play", desc: "Initialize audio playback for a track or URL" },
-  { cmd: "/tpg stop", desc: "Terminate current session and clear queue" },
-  { cmd: "/tpg pause", desc: "Suspend active playback" },
-  { cmd: "/tpg resume", desc: "Restore suspended playback" },
-  { cmd: "/tpg replay", desc: "Restart the current track from beginning" },
-  { cmd: "/tpg skip", desc: "Proceed to the next item in stack" },
-  { cmd: "/tpg loop", desc: "Toggle loop mode for track or queue" },
-  { cmd: "/tpg queue", desc: "Display current playback stack" },
-  { cmd: "/tpg track", desc: "Display detailed metadata for active track" },
-  { cmd: "/tpg disconnect", desc: "Force bot to leave the voice channel" },
-  { cmd: "/tpg set-volume [vol]", desc: "Calibrate output gain (0-100)" }
+const CommandCategory = ({ title, icon, commands }: { title: string, icon: string, commands: { cmd: string, desc: string }[] }) => (
+  <div className="mb-16">
+    <div className="flex items-center gap-4 mb-8">
+      <span className="text-3xl">{icon}</span>
+      <h2 className="text-2xl font-black text-white uppercase tracking-tighter">{title}</h2>
+    </div>
+    <div className="space-y-4">
+      {commands.map((c, i) => (
+        <CommandItem key={i} {...c} />
+      ))}
+    </div>
+  </div>
+);
+
+const ECONOMY_COMMANDS = [
+  { cmd: "daily", desc: "Claim your daily reward" },
+  { cmd: "pray", desc: "Pray for good fortune" },
+  { cmd: "profile", desc: "View your user profile" },
+  { cmd: "cash", desc: "Check your current balance" },
+  { cmd: "cf <all/amt> [h/t]", desc: "Coinflip gamble" },
+  { cmd: "s <all/amt>", desc: "Slots gamble" },
+  { cmd: "h", desc: "Heads or tails" },
+  { cmd: "give @user <all/amt>", desc: "Transfer funds to another user" },
+  { cmd: "lb", desc: "View the global leaderboard" },
+  { cmd: "ttt @user <bet>", desc: "Play Tic-Tac-Toe with a bet" }
+];
+
+const MUSIC_COMMANDS = [
+  { cmd: "play", desc: "Play a song from URL or search" },
+  { cmd: "skip", desc: "Skip the current track" },
+  { cmd: "pause", desc: "Pause the current playback" },
+  { cmd: "stop", desc: "Stop playback and clear queue" },
+  { cmd: "leave", desc: "Make the bot leave the voice channel" },
+  { cmd: "queue", desc: "View the current song queue" },
+  { cmd: "loop", desc: "Toggle loop mode" },
+  { cmd: "shuffle", desc: "Shuffle the current queue" },
+  { cmd: "clear", desc: "Clear the entire queue" },
+  { cmd: "np", desc: "Show currently playing track" },
+  { cmd: "ping", desc: "Check bot latency" }
+];
+
+const MODERATION_COMMANDS = [
+  { cmd: "ban @user", desc: "Permanently ban a user" },
+  { cmd: "kick @user", desc: "Kick a user from the server" },
+  { cmd: "timeout @user <min>", desc: "Timeout a user for specified minutes" }
 ];
 
 const CommandsPage: React.FC = () => {
@@ -46,23 +78,19 @@ const CommandsPage: React.FC = () => {
         <h1 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter mb-6">
           System <span className="text-indigo-500">Manifesto</span>
         </h1>
-        <p className="text-gray-500 font-bold uppercase tracking-[0.4em] text-xs md:text-sm">
-          Complete Operational Protocol for {BOT_NAME}
-        </p>
+        <div className="flex flex-col items-center gap-4">
+          <p className="text-gray-500 font-bold uppercase tracking-[0.4em] text-xs md:text-sm">
+            Complete Operational Protocol for {BOT_NAME}
+          </p>
+          <div className="px-6 py-2 rounded-full bg-white/5 border border-white/10 text-[10px] font-black text-indigo-400 uppercase tracking-[0.2em]">
+            Prefixes: / , ! , tpg , @tpg , or ping me!
+          </div>
+        </div>
       </motion.div>
 
-      <div className="space-y-4">
-        {COMMANDS.map((c, i) => (
-          <motion.div 
-            key={i}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: i * 0.05 }}
-          >
-            <CommandItem {...c} />
-          </motion.div>
-        ))}
-      </div>
+      <CommandCategory title="Economy & Games" icon="💰" commands={ECONOMY_COMMANDS} />
+      <CommandCategory title="Music" icon="🎵" commands={MUSIC_COMMANDS} />
+      <CommandCategory title="Moderation" icon="🛡️" commands={MODERATION_COMMANDS} />
 
       <div className="mt-20 p-12 rounded-[2.5rem] glass-panel border border-indigo-500/10 text-center relative overflow-hidden">
         <div className="absolute inset-0 bg-indigo-500/5 blur-3xl rounded-full"></div>

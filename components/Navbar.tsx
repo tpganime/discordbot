@@ -4,26 +4,16 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BOT_INVITE_URL, BOT_NAME, SUPPORT_SERVER_URL } from '../constants.tsx';
 
-interface User {
-  username: string;
-  avatar: string;
-  discriminator: string;
-}
-
 interface NavbarProps {
-  onAdd: () => void;
-  onLogin: () => void;
-  onLogout: () => void;
-  user: User | null;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onLogin, onLogout, user }) => {
+const Navbar: React.FC<NavbarProps> = () => {
   return (
     <nav className="fixed top-6 left-0 right-0 z-[100] px-6 pointer-events-none">
       <div className="max-w-7xl mx-auto flex items-center justify-between pointer-events-auto">
         <Link to="/" className="flex items-center gap-4 group">
           <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center font-black text-white text-sm shadow-[0_0_15px_rgba(79,70,229,0.4)] group-hover:scale-110 transition-transform">
-            T
+            F
           </div>
           <span className="text-[11px] font-black tracking-[0.4em] text-white uppercase hidden sm:block">
             {BOT_NAME}
@@ -37,31 +27,6 @@ const Navbar: React.FC<NavbarProps> = ({ onLogin, onLogout, user }) => {
         </div>
 
         <div className="flex items-center gap-3">
-          <AnimatePresence mode="wait">
-            {!user ? (
-              <button 
-                onClick={onLogin}
-                className="px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-xl text-[9px] font-black uppercase tracking-[0.2em] transition-all"
-              >
-                Login
-              </button>
-            ) : (
-              <div 
-                className="flex items-center gap-3 pl-2 pr-4 py-2 rounded-xl bg-[#111] border border-white/10 hover:border-indigo-500/30 transition-all cursor-pointer group"
-                onClick={onLogout}
-              >
-                <div className="relative w-9 h-9">
-                  <img src={user.avatar} className="w-full h-full rounded-lg border border-white/10 object-cover shadow-[0_0_10px_rgba(99,102,241,0.3)]" alt="" />
-                  <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-indigo-600 rounded-full border-2 border-[#111] animate-pulse"></div>
-                </div>
-                <div className="hidden md:flex flex-col">
-                  <span className="text-[10px] font-black text-white leading-none group-hover:text-indigo-400 transition-colors uppercase tracking-widest">{user.username}</span>
-                  <span className="text-[7px] font-bold text-gray-500 leading-none mt-1 uppercase tracking-tighter">OPERATOR_SYNCED</span>
-                </div>
-              </div>
-            )}
-          </AnimatePresence>
-          
           <a 
             href={BOT_INVITE_URL}
             className="px-8 py-3 bg-white text-black hover:bg-indigo-50 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] transition-all shadow-xl"

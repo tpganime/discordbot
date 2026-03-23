@@ -21,18 +21,18 @@ const FeatureCard = ({ title, description, icon }: { title: string, description:
 
 const FEATURES = [
   {
-    title: "Lossless Audio",
-    description: "Multi-point distribution engine for ultra-fidelity voice sessions.",
-    icon: "🔊"
+    title: "Economy & Games",
+    description: "Engage your community with a full-featured economy system and interactive games.",
+    icon: "💰"
   },
   {
-    title: "Role Reactor",
-    description: "Event-based automated role management and member lifecycle.",
-    icon: "🎭"
+    title: "High-Fidelity Music",
+    description: "Crystal clear audio streaming with zero latency and advanced playback controls.",
+    icon: "🎵"
   },
   {
-    title: "Shield Mod",
-    description: "Enterprise grade anti-raid and behavioral filter settings.",
+    title: "Advanced Moderation",
+    description: "Keep your server secure with powerful moderation tools and automated filters.",
     icon: "🛡️"
   }
 ];
