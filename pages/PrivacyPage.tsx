@@ -9,59 +9,51 @@ const PrivacyPage: React.FC = () => {
         <h1 className="text-4xl font-black mb-8 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
           Privacy Policy
         </h1>
-        <p className="text-gray-400 mb-8">Last Updated: May 2024</p>
+        <p className="text-gray-400 mb-8">Last Updated: March 2026</p>
 
         <section className="space-y-8 text-gray-300 leading-relaxed">
           <div>
-            <h2 className="text-xl font-bold text-white mb-4">1. Information We Collect</h2>
+            <h2 className="text-xl font-bold text-white mb-4">1. Data Collection & Storage</h2>
             <p className="mb-4">
-              When you add <strong>{BOT_NAME}</strong> to your server or interact with its commands, we collect specific data required for the bot's functionality:
+              At <strong>{BOT_NAME}</strong>, we prioritize your privacy. We do <strong>not</strong> take, collect, or save your personal data on our servers. 
+            </p>
+            <p className="mb-4">
+              Our bot is designed to function without persistent data storage of your personal information.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="text-xl font-bold text-white mb-4">2. Use of User Data in Games</h2>
+            <p className="mb-4">
+              The only instance where user data is utilized is within the bot's interactive games (such as Economy or Tic-Tac-Toe). In these cases:
             </p>
             <ul className="list-disc pl-6 space-y-2 text-gray-400">
-              <li><strong>Discord User IDs:</strong> To identify unique users for commands and levels.</li>
-              <li><strong>Discord Server IDs:</strong> To store server-specific settings and configurations.</li>
-              <li><strong>Channel IDs:</strong> To know where to send messages or stream audio.</li>
-              <li><strong>Command Usage:</strong> We log which commands are used to improve bot performance and identify bugs.</li>
+              <li><strong>Usernames:</strong> We may use your Discord display name to identify you within the game interface or leaderboards.</li>
+              <li><strong>Temporary Session Data:</strong> Game-related data (like scores or bets) is used only to facilitate the current game session.</li>
             </ul>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-bold text-white mb-4">2. Audio Data</h2>
-            <p>
-              {BOT_NAME} is a music bot. We do <strong>not</strong> record, store, or transmit any audio from your voice channels. The bot only transmits audio data <em>to</em> your channel.
+            <p className="mt-4">
+              This data is used strictly for the purpose of gameplay and is not harvested or sold to third parties.
             </p>
           </div>
 
           <div>
-            <h2 className="text-xl font-bold text-white mb-4">3. AI Interactions</h2>
+            <h2 className="text-xl font-bold text-white mb-4">3. Audio Data</h2>
             <p>
-              Interactions with the AI Chat Assistant (powered by Google Gemini) are transmitted to Google's API for processing. We do not store these conversations permanently, but they may be cached temporarily to maintain session context.
+              {BOT_NAME} is a music bot. We do <strong>not</strong> record, store, or transmit any audio from your voice channels. The bot only transmits audio data <em>to</em> your channel for your listening pleasure.
             </p>
           </div>
 
           <div>
-            <h2 className="text-xl font-bold text-white mb-4">4. How We Use Information</h2>
+            <h2 className="text-xl font-bold text-white mb-4">4. Third-Party Services</h2>
             <p>
-              Your data is used solely to:
-            </p>
-            <ul className="list-disc pl-6 space-y-2 text-gray-400">
-              <li>Provide and maintain {BOT_NAME}'s services.</li>
-              <li>Save your music queues and server settings.</li>
-              <li>Prevent abuse and ensure compliance with Discord's Terms of Service.</li>
-            </ul>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-bold text-white mb-4">5. Data Retention</h2>
-            <p>
-              We retain your data as long as the bot is in your server or you are an active user. You can request data deletion at any time by contacting us through our support server.
+              We use Discord's API to provide our services. While we do not save your data, Discord may collect information as per their own privacy policy. We encourage you to review Discord's privacy settings and policies.
             </p>
           </div>
 
           <div>
-            <h2 className="text-xl font-bold text-white mb-4">6. Third-Party Services</h2>
+            <h2 className="text-xl font-bold text-white mb-4">5. Data Deletion</h2>
             <p>
-              We use third-party services like Discord (for the platform), YouTube/Spotify (for music metadata), and Google (for AI). These services have their own privacy policies which we encourage you to review.
+              Since we do not store persistent personal data, there is no data to delete. However, if you have concerns about your interaction history within a specific server, you can manage those through Discord's native tools.
             </p>
           </div>
 
