@@ -4,7 +4,6 @@ import path from "path";
 import fs from "fs";
 import { spawn, execSync } from "child_process";
 import nodemailer from "nodemailer";
-import { startBot } from "./src/bot/bot";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -266,11 +265,6 @@ async function startServer() {
 
     app.listen(PORT, "0.0.0.0", () => {
         console.log(`Server running on http://localhost:${PORT}`);
-        
-        // Start the Discord Bot
-        startBot({ readDB, writeDB, dbFiles, YTDLP_PATH }).catch(err => {
-            console.error("[Bot] Failed to start Discord bot:", err);
-        });
     });
 }
 
