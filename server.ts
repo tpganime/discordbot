@@ -20,8 +20,8 @@ app.use(express.json());
 const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID || '1485375910562758967'; 
 const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET || 'vSOnjPRwqht5eGVSiyQG_yjxlGVdbs9A';
 
-// Use APP_URL if available, otherwise fallback to localhost:3000
-const APP_URL = process.env.APP_URL || `http://localhost:${PORT}`;
+// Use APP_URL if available, otherwise fallback to the custom domain
+const APP_URL = process.env.APP_URL || 'https://bot.fusionhub.in';
 const DISCORD_REDIRECT_URI = `${APP_URL}/api/auth/discord/callback`;
 
 if (!process.env.APP_URL) {
