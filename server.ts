@@ -5,6 +5,7 @@ import fs from "fs";
 import { spawn, execSync } from "child_process";
 import nodemailer from "nodemailer";
 import { fileURLToPath } from "url";
+import mongoose from "mongoose";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,7 +20,22 @@ const DISCORD_CLIENT_ID = '1485375910562758967';
 const DISCORD_CLIENT_SECRET = 'vSOnjPRwqht5eGVSiyQG_yjxlGVdbs9A'; 
 const DISCORD_REDIRECT_URI = 'https://bot.fusionhub.in/api/auth/discord/callback'; 
 
-// ⚠️ Vercel uses a read-only file system, so we must write to /tmp
+// 🍃 MONGODB SETUP
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://fusionbot:tpg@fusionbot.lq3g6fc.mongodb.net/?retryWrites=true&w=majority';
+
+mongoose.connect(MONGODB_URI)
+  .then(() => console.log('✅ Connected to MongoDB'))
+  .catch(err => console.error('❌ MongoDB connection error:', err));
+
+const serverConfigSchema = new mongoose.Schema({
+  guildId: { type: String, required: true, unique: true },
+  welcomeChannel: String,
+  byeChannel: String,
+  banWords: [String]
+});
+
+const ServerConfig = mongoose.model('ServerConfig', serverConfigSchema);
+
 const DB_FOLDER = process.env.VERCEL ? '/tmp/database' : path.join(__dirname, 'database');
 const EMAIL_USER = process.env.EMAIL_USER; 
 const EMAIL_PASS = process.env.EMAIL_PASS;    
@@ -320,24 +336,38 @@ app.get('/api/discord/me', async (req, res) => {
 });
 
 // 🔥 5. SECURE WEB PANEL API ENDPOINTS
-app.get('/api/panel/data', (req, res) => {
+app.get('/api/panel/data', async (req, res) => {
     const guildId = req.query.guildId as string; 
     if (!guildId) return res.status(400).json({error: "No guild ID"});
-    const serverCfg = readDB(dbFiles.serverConfig);
-    return res.json({ config: serverCfg[guildId] || {} });
+    try {
+        const config = await ServerConfig.findOne({ guildId });
+        return res.json({ config: config || {} });
+    } catch (e) {
+        return res.status(500).json({ error: "Failed to fetch config" });
+    }
 });
 
-app.post('/api/panel/update', (req, res) => {
+app.post('/api/panel/update', async (req, res) => {
     const body = req.body; 
     const guildId = body.guildId;
     if (!guildId) return res.status(400).json({error: "No guild ID"});
-    const serverCfg = readDB(dbFiles.serverConfig);
-    if (!serverCfg[guildId]) serverCfg[guildId] = {};
-    if (body.welcomeChannel !== undefined) serverCfg[guildId].welcomeChannel = body.welcomeChannel; 
-    if (body.byeChannel !== undefined) serverCfg[guildId].byeChannel = body.byeChannel; 
-    if (body.banWords !== undefined) serverCfg[guildId].banWords = body.banWords;
-    writeDB(dbFiles.serverConfig, serverCfg); 
-    return res.json({ success: true });
+    
+    try {
+        const update: any = {};
+        if (body.welcomeChannel !== undefined) update.welcomeChannel = body.welcomeChannel;
+        if (body.byeChannel !== undefined) update.byeChannel = body.byeChannel;
+        if (body.banWords !== undefined) update.banWords = body.banWords;
+
+        await ServerConfig.findOneAndUpdate(
+            { guildId },
+            { $set: update },
+            { upsert: true, new: true }
+        );
+        return res.json({ success: true });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ error: "Failed to update config" });
+    }
 });
 
 // ORIGINAL ROUTES (Kept fully intact)
