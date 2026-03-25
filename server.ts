@@ -4,6 +4,7 @@ import path from "path";
 import fs from "fs";
 import { spawn, execSync } from "child_process";
 import nodemailer from "nodemailer";
+import { startBot } from "./src/bot/bot";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -15,9 +16,9 @@ const PORT = 3000;
 app.use(express.json());
 
 // 🔐 DISCORD OAUTH2 CREDENTIALS
-const DISCORD_CLIENT_ID = '1485375910562758967'; 
-const DISCORD_CLIENT_SECRET = 'vSOnjPRwqht5eGVSiyQG_yjxlGVdbs9A'; 
-const DISCORD_REDIRECT_URI = 'https://bot.fusionhub.in/api/auth/discord/callback'; 
+const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID; 
+const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET; 
+const DISCORD_REDIRECT_URI = process.env.DISCORD_REDIRECT_URI || (process.env.APP_URL ? `${process.env.APP_URL}/api/auth/discord/callback` : ''); 
 
 if (!process.env.APP_URL) {
     console.warn("[Warning] APP_URL environment variable is not set. OAuth redirects may fail in production.");
@@ -26,8 +27,8 @@ console.log(`[Config] APP_URL: ${process.env.APP_URL}`);
 console.log(`[Config] DISCORD_REDIRECT_URI: ${DISCORD_REDIRECT_URI}`);
 
 const DB_FOLDER = path.join(__dirname, 'database');
-const EMAIL_USER = process.env.EMAIL_USER || 'fusionhub122@gmail.com'; 
-const EMAIL_PASS = process.env.EMAIL_PASS || 'bjes fepg nqqf aioq';    
+const EMAIL_USER = process.env.EMAIL_USER; 
+const EMAIL_PASS = process.env.EMAIL_PASS;    
 
 const transporter = nodemailer.createTransport({ service: 'gmail', auth: { user: EMAIL_USER, pass: EMAIL_PASS } });
 
@@ -39,7 +40,10 @@ const dbFiles = {
     liked: path.join(DB_FOLDER, 'liked.json'), 
     playlists: path.join(DB_FOLDER, 'playlists.json'),
     serverConfig: path.join(DB_FOLDER, 'server_config.json'), 
-    webTokens: path.join(DB_FOLDER, 'web_tokens.json')
+    webTokens: path.join(DB_FOLDER, 'web_tokens.json'),
+    economy: path.join(DB_FOLDER, 'economy.json'),
+    daily: path.join(DB_FOLDER, 'daily.json'),
+    giveaways: path.join(DB_FOLDER, 'giveaways.json')
 };
 
 for (const key in dbFiles) { 
@@ -159,8 +163,8 @@ app.get('/api/auth/discord/callback', async (req, res) => {
     try {
         console.log("[OAuth] Exchanging code for token...");
         const params = new URLSearchParams({
-            client_id: DISCORD_CLIENT_ID, 
-            client_secret: DISCORD_CLIENT_SECRET,
+            client_id: DISCORD_CLIENT_ID as string, 
+            client_secret: DISCORD_CLIENT_SECRET as string,
             grant_type: 'authorization_code', 
             code: code, 
             redirect_uri: DISCORD_REDIRECT_URI
@@ -262,6 +266,11 @@ async function startServer() {
 
     app.listen(PORT, "0.0.0.0", () => {
         console.log(`Server running on http://localhost:${PORT}`);
+        
+        // Start the Discord Bot
+        startBot({ readDB, writeDB, dbFiles, YTDLP_PATH }).catch(err => {
+            console.error("[Bot] Failed to start Discord bot:", err);
+        });
     });
 }
 
