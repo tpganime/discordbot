@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUSION BOT — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #fc3c44;
+    --red-dim: #c42e34;
+    --dark: #0e0e10;
+    --darker: #08080a;
+    --card: #161618;
+    --border: #2a2a2e;
+    --text: #e8e8ea;
+    --muted: #6e6e78;
+    --success: #2ecc71;
+    --blurple: #5865f2;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--darker);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE TEXTURE ─── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: .4;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 40px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(8,8,10,.85);
+    backdrop-filter: blur(20px);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .logo {
+    font-size: 1.25rem; font-weight: 800; letter-spacing: -.02em;
+    display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text);
+  }
+  .logo span { color: var(--red); }
+  .nav-user { display: flex; align-items: center; gap: 12px; }
+  .nav-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 2px solid var(--red);
+    object-fit: cover; display: none;
+  }
+  .nav-username { font-size: .9rem; font-weight: 600; color: var(--muted); display: none; }
+
+  /* ─── SCREENS ─── */
+  .screen { position: relative; z-index: 1; }
+
+  /* ─── LOGIN SCREEN ─── */
+  #loginScreen {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 0;
+    padding: 40px 20px;
+  }
+  .login-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 56px 48px;
+    max-width: 440px; width: 100%;
+    text-align: center;
+    box-shadow: 0 0 80px rgba(252,60,68,.08);
+    animation: slideUp .5s ease both;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .login-icon {
+    font-size: 3rem; margin-bottom: 20px;
+    display: block;
+    filter: drop-shadow(0 0 20px rgba(252,60,68,.4));
+  }
+  .login-card h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+  .login-card h1 span { color: var(--red); }
+  .login-card p { color: var(--muted); font-size: .95rem; line-height: 1.6; margin-bottom: 32px; }
+  
+  .btn-discord {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: var(--blurple); color: #fff;
+    border: none; border-radius: 12px;
+    padding: 14px 28px; font-size: 1rem; font-weight: 700;
+    font-family: 'Syne', sans-serif;
+    cursor: pointer; text-decoration: none;
+    width: 100%; justify-content: center;
+    transition: background .2s, transform .15s, box-shadow .2s;
+    box-shadow: 0 4px 20px rgba(88,101,242,.35);
+  }
+  .btn-discord:hover { background: #4752c4; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(88,101,242,.5); }
+  .btn-discord svg { width: 22px; height: 22px; }
+
+  .features {
+    display: flex; gap: 16px; margin-top: 28px; flex-wrap: wrap; justify-content: center;
+  }
+  .feature-tag {
+    background: rgba(252,60,68,.1); border: 1px solid rgba(252,60,68,.2);
+    border-radius: 100px; padding: 5px 14px;
+    font-size: .8rem; font-weight: 600; color: var(--red);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ─── SERVER SELECT SCREEN ─── */
+  #serverScreen { display: none; padding: 40px; min-height: calc(100vh - 73px); }
+  .screen-header { margin-bottom: 32px; }
+  .screen-header h2 { font-size: 1.6rem; font-weight: 800; }
+  .screen-header p { color: var(--muted); margin-top: 4px; }
+  
+  .servers-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .server-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 24px 20px;
+    text-align: center; cursor: pointer;
+    transition: border-color .2s, transform .2s, box-shadow .2s;
+    animation: slideUp .4s ease both;
+    position: relative; overflow: hidden;
+  }
+  .server-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(252,60,68,.06), transparent);
+    opacity: 0; transition: opacity .2s;
+  }
+  .server-card:hover { border-color: var(--red); transform: translateY(-4px); box-shadow: 0 8px 30px rgba(252,60,68,.15); }
+  .server-card:hover::before { opacity: 1; }
+  .server-icon {
+    width: 64px; height: 64px; border-radius: 50%;
+    margin: 0 auto 12px; display: block;
+    border: 2px solid var(--border);
+    background: var(--darker);
+    object-fit: cover;
+  }
+  .server-icon-letter {
+    width: 64px; height: 64px; border-radius: 50%;
+    margin: 0 auto 12px;
+    background: linear-gradient(135deg, var(--red), var(--red-dim));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; font-weight: 800; color: #fff;
+  }
+  .server-name { font-weight: 700; font-size: .95rem; margin-bottom: 4px; }
+  .server-badge {
+    display: inline-block; background: rgba(252,60,68,.15);
+    color: var(--red); border-radius: 100px; padding: 2px 10px;
+    font-size: .75rem; font-weight: 600; font-family: 'JetBrains Mono', monospace;
+  }
+  .not-in-server {
+    opacity: .5; pointer-events: none;
+  }
+  .not-in-server .server-badge {
+    background: rgba(110,110,120,.15); color: var(--muted);
+  }
+  .not-in-server-label {
+    position: absolute; top: 8px; right: 8px;
+    background: rgba(110,110,120,.2); border-radius: 6px;
+    font-size: .7rem; padding: 2px 6px; color: var(--muted);
+  }
+
+  /* ─── PANEL SCREEN ─── */
+  #panelScreen { display: none; padding: 40px; min-height: calc(100vh - 73px); }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; border: 1px solid var(--border);
+    color: var(--muted); border-radius: 8px; padding: 8px 16px;
+    font-family: 'Syne', sans-serif; font-size: .85rem; font-weight: 600;
+    cursor: pointer; margin-bottom: 28px;
+    transition: color .2s, border-color .2s;
+  }
+  .back-btn:hover { color: var(--text); border-color: var(--text); }
+
+  .panel-header {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 36px;
+  }
+  .panel-guild-icon {
+    width: 52px; height: 52px; border-radius: 50%;
+    border: 2px solid var(--red);
+  }
+  .panel-guild-icon-letter {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--red), var(--red-dim));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; font-weight: 800; color: #fff;
+  }
+  .panel-guild-name { font-size: 1.4rem; font-weight: 800; }
+  .panel-guild-sub { color: var(--muted); font-size: .85rem; margin-top: 2px; }
+
+  .panel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 20px; }
+  
+  .settings-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 28px;
+    animation: slideUp .4s ease both;
+  }
+  .settings-card h3 {
+    font-size: 1rem; font-weight: 700; margin-bottom: 4px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .settings-card > p { color: var(--muted); font-size: .85rem; margin-bottom: 20px; }
+
+  .form-group { margin-bottom: 16px; }
+  .form-group label {
+    display: block; font-size: .82rem; font-weight: 600;
+    color: var(--muted); margin-bottom: 8px;
+    text-transform: uppercase; letter-spacing: .05em;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .form-group input, .form-group textarea {
+    width: 100%; background: var(--darker);
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: 12px 14px; color: var(--text);
+    font-family: 'JetBrains Mono', monospace; font-size: .88rem;
+    transition: border-color .2s;
+    outline: none;
+  }
+  .form-group input:focus, .form-group textarea:focus {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(252,60,68,.12);
+  }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+  .form-hint { font-size: .78rem; color: var(--muted); margin-top: 6px; font-family: 'JetBrains Mono', monospace; }
+
+  .ban-words-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; min-height: 36px; }
+  .ban-word-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(252,60,68,.12); border: 1px solid rgba(252,60,68,.25);
+    color: var(--red); border-radius: 8px; padding: 4px 10px;
+    font-size: .82rem; font-family: 'JetBrains Mono', monospace;
+  }
+  .ban-word-tag button {
+    background: none; border: none; color: var(--red);
+    cursor: pointer; font-size: .9rem; padding: 0; line-height: 1;
+    opacity: .7; transition: opacity .15s;
+  }
+  .ban-word-tag button:hover { opacity: 1; }
+
+  .add-word-row { display: flex; gap: 8px; }
+  .add-word-row input {
+    flex: 1; background: var(--darker); border: 1px solid var(--border);
+    border-radius: 10px; padding: 10px 12px; color: var(--text);
+    font-family: 'JetBrains Mono', monospace; font-size: .88rem; outline: none;
+    transition: border-color .2s;
+  }
+  .add-word-row input:focus { border-color: var(--red); }
+  .add-word-btn {
+    background: rgba(252,60,68,.15); border: 1px solid rgba(252,60,68,.3);
+    color: var(--red); border-radius: 10px; padding: 10px 16px;
+    font-weight: 700; cursor: pointer; font-family: 'Syne', sans-serif;
+    transition: background .2s;
+  }
+  .add-word-btn:hover { background: rgba(252,60,68,.25); }
+
+  .save-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--red); color: #fff; border: none;
+    border-radius: 10px; padding: 12px 24px;
+    font-size: .95rem; font-weight: 700; font-family: 'Syne', sans-serif;
+    cursor: pointer; margin-top: 8px; width: 100%; justify-content: center;
+    transition: background .2s, transform .15s;
+  }
+  .save-btn:hover { background: var(--red-dim); transform: translateY(-1px); }
+  .save-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+  .toast {
+    position: fixed; bottom: 28px; right: 28px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 20px;
+    display: flex; align-items: center; gap: 12px;
+    font-size: .9rem; font-weight: 600; z-index: 999;
+    transform: translateY(80px); opacity: 0;
+    transition: transform .3s, opacity .3s;
+    box-shadow: 0 8px 30px rgba(0,0,0,.4);
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast.success { border-color: rgba(46,204,113,.3); }
+  .toast.error { border-color: rgba(252,60,68,.3); }
+
+  .loading-overlay {
+    position: fixed; inset: 0; background: rgba(8,8,10,.8);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 500; backdrop-filter: blur(4px);
+    transition: opacity .3s;
+  }
+  .loading-overlay.hidden { opacity: 0; pointer-events: none; }
+  .spinner {
+    width: 48px; height: 48px; border: 3px solid var(--border);
+    border-top-color: var(--red); border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ─── CHANNEL SELECTOR ─── */
+  .channel-select {
+    width: 100%; background: var(--darker);
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: 12px 14px; color: var(--text);
+    font-family: 'JetBrains Mono', monospace; font-size: .88rem;
+    outline: none; transition: border-color .2s;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236e6e78' fill='none' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center;
+    cursor: pointer;
+  }
+  .channel-select:focus { border-color: var(--red); }
+  .channel-select option { background: var(--card); }
+
+  @media (max-width: 600px) {
+    nav { padding: 16px 20px; }
+    #serverScreen, #panelScreen { padding: 20px; }
+    .login-card { padding: 36px 24px; }
+    .panel-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Status indicator */
+  .status-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--success); display: inline-block;
+    box-shadow: 0 0 8px var(--success); animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .5; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#">⚡ FUSION<span>BOT</span></a>
+  <div class="nav-user">
+    <span class="nav-username" id="navUsername"></span>
+    <img class="nav-avatar" id="navAvatar" alt="avatar">
+  </div>
+</nav>
+
+<!-- LOADING -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+</div>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen" class="screen">
+  <div class="login-card">
+    <span class="login-icon">⚡</span>
+    <h1>FUSION<span>BOT</span> Panel</h1>
+    <p>Log in with Discord to manage your server's bot settings — welcome messages, goodbye messages, and auto-moderation.</p>
+    <a href="/api/auth/discord/login" class="btn-discord" id="loginBtn">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.1 18.12.133 18.18.181 18.22a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+      Login with Discord
+    </a>
+    <div class="features">
+      <span class="feature-tag">Welcome Msgs</span>
+      <span class="feature-tag">Goodbye Msgs</span>
+      <span class="feature-tag">Auto-Mod</span>
+      <span class="feature-tag">Ban Words</span>
+    </div>
+  </div>
+</div>
+
+<!-- SERVER SELECT SCREEN -->
+<div id="serverScreen" class="screen">
+  <div class="screen-header">
+    <h2>Select a Server</h2>
+    <p>Servers where you have Administrator permissions <span class="status-dot"></span></p>
+  </div>
+  <div class="servers-grid" id="serversGrid"></div>
+</div>
+
+<!-- PANEL SCREEN -->
+<div id="panelScreen" class="screen">
+  <button class="back-btn" id="backBtn">← Back to Servers</button>
+  <div class="panel-header">
+    <div id="panelGuildIcon"></div>
+    <div>
+      <div class="panel-guild-name" id="panelGuildName"></div>
+      <div class="panel-guild-sub">Bot Settings Dashboard</div>
+    </div>
+  </div>
+  <div class="panel-grid">
+
+    <!-- Welcome Channel -->
+    <div class="settings-card">
+      <h3>👋 Welcome Channel</h3>
+      <p>The channel where the bot greets new members when they join your server.</p>
+      <div class="form-group">
+        <label>Channel ID</label>
+        <input type="text" id="welcomeChannel" placeholder="e.g. 1234567890123456789">
+        <div class="form-hint">Paste the channel ID (right-click channel → Copy ID)</div>
+      </div>
+      <button class="save-btn" onclick="saveSection('welcome')">Save Welcome Channel</button>
+    </div>
+
+    <!-- Goodbye Channel -->
+    <div class="settings-card">
+      <h3>😢 Goodbye Channel</h3>
+      <p>The channel where the bot says farewell when members leave your server.</p>
+      <div class="form-group">
+        <label>Channel ID</label>
+        <input type="text" id="byeChannel" placeholder="e.g. 1234567890123456789">
+        <div class="form-hint">Paste the channel ID (right-click channel → Copy ID)</div>
+      </div>
+      <button class="save-btn" onclick="saveSection('bye')">Save Goodbye Channel</button>
+    </div>
+
+    <!-- Auto-Mod / Ban Words -->
+    <div class="settings-card" style="grid-column: span 1;">
+      <h3>🛡️ Auto-Moderation</h3>
+      <p>Automatically delete messages containing banned words and timeout the user for 5 minutes.</p>
+      <div class="form-group">
+        <label>Banned Words</label>
+        <div class="ban-words-list" id="banWordsList"></div>
+        <div class="add-word-row">
+          <input type="text" id="newBanWord" placeholder="Type a word..." onkeydown="if(event.key==='Enter') addBanWord()">
+          <button class="add-word-btn" onclick="addBanWord()">+ Add</button>
+        </div>
+        <div class="form-hint">Words are checked case-insensitively</div>
+      </div>
+      <button class="save-btn" onclick="saveSection('banwords')">Save Ban Words</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── STATE ───
+let token = null;
+let userData = null;
+let selectedGuild = null;
+let banWords = [];
+let currentConfig = {};
+
+const API_BASE = ''; // same origin
+
+// ─── INIT ───
+(async function init() {
+  const params = new URLSearchParams(window.location.search);
+  const urlToken = params.get('token');
+  if (urlToken) {
+    token = urlToken;
+    localStorage.setItem('fusion_token', urlToken);
+    window.history.replaceState({}, '', '/panel.html');
+  } else {
+    token = localStorage.getItem('fusion_token');
+  }
+
+  if (!token) {
+    showScreen('login');
+    hideLoader();
+    return;
+  }
+
+  try {
+    const res = await apiFetch('/api/discord/me');
+    if (res.error) throw new Error(res.error);
+    userData = res;
+    setNavUser(res.user);
+    showScreen('server');
+    renderServers(res.guilds);
+  } catch(e) {
+    localStorage.removeItem('fusion_token');
+    token = null;
+    showScreen('login');
+    showToast('Session expired. Please log in again.', 'error');
+  }
+  hideLoader();
+})();
+
+// ─── API HELPERS ───
+async function apiFetch(path, options = {}) {
+  const res = await fetch(API_BASE + path, {
+    ...options,
+    headers: { 'Authorization': token, 'Content-Type': 'application/json', ...(options.headers || {}) }
+  });
+  return res.json();
+}
+
+// ─── NAV ───
+function setNavUser(user) {
+  document.getElementById('navUsername').textContent = user.username;
+  document.getElementById('navUsername').style.display = 'block';
+  const avatar = document.getElementById('navAvatar');
+  if (user.avatar) {
+    avatar.src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=64`;
+    avatar.style.display = 'block';
+  }
+}
+
+// ─── SCREEN MANAGER ───
+function showScreen(name) {
+  document.getElementById('loginScreen').style.display = name === 'login' ? 'flex' : 'none';
+  document.getElementById('serverScreen').style.display = name === 'server' ? 'block' : 'none';
+  document.getElementById('panelScreen').style.display = name === 'panel' ? 'block' : 'none';
+}
+function hideLoader() { document.getElementById('loadingOverlay').classList.add('hidden'); }
+function showLoader() { document.getElementById('loadingOverlay').classList.remove('hidden'); }
+
+// ─── SERVERS ───
+function renderServers(guilds) {
+  const grid = document.getElementById('serversGrid');
+  grid.innerHTML = '';
+  guilds.forEach((g, i) => {
+    const card = document.createElement('div');
+    card.className = 'server-card';
+    card.style.animationDelay = `${i * 0.06}s`;
+
+    let iconHtml = '';
+    if (g.icon) {
+      iconHtml = `<img class="server-icon" src="https://cdn.discordapp.com/icons/${g.id}/${g.icon}.png?size=128" alt="${g.name}">`;
+    } else {
+      const letter = g.name.charAt(0).toUpperCase();
+      iconHtml = `<div class="server-icon-letter">${letter}</div>`;
+    }
+
+    card.innerHTML = `
+      ${iconHtml}
+      <div class="server-name">${escHtml(g.name)}</div>
+      <span class="server-badge">Admin</span>
+    `;
+    card.addEventListener('click', () => openPanel(g));
+    grid.appendChild(card);
+  });
+}
+
+// ─── PANEL ───
+async function openPanel(guild) {
+  selectedGuild = guild;
+  showLoader();
+
+  // Set header
+  document.getElementById('panelGuildName').textContent = guild.name;
+  const iconEl = document.getElementById('panelGuildIcon');
+  if (guild.icon) {
+    iconEl.innerHTML = `<img class="panel-guild-icon" src="https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png?size=128" alt="${guild.name}">`;
+  } else {
+    iconEl.innerHTML = `<div class="panel-guild-icon-letter">${guild.name.charAt(0).toUpperCase()}</div>`;
+  }
+
+  try {
+    const data = await apiFetch(`/api/panel/data?guildId=${guild.id}`);
+    currentConfig = data.config || {};
+    document.getElementById('welcomeChannel').value = currentConfig.welcomeChannel || '';
+    document.getElementById('byeChannel').value = currentConfig.byeChannel || '';
+    banWords = Array.isArray(currentConfig.banWords) ? [...currentConfig.banWords] : [];
+    renderBanWords();
+    showScreen('panel');
+  } catch(e) {
+    showToast('Failed to load server config.', 'error');
+  }
+  hideLoader();
+}
+
+document.getElementById('backBtn').addEventListener('click', () => {
+  selectedGuild = null;
+  showScreen('server');
+});
+
+// ─── BAN WORDS ───
+function renderBanWords() {
+  const list = document.getElementById('banWordsList');
+  list.innerHTML = '';
+  banWords.forEach((w, i) => {
+    const tag = document.createElement('span');
+    tag.className = 'ban-word-tag';
+    tag.innerHTML = `${escHtml(w)} <button onclick="removeBanWord(${i})" title="Remove">✕</button>`;
+    list.appendChild(tag);
+  });
+}
+function addBanWord() {
+  const input = document.getElementById('newBanWord');
+  const word = input.value.trim().toLowerCase();
+  if (!word || banWords.includes(word)) { input.value = ''; return; }
+  banWords.push(word); input.value = '';
+  renderBanWords();
+}
+function removeBanWord(i) { banWords.splice(i, 1); renderBanWords(); }
+
+// ─── SAVE ───
+async function saveSection(section) {
+  if (!selectedGuild) return;
+  showLoader();
+  try {
+    const body = { guildId: selectedGuild.id };
+    if (section === 'welcome') body.welcomeChannel = document.getElementById('welcomeChannel').value.trim();
+    if (section === 'bye') body.byeChannel = document.getElementById('byeChannel').value.trim();
+    if (section === 'banwords') body.banWords = banWords;
+
+    // Always send full config merged
+    const payload = {
+      guildId: selectedGuild.id,
+      welcomeChannel: document.getElementById('welcomeChannel').value.trim() || currentConfig.welcomeChannel,
+      byeChannel: document.getElementById('byeChannel').value.trim() || currentConfig.byeChannel,
+      banWords: section === 'banwords' ? banWords : (currentConfig.banWords || []),
+      ...body
+    };
+
+    const res = await apiFetch('/api/panel/update', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+    if (res.success) {
+      currentConfig = { ...currentConfig, ...payload };
+      showToast('✅ Settings saved successfully!', 'success');
+    } else {
+      showToast('❌ Failed to save.', 'error');
+    }
+  } catch(e) {
+    showToast('❌ Network error.', 'error');
+  }
+  hideLoader();
+}
+
+// ─── TOAST ───
+function showToast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast ${type} show`;
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ─── UTIL ───
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+</script>
+</body>
+</html>

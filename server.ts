@@ -140,7 +140,16 @@ app.get('/sw.js', (req, res) => {
     res.send(`self.addEventListener('fetch', e => e.respondWith(fetch(e.request)));`);
 });
 
-// 🔥 1. DISCORD OAUTH2 LOGIN REDIRECT
+// 🔥 1. SERVE PANEL HTML
+app.get(['/panel', '/panel.html', '/dashboard'], (req, res) => {
+    const panelPath = path.join(__dirname, 'panel.html');
+    if (fs.existsSync(panelPath)) {
+        return res.sendFile(panelPath);
+    }
+    res.status(404).send('panel.html not found.');
+});
+
+// 🔥 2. DISCORD OAUTH2 LOGIN REDIRECT
 app.get('/api/auth/discord/login', (req, res) => {
     const authUrl = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(DISCORD_REDIRECT_URI)}&response_type=code&scope=identify%20guilds`;
     console.log(`[OAuth] Initiating login.`);
@@ -182,9 +191,9 @@ app.get('/api/auth/discord/callback', async (req, res) => {
             return res.end(`<h2>Discord API Error</h2><p>${tokenData.error_description}</p><a href="/">Go Back</a>`);
         }
         
-        console.log("[OAuth] Token exchange successful. Redirecting to homepage...");
-        // Securely redirect to homepage with the token attached
-        res.redirect(`/?token=${tokenData.access_token}`);
+        console.log("[OAuth] Token exchange successful. Redirecting to panel...");
+        // Securely redirect to panel with the token attached
+        res.redirect(`/panel?token=${tokenData.access_token}`);
     } catch(e) { 
         console.error("[OAuth] Server Error during OAuth:", e);
         return res.send("Server Error during OAuth"); 
@@ -230,9 +239,9 @@ app.post('/api/panel/update', (req, res) => {
     if (!guildId) return res.status(400).json({error: "No guild ID"});
     const serverCfg = readDB(dbFiles.serverConfig);
     if (!serverCfg[guildId]) serverCfg[guildId] = {};
-    serverCfg[guildId].welcomeChannel = body.welcomeChannel; 
-    serverCfg[guildId].byeChannel = body.byeChannel; 
-    serverCfg[guildId].banWords = body.banWords;
+    if (body.welcomeChannel !== undefined) serverCfg[guildId].welcomeChannel = body.welcomeChannel; 
+    if (body.byeChannel !== undefined) serverCfg[guildId].byeChannel = body.byeChannel; 
+    if (body.banWords !== undefined) serverCfg[guildId].banWords = body.banWords;
     writeDB(dbFiles.serverConfig, serverCfg); 
     return res.json({ success: true });
 });
