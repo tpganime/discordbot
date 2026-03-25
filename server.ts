@@ -157,11 +157,11 @@ app.get('/api/auth/discord/callback', async (req, res) => {
         grant_type: 'authorization_code', 
         code: code, 
         redirect_uri: DISCORD_REDIRECT_URI
-    });
+    }).toString();
 
     try {
         console.log("[OAuth] Exchanging code for token...");
-        const tokenRes = await fetch('https://discord.com/api/oauth2/token', { 
+        const tokenRes = await fetch('https://discord.com/api/v10/oauth2/token', { 
             method: 'POST', 
             body: params, 
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' } 
@@ -170,11 +170,12 @@ app.get('/api/auth/discord/callback', async (req, res) => {
         
         if (tokenData.error) {
             console.error(`[OAuth] Token exchange error: ${tokenData.error} - ${tokenData.error_description}`);
-            return res.send(`Discord OAuth Error: ${tokenData.error_description}`);
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            return res.end(`<h2>Discord API Error</h2><p>${tokenData.error_description}</p><a href="/panel">Go Back</a>`);
         }
         
         console.log("[OAuth] Token exchange successful. Redirecting to panel...");
-        // Send them to the panel with their secure access token
+        // Securely redirect to panel with the token attached
         res.redirect(`/panel?token=${tokenData.access_token}`);
     } catch(e) { 
         console.error("[OAuth] Server Error during OAuth:", e);
@@ -185,19 +186,20 @@ app.get('/api/auth/discord/callback', async (req, res) => {
 // 🔥 3. FETCH USER DISCORD DATA
 app.get('/api/discord/me', async (req, res) => {
     const authHeader = req.headers['authorization'];
-    if (!authHeader) return res.status(401).json({ error: "Unauthorized" });
+    if (!authHeader || authHeader === 'null') return res.status(401).json({ error: "Unauthorized" });
     try {
-        const userRes = await fetch('https://discord.com/api/users/@me', { 
+        const userRes = await fetch('https://discord.com/api/v10/users/@me', { 
             headers: { Authorization: `Bearer ${authHeader}` } 
         });
-        const userData = await userRes.json();
+        const userData: any = await userRes.json();
+        if (userData.message === "401: Unauthorized") return res.status(401).json({ error: "Session Expired" });
         
-        const guildRes = await fetch('https://discord.com/api/users/@me/guilds', { 
+        const guildRes = await fetch('https://discord.com/api/v10/users/@me/guilds', { 
             headers: { Authorization: `Bearer ${authHeader}` } 
         });
         const guildData: any[] = await guildRes.json() as any[];
         
-        // Only return servers where the user is an Administrator (Permission bit 0x8)
+        // Filter to only show servers where the user is an Administrator (Permission bit 0x8)
         const adminGuilds = guildData.filter(g => (BigInt(g.permissions) & 0x8n) === 0x8n);
         return res.json({ user: userData, guilds: adminGuilds });
     } catch(e) { 
