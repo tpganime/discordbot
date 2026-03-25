@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-import { BOT_LOGO_URL } from '../constants.tsx';
+import { BOT_LOGO_URL } from '../constants';
 
 interface MusicIconProps {
   className?: string;

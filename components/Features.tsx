@@ -48,7 +48,7 @@ const Features: React.FC = () => {
           <p className="text-gray-600 text-[9px] font-black uppercase tracking-[0.5em]">System Protocols Active.</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
           {FEATURES.map((f, i) => (
             <motion.div
               key={i}
@@ -61,6 +61,26 @@ const Features: React.FC = () => {
             </motion.div>
           ))}
         </div>
+
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="text-center p-12 glass-panel rounded-[3rem] border border-white/5"
+        >
+          <h3 className="text-3xl font-black text-white uppercase tracking-tighter mb-6">
+            READY TO <span className="text-indigo-500">CONTROL?</span>
+          </h3>
+          <p className="text-gray-500 text-[10px] font-bold uppercase tracking-[0.4em] mb-10">
+            Access the full power of Fusion Bot via the secure panel.
+          </p>
+          <a 
+            href="/panel"
+            className="inline-block px-12 py-5 bg-white text-black font-black text-[11px] uppercase tracking-[0.4em] rounded-2xl transition-all hover:scale-105 shadow-2xl"
+          >
+            Open Bot Panel
+          </a>
+        </motion.div>
       </div>
     </section>
   );

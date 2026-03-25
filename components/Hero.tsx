@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { BOT_INVITE_URL, BOT_TAGLINE, BOT_NAME } from '../constants.tsx';
+import { BOT_INVITE_URL, BOT_TAGLINE, BOT_NAME } from '../constants';
 
 interface HeroProps {
 }
@@ -57,6 +57,14 @@ const Hero: React.FC<HeroProps> = () => {
             className="w-full sm:w-auto px-14 py-5 bg-indigo-600 text-white font-black text-[11px] uppercase tracking-[0.4em] rounded-2xl transition-all shadow-[0_15px_35px_-10px_rgba(79,70,229,0.5)] border-b-4 border-indigo-800"
           >
             Deploy Bot
+          </motion.a>
+          <motion.a 
+            whileHover={{ y: -4, scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            href="/panel"
+            className="w-full sm:w-auto px-14 py-5 bg-white/5 text-white font-black text-[11px] uppercase tracking-[0.4em] rounded-2xl transition-all border border-white/10 hover:bg-white/10"
+          >
+            Bot Panel
           </motion.a>
         </div>
       </div>

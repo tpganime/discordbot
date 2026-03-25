@@ -1,14 +1,15 @@
 
 import React, { useState, useEffect } from 'react';
-import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import Navbar from './components/Navbar.tsx';
-import Hero from './components/Hero.tsx';
-import Features from './components/Features.tsx';
-import Stats from './components/Stats.tsx';
-import Footer from './components/Footer.tsx';
-import PrivacyPage from './pages/PrivacyPage.tsx';
-import TermsPage from './pages/TermsPage.tsx';
-import CommandsPage from './pages/CommandsPage.tsx';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import Features from './components/Features';
+import Stats from './components/Stats';
+import Footer from './components/Footer';
+import PrivacyPage from './pages/PrivacyPage';
+import TermsPage from './pages/TermsPage';
+import CommandsPage from './pages/CommandsPage';
+import DashboardPage from './pages/DashboardPage';
 import { motion } from 'framer-motion';
 
 const ScrollToTop = () => {
@@ -48,6 +49,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<LandingPage servers={serverCount} />} />
           <Route path="/commands" element={<CommandsPage />} />
+          <Route path="/panel" element={<DashboardPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />
         </Routes>

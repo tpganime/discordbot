@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BOT_INVITE_URL, BOT_NAME, SUPPORT_SERVER_URL, BOT_LOGO_URL } from '../constants.tsx';
+import { BOT_INVITE_URL, BOT_NAME, SUPPORT_SERVER_URL, BOT_LOGO_URL } from '../constants';
 
 interface NavbarProps {
 }
@@ -28,6 +28,7 @@ const Navbar: React.FC<NavbarProps> = () => {
         <div className="hidden lg:flex items-center gap-10 px-10 py-4 rounded-full glass-effect shadow-2xl">
           <Link to="/" className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 hover:text-white transition-colors">Home</Link>
           <Link to="/commands" className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 hover:text-white transition-colors">Commands</Link>
+          <Link to="/panel" className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 hover:text-white transition-colors">Panel</Link>
           <a href={SUPPORT_SERVER_URL} target="_blank" rel="noreferrer" className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 hover:text-white transition-colors">Support</a>
         </div>
 
