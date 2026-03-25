@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Features from './components/Features';
@@ -17,6 +17,23 @@ const ScrollToTop = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+  return null;
+};
+
+const TokenHandler = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const token = params.get('token');
+    if (token) {
+      localStorage.setItem('discord_token', token);
+      // Remove token from URL and redirect to panel
+      navigate('/panel', { replace: true });
+    }
+  }, [location, navigate]);
+
   return null;
 };
 
@@ -43,6 +60,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <ScrollToTop />
+      <TokenHandler />
       <div className="min-h-screen relative selection:bg-indigo-500/30 overflow-x-hidden">
         <Navbar />
         

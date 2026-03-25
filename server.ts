@@ -22,7 +22,7 @@ const DISCORD_REDIRECT_URI = 'https://bot.fusionhub.in/api/auth/discord/callback
 if (!process.env.APP_URL) {
     console.warn("[Warning] APP_URL environment variable is not set. OAuth redirects may fail in production.");
 }
-console.log(`[Config] APP_URL: ${APP_URL}`);
+console.log(`[Config] APP_URL: ${process.env.APP_URL}`);
 console.log(`[Config] DISCORD_REDIRECT_URI: ${DISCORD_REDIRECT_URI}`);
 
 const DB_FOLDER = path.join(__dirname, 'database');
@@ -108,6 +108,11 @@ async function searchYouTube(query: string, limit = 15) {
   return results;
 }
 
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    next();
+});
+
 // ==========================================
 // API ROUTES
 // ==========================================
@@ -151,16 +156,16 @@ app.get('/api/auth/discord/callback', async (req, res) => {
         return res.send("Error: No code provided by Discord.");
     }
 
-    const params = new URLSearchParams({
-        client_id: DISCORD_CLIENT_ID, 
-        client_secret: DISCORD_CLIENT_SECRET,
-        grant_type: 'authorization_code', 
-        code: code, 
-        redirect_uri: DISCORD_REDIRECT_URI
-    }).toString();
-
     try {
         console.log("[OAuth] Exchanging code for token...");
+        const params = new URLSearchParams({
+            client_id: DISCORD_CLIENT_ID, 
+            client_secret: DISCORD_CLIENT_SECRET,
+            grant_type: 'authorization_code', 
+            code: code, 
+            redirect_uri: DISCORD_REDIRECT_URI
+        }).toString();
+
         const tokenRes = await fetch('https://discord.com/api/v10/oauth2/token', { 
             method: 'POST', 
             body: params, 
@@ -171,12 +176,12 @@ app.get('/api/auth/discord/callback', async (req, res) => {
         if (tokenData.error) {
             console.error(`[OAuth] Token exchange error: ${tokenData.error} - ${tokenData.error_description}`);
             res.writeHead(200, {'Content-Type': 'text/html'});
-            return res.end(`<h2>Discord API Error</h2><p>${tokenData.error_description}</p><a href="/panel">Go Back</a>`);
+            return res.end(`<h2>Discord API Error</h2><p>${tokenData.error_description}</p><a href="/">Go Back</a>`);
         }
         
-        console.log("[OAuth] Token exchange successful. Redirecting to panel...");
-        // Securely redirect to panel with the token attached
-        res.redirect(`/panel?token=${tokenData.access_token}`);
+        console.log("[OAuth] Token exchange successful. Redirecting to homepage...");
+        // Securely redirect to homepage with the token attached
+        res.redirect(`/?token=${tokenData.access_token}`);
     } catch(e) { 
         console.error("[OAuth] Server Error during OAuth:", e);
         return res.send("Server Error during OAuth"); 
