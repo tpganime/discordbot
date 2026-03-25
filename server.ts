@@ -17,8 +17,8 @@ app.use(express.json());
 // ==========================================
 // 🔐 DISCORD OAUTH2 CREDENTIALS 
 // ==========================================
-const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID || '1486431098220187758'; 
-const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET || 'tPBwI-DQnsL_CnaoPjEuuAi81sWzhWh1';
+const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID || '1485375910562758967'; 
+const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET || 'vSOnjPRwqht5eGVSiyQG_yjxlGVdbs9A';
 
 // Use APP_URL if available, otherwise fallback to localhost:3000
 const APP_URL = process.env.APP_URL || `http://localhost:${PORT}`;
@@ -140,7 +140,7 @@ app.get('/api/auth/discord/callback', async (req, res) => {
         if (tokenData.error) return res.send(`Discord OAuth Error: ${tokenData.error_description}`);
         
         // Send them to the panel with their secure access token
-        res.redirect(`/dashboard?token=${tokenData.access_token}`);
+        res.redirect(`/panel?token=${tokenData.access_token}`);
     } catch(e) { 
         console.error(e);
         return res.send("Server Error during OAuth"); 
