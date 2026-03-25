@@ -119,8 +119,10 @@ async function searchYouTube(query: string, limit = 15) {
 
 // 🔥 1. DISCORD OAUTH2 LOGIN REDIRECT
 app.get('/api/auth/discord/login', (req, res) => {
-    console.log(`[OAuth] Initiating login. Redirect URI: ${DISCORD_REDIRECT_URI}`);
     const authUrl = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(DISCORD_REDIRECT_URI)}&response_type=code&scope=identify%20guilds`;
+    console.log(`[OAuth] Initiating login.`);
+    console.log(`[OAuth] Redirect URI: ${DISCORD_REDIRECT_URI}`);
+    console.log(`[OAuth] Auth URL: ${authUrl}`);
     res.redirect(authUrl);
 });
 
