@@ -14,15 +14,10 @@ const PORT = 3000;
 
 app.use(express.json());
 
-// ==========================================
-// 🔐 DISCORD OAUTH2 CREDENTIALS 
-// ==========================================
-const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID || '1485375910562758967'; 
-const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET || 'vSOnjPRwqht5eGVSiyQG_yjxlGVdbs9A';
-
-// Use APP_URL if available, otherwise fallback to the custom domain
-const APP_URL = process.env.APP_URL || 'https://bot.fusionhub.in';
-const DISCORD_REDIRECT_URI = `${APP_URL}/api/auth/discord/callback`;
+// 🔐 DISCORD OAUTH2 CREDENTIALS
+const DISCORD_CLIENT_ID = '1485375910562758967'; 
+const DISCORD_CLIENT_SECRET = 'vSOnjPRwqht5eGVSiyQG_yjxlGVdbs9A'; 
+const DISCORD_REDIRECT_URI = 'https://bot.fusionhub.in/api/auth/discord/callback'; 
 
 if (!process.env.APP_URL) {
     console.warn("[Warning] APP_URL environment variable is not set. OAuth redirects may fail in production.");
@@ -116,6 +111,26 @@ async function searchYouTube(query: string, limit = 15) {
 // ==========================================
 // API ROUTES
 // ==========================================
+
+app.get('/manifest.json', (req, res) => {
+    res.json({ 
+        "name": "FusionMusic", 
+        "short_name": "Fusion", 
+        "start_url": "/", 
+        "display": "standalone", 
+        "background_color": "#121212", 
+        "theme_color": "#fc3c44", 
+        "icons": [
+            {"src": "https://cdn-icons-png.flaticon.com/512/461/461163.png", "sizes": "192x192", "type": "image/png"}, 
+            {"src": "https://cdn-icons-png.flaticon.com/512/461/461163.png", "sizes": "512x512", "type": "image/png"}
+        ] 
+    });
+});
+
+app.get('/sw.js', (req, res) => {
+    res.setHeader('Content-Type', 'application/javascript');
+    res.send(`self.addEventListener('fetch', e => e.respondWith(fetch(e.request)));`);
+});
 
 // 🔥 1. DISCORD OAUTH2 LOGIN REDIRECT
 app.get('/api/auth/discord/login', (req, res) => {
