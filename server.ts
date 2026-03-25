@@ -14,18 +14,13 @@ const PORT = 3000;
 
 app.use(express.json());
 
-// 🔐 DISCORD OAUTH2 CREDENTIALS
-const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID; 
-const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET; 
-const DISCORD_REDIRECT_URI = process.env.DISCORD_REDIRECT_URI || (process.env.APP_URL ? `${process.env.APP_URL}/api/auth/discord/callback` : ''); 
+// 🔐 DISCORD OAUTH2 CREDENTIALS 
+const DISCORD_CLIENT_ID = '1485375910562758967'; 
+const DISCORD_CLIENT_SECRET = 'vSOnjPRwqht5eGVSiyQG_yjxlGVdbs9A'; 
+const DISCORD_REDIRECT_URI = 'https://bot.fusionhub.in/api/auth/discord/callback'; 
 
-if (!process.env.APP_URL) {
-    console.warn("[Warning] APP_URL environment variable is not set. OAuth redirects may fail in production.");
-}
-console.log(`[Config] APP_URL: ${process.env.APP_URL}`);
-console.log(`[Config] DISCORD_REDIRECT_URI: ${DISCORD_REDIRECT_URI}`);
-
-const DB_FOLDER = path.join(__dirname, 'database');
+// ⚠️ Vercel uses a read-only file system, so we must write to /tmp
+const DB_FOLDER = process.env.VERCEL ? '/tmp/database' : path.join(__dirname, 'database');
 const EMAIL_USER = process.env.EMAIL_USER; 
 const EMAIL_PASS = process.env.EMAIL_PASS;    
 
@@ -51,8 +46,8 @@ for (const key in dbFiles) {
     }
 }
 
-function readDB(file: string) { return JSON.parse(fs.readFileSync(file, 'utf8')); }
-function writeDB(file: string, data: any) { fs.writeFileSync(file, JSON.stringify(data, null, 2)); }
+function readDB(file: string) { try { return JSON.parse(fs.readFileSync(file, 'utf8')); } catch(e) { return {}; } }
+function writeDB(file: string, data: any) { try { fs.writeFileSync(file, JSON.stringify(data, null, 2)); } catch(e) {} }
 
 // ==========================================
 // YT-DLP ENGINE (FOR WEB API)
@@ -140,13 +135,112 @@ app.get('/sw.js', (req, res) => {
     res.send(`self.addEventListener('fetch', e => e.respondWith(fetch(e.request)));`);
 });
 
-// 🔥 1. SERVE PANEL HTML
+// 🔥 1. SERVE PANEL HTML (The Dashboard)
 app.get(['/panel', '/panel.html', '/dashboard'], (req, res) => {
     const panelPath = path.join(__dirname, 'panel.html');
     if (fs.existsSync(panelPath)) {
         return res.sendFile(panelPath);
     }
-    res.status(404).send('panel.html not found.');
+    // Fallback if panel.html is missing
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    return res.end(`
+        <!DOCTYPE html><html><head><title>Fusion Bot Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body{font-family:sans-serif;background:#121212;color:#fff;padding:20px;display:flex;justify-content:center;align-items:flex-start;min-height:100vh;} 
+            .container {background:#1e1e1e;padding:30px;border-radius:12px;width:100%;max-width:500px;box-shadow:0 4px 15px rgba(0,0,0,0.5);}
+            input, select{padding:12px;margin:8px 0 15px 0;width:100%;box-sizing:border-box;border-radius:6px;border:1px solid #333;background:#2a2a2a;color:#fff;font-size:14px;} 
+            button{padding:12px 20px;background:#5865F2;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:bold;width:100%;font-size:16px;transition:0.2s;}
+            button:hover{background:#4752C4;}
+            .btn-save {background:#fc3c44;} .btn-save:hover {background:#d63038;}
+            .profile{display:flex;align-items:center;gap:15px;margin-bottom:25px;background:#2a2a2a;padding:15px;border-radius:8px;}
+            .profile img{border-radius:50%;width:60px;height:60px;}
+            h2 {margin-top:0; text-align:center;}
+        </style></head>
+        <body>
+            <div class="container">
+                <h2>⚙️ Server Dashboard</h2>
+                <div id="app">
+                    <p style="text-align:center; color:#aaa;">Please log in to manage your bot settings.</p>
+                    <button onclick="window.location.href='/api/auth/discord/login'">Login with Discord</button>
+                </div>
+            </div>
+            <script>
+                let token = new URLSearchParams(window.location.search).get('token') || localStorage.getItem('discord_token');
+                let currentGuildId = null;
+
+                if (token) {
+                    localStorage.setItem('discord_token', token);
+                    window.history.replaceState({}, document.title, "/panel"); // Clean up the URL
+                    loadDashboard();
+                }
+
+                function loadDashboard() {
+                    document.getElementById('app').innerHTML = "<p style='text-align:center;'>Loading your servers...</p>";
+                    fetch('/api/discord/me', { headers: { 'Authorization': token } }).then(r=>r.json()).then(data => {
+                        if (data.error) { 
+                            localStorage.removeItem('discord_token'); 
+                            window.location.href = "/api/auth/discord/login"; 
+                            return; 
+                        }
+                        
+                        let guildOptions = data.guilds.map(g => \`<option value="\${g.id}">\${g.name}</option>\`).join('');
+                        if(data.guilds.length === 0) guildOptions = "<option disabled>You are not an Admin in any servers.</option>";
+                        
+                        document.getElementById('app').innerHTML = \`
+                            <div class="profile">
+                                <img src="https://cdn.discordapp.com/avatars/\${data.user.id}/\${data.user.avatar}.png">
+                                <div>
+                                    <b style="font-size:18px;">\${data.user.username}</b><br>
+                                    <span style="color:#fc3c44; cursor:pointer; font-weight:bold; font-size:14px;" onclick="logout()">Logout</span>
+                                </div>
+                            </div>
+                            <label><b>Select a Server to Manage:</b></label><br>
+                            <select id="serverSelect" onchange="loadServerSettings(this.value)">
+                                <option value="" disabled selected>-- Choose a server --</option>
+                                \${guildOptions}
+                            </select>
+                            <div id="settingsArea" style="display:none; margin-top:20px; padding-top:15px; border-top:1px solid #333;">
+                                <label>Welcome Channel ID:</label><br><input id="welc" placeholder="e.g. 123456789012345"><br>
+                                <label>Goodbye Channel ID:</label><br><input id="bye" placeholder="e.g. 123456789012345"><br>
+                                <label>Banned Words (comma separated):</label><br><input id="ban" placeholder="e.g. badword1, badword2"><br>
+                                <button class="btn-save" onclick="saveSettings()">Save Settings</button>
+                            </div>
+                        \`;
+                    });
+                }
+
+                function loadServerSettings(guildId) {
+                    currentGuildId = guildId;
+                    document.getElementById('settingsArea').style.display = "block";
+                    fetch('/api/panel/data?guildId=' + guildId).then(r=>r.json()).then(data => {
+                        const cfg = data.config || {};
+                        document.getElementById('welc').value = cfg.welcomeChannel || '';
+                        document.getElementById('bye').value = cfg.byeChannel || '';
+                        document.getElementById('ban').value = (cfg.banWords || []).join(', ');
+                    });
+                }
+
+                function saveSettings() {
+                    if(!currentGuildId) return;
+                    const payload = {
+                        guildId: currentGuildId,
+                        welcomeChannel: document.getElementById('welc').value.trim(),
+                        byeChannel: document.getElementById('bye').value.trim(),
+                        banWords: document.getElementById('ban').value.split(',').map(s=>s.trim()).filter(Boolean)
+                    };
+                    fetch('/api/panel/update', {
+                        method: 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
+                    }).then(r=>r.json()).then(d=>{
+                        if(d.success) alert("✅ Settings Saved Successfully!");
+                        else alert("❌ Error Saving Settings.");
+                    });
+                }
+
+                function logout() { localStorage.removeItem('discord_token'); location.reload(); }
+            </script>
+        </body></html>
+    `);
 });
 
 // 🔥 2. DISCORD OAUTH2 LOGIN REDIRECT
@@ -216,8 +310,8 @@ app.get('/api/discord/me', async (req, res) => {
         });
         const guildData: any[] = await guildRes.json() as any[];
         
-        // Filter to only show servers where the user is an Administrator (Permission bit 0x8)
-        const adminGuilds = guildData.filter(g => (BigInt(g.permissions) & 0x8n) === 0x8n);
+        // Only return servers where the user is an Administrator
+        const adminGuilds = guildData.filter(g => (parseInt(g.permissions) & 0x8) === 0x8);
         return res.json({ user: userData, guilds: adminGuilds });
     } catch(e) { 
         console.error(e);
