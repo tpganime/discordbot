@@ -24,6 +24,12 @@ const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET || 'vSOnjPRwqht5
 const APP_URL = process.env.APP_URL || `http://localhost:${PORT}`;
 const DISCORD_REDIRECT_URI = `${APP_URL}/api/auth/discord/callback`;
 
+if (!process.env.APP_URL) {
+    console.warn("[Warning] APP_URL environment variable is not set. OAuth redirects may fail in production.");
+}
+console.log(`[Config] APP_URL: ${APP_URL}`);
+console.log(`[Config] DISCORD_REDIRECT_URI: ${DISCORD_REDIRECT_URI}`);
+
 const DB_FOLDER = path.join(__dirname, 'database');
 const EMAIL_USER = process.env.EMAIL_USER || 'fusionhub122@gmail.com'; 
 const EMAIL_PASS = process.env.EMAIL_PASS || 'bjes fepg nqqf aioq';    
@@ -113,6 +119,7 @@ async function searchYouTube(query: string, limit = 15) {
 
 // 🔥 1. DISCORD OAUTH2 LOGIN REDIRECT
 app.get('/api/auth/discord/login', (req, res) => {
+    console.log(`[OAuth] Initiating login. Redirect URI: ${DISCORD_REDIRECT_URI}`);
     const authUrl = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(DISCORD_REDIRECT_URI)}&response_type=code&scope=identify%20guilds`;
     res.redirect(authUrl);
 });
@@ -120,7 +127,12 @@ app.get('/api/auth/discord/login', (req, res) => {
 // 🔥 2. DISCORD OAUTH2 CALLBACK (GETS TOKEN)
 app.get('/api/auth/discord/callback', async (req, res) => {
     const code = req.query.code as string;
-    if (!code) return res.send("Error: No code provided by Discord.");
+    console.log(`[OAuth] Callback received. Code present: ${!!code}`);
+    
+    if (!code) {
+        console.error("[OAuth] No code provided by Discord.");
+        return res.send("Error: No code provided by Discord.");
+    }
 
     const params = new URLSearchParams({
         client_id: DISCORD_CLIENT_ID, 
@@ -131,18 +143,24 @@ app.get('/api/auth/discord/callback', async (req, res) => {
     });
 
     try {
+        console.log("[OAuth] Exchanging code for token...");
         const tokenRes = await fetch('https://discord.com/api/oauth2/token', { 
             method: 'POST', 
             body: params, 
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' } 
         });
         const tokenData: any = await tokenRes.json();
-        if (tokenData.error) return res.send(`Discord OAuth Error: ${tokenData.error_description}`);
         
+        if (tokenData.error) {
+            console.error(`[OAuth] Token exchange error: ${tokenData.error} - ${tokenData.error_description}`);
+            return res.send(`Discord OAuth Error: ${tokenData.error_description}`);
+        }
+        
+        console.log("[OAuth] Token exchange successful. Redirecting to panel...");
         // Send them to the panel with their secure access token
         res.redirect(`/panel?token=${tokenData.access_token}`);
     } catch(e) { 
-        console.error(e);
+        console.error("[OAuth] Server Error during OAuth:", e);
         return res.send("Server Error during OAuth"); 
     }
 });
