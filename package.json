@@ -10,15 +10,22 @@
     "lint": "tsc"
   },
   "dependencies": {
+    "@discordjs/voice": "^0.19.2",
     "@google/genai": "^1.35.0",
+    "discord.js": "^14.25.1",
     "express": "^5.2.1",
+    "ffmpeg-static": "^5.3.0",
     "framer-motion": "^11.11.11",
+    "libsodium-wrappers": "^0.8.2",
     "mongoose": "^9.3.3",
     "nodemailer": "^8.0.4",
+    "opusscript": "^0.0.8",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-router-dom": "^7.12.0",
-    "tsx": "^4.21.0"
+    "sodium-native": "^5.1.0",
+    "tsx": "^4.21.0",
+    "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
