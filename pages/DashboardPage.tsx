@@ -128,7 +128,7 @@ const DashboardPage: React.FC = () => {
             Manage your bot settings securely.
           </p>
           <a
-            href="/api/auth/discord/login"
+            href="/auth/login"
             className="block w-full py-4 bg-[#5865F2] text-white font-black text-[11px] uppercase tracking-[0.4em] rounded-2xl transition-all shadow-xl hover:scale-105"
           >
             Login with Discord

@@ -18,7 +18,7 @@ app.use(express.json());
 // 🔐 DISCORD OAUTH2 CREDENTIALS 
 const DISCORD_CLIENT_ID = '1485375910562758967'; 
 const DISCORD_CLIENT_SECRET = 'vSOnjPRwqht5eGVSiyQG_yjxlGVdbs9A'; 
-const DISCORD_REDIRECT_URI = 'https://bot.fusionhub.in/api/auth/discord/callback'; 
+const DISCORD_REDIRECT_URI = 'https://bot.fusionhub.in/auth/callback'; 
 
 // 🍃 MONGODB SETUP
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://fusionbot:tpg@fusionbot.lq3g6fc.mongodb.net/?retryWrites=true&w=majority';
@@ -178,7 +178,7 @@ app.get(['/panel', '/panel.html', '/dashboard'], (req, res) => {
                 <h2>⚙️ Server Dashboard</h2>
                 <div id="app">
                     <p style="text-align:center; color:#aaa;">Please log in to manage your bot settings.</p>
-                    <button onclick="window.location.href='/api/auth/discord/login'">Login with Discord</button>
+                    <button onclick="window.location.href='/auth/login'">Login with Discord</button>
                 </div>
             </div>
             <script>
@@ -196,7 +196,7 @@ app.get(['/panel', '/panel.html', '/dashboard'], (req, res) => {
                     fetch('/api/discord/me', { headers: { 'Authorization': token } }).then(r=>r.json()).then(data => {
                         if (data.error) { 
                             localStorage.removeItem('discord_token'); 
-                            window.location.href = "/api/auth/discord/login"; 
+                            window.location.href = "/auth/login"; 
                             return; 
                         }
                         
@@ -260,7 +260,7 @@ app.get(['/panel', '/panel.html', '/dashboard'], (req, res) => {
 });
 
 // 🔥 2. DISCORD OAUTH2 LOGIN REDIRECT
-app.get('/api/auth/discord/login', (req, res) => {
+app.get('/auth/login', (req, res) => {
     const authUrl = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(DISCORD_REDIRECT_URI)}&response_type=code&scope=identify%20guilds`;
     console.log(`[OAuth] Initiating login.`);
     console.log(`[OAuth] Redirect URI: ${DISCORD_REDIRECT_URI}`);
@@ -269,7 +269,7 @@ app.get('/api/auth/discord/login', (req, res) => {
 });
 
 // 🔥 2. DISCORD OAUTH2 CALLBACK (GETS TOKEN)
-app.get('/api/auth/discord/callback', async (req, res) => {
+app.get('/auth/callback', async (req, res) => {
     const code = req.query.code as string;
     console.log(`[OAuth] Callback received. Code present: ${!!code}`);
     
