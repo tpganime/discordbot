@@ -1,9 +1,9 @@
+
 {
-  "version": 2,
   "rewrites": [
-    { "source": "/auth/login", "destination": "/api/index.js" },
-    { "source": "/auth/callback", "destination": "/api/index.js" },
-    { "source": "/panel", "destination": "/api/index.js" },
-    { "source": "/bot/(.*)", "destination": "/api/index.js" }
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }

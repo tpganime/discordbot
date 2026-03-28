@@ -1,42 +1,29 @@
+
 {
-  "name": "fusion-music-pc",
+  "name": "tpg-music-bot-landing",
+  "private": true,
   "version": "1.0.0",
-  "description": "TPG Master Bot & Web App",
-  "main": "server.js",
+  "type": "module",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js",
+    "dev": "vite",
     "build": "vite build",
-    "lint": "tsc && vite build"
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@discordjs/voice": "^0.19.2",
-    "@tailwindcss/vite": "^4.2.2",
-    "@vitejs/plugin-react": "^6.0.1",
-    "clsx": "^2.1.1",
-    "discord.js": "^14.14.1",
-    "dotenv": "^16.4.5",
-    "express": "^5.2.1",
-    "ffmpeg-static": "^5.3.0",
-    "libsodium-wrappers": "^0.7.16",
-    "localtunnel": "^2.0.2",
-    "lucide-react": "^0.477.0",
-    "mongoose": "^9.3.3",
-    "motion": "^12.38.0",
-    "nodemailer": "^8.0.3",
-    "opusscript": "^0.0.8",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "shoukaku": "^4.3.0",
-    "sodium-native": "^5.1.0",
-    "tailwind-merge": "^3.5.0",
-    "tailwindcss": "^4.2.2",
-    "tweetnacl": "^1.0.3",
-    "vite": "^8.0.3"
+    "@google/genai": "^1.35.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-router-dom": "^7.12.0",
+    "framer-motion": "^11.11.11"
   },
   "devDependencies": {
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "typescript": "^6.0.2"
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.3"
   }
 }
