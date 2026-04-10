@@ -9,7 +9,7 @@ interface ProgressProps {
   color?: string;
 }
 
-export const Progress = ({ value, max = 100, className, color = 'bg-orange-600' }: ProgressProps) => {
+export const Progress = ({ value, max = 100, className, color = 'bg-blue-600' }: ProgressProps) => {
   const percentage = Math.min(Math.max((value / max) * 100, 0), 100);
 
   return (

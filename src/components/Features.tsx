@@ -17,10 +17,10 @@ const features = [
   },
   {
     title: 'Smart Moderation',
-    description: 'Keep your server safe with AI-powered auto-moderation and advanced logging.',
+    description: 'Keep your server safe with advanced auto-moderation and intelligent logging.',
     icon: Shield,
-    color: 'text-orange-500',
-    bg: 'bg-orange-500/10',
+    color: 'text-blue-500',
+    bg: 'bg-blue-500/10',
   },
   {
     title: 'Lightning Fast',
@@ -31,10 +31,10 @@ const features = [
   },
   {
     title: 'AI Integration',
-    description: 'Powered by Google Gemini for intelligent conversations and smart command handling.',
+    description: 'Advanced AI for intelligent conversations and smart command handling.',
     icon: Cpu,
-    color: 'text-purple-500',
-    bg: 'bg-purple-500/10',
+    color: 'text-blue-500',
+    bg: 'bg-blue-500/10',
   },
   {
     title: 'Custom Dashboard',
@@ -55,7 +55,7 @@ export const Features = () => {
             Powerful Features
           </Badge>
           <Typography variant="h2" weight="black" className="mb-8">
-            Everything You Need <br /> To <span className="text-indigo-600">Scale</span> Your Server
+            Everything You Need <br /> To <span className="text-blue-600">Scale</span> Your Server
           </Typography>
           <Typography variant="lead" className="max-w-3xl mx-auto">
             We've built the most comprehensive Discord bot with features that matter to you and your community.
@@ -75,7 +75,7 @@ export const Features = () => {
                 <div className={`w-16 h-16 rounded-2xl ${feature.bg} flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500`}>
                   <feature.icon className={`w-8 h-8 ${feature.color}`} />
                 </div>
-                <Typography variant="h4" weight="bold" className="mb-4 group-hover:text-indigo-600 transition-colors duration-300">
+                <Typography variant="h4" weight="bold" className="mb-4 group-hover:text-blue-600 transition-colors duration-300">
                   {feature.title}
                 </Typography>
                 <Typography variant="p">

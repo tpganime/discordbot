@@ -15,7 +15,7 @@ export const Slider = ({ value, min = 0, max = 100, step = 1, onChange, classNam
   return (
     <div className={cn('relative w-full h-1.5 bg-white/5 rounded-full overflow-hidden', className)}>
       <div
-        className="absolute top-0 left-0 h-full bg-orange-600 transition-all duration-300"
+        className="absolute top-0 left-0 h-full bg-blue-600 transition-all duration-300"
         style={{ width: `${percentage}%` }}
       />
       <input

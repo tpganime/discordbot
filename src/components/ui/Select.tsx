@@ -61,7 +61,7 @@ export const Select = ({ options, value, onChange, placeholder = 'Select an opti
                 }}
                 className={cn(
                   'w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300',
-                  value === option.value ? 'bg-orange-600 text-white' : 'text-white/40 hover:bg-white/5 hover:text-white'
+                  value === option.value ? 'bg-blue-600 text-white' : 'text-white/40 hover:bg-white/5 hover:text-white'
                 )}
               >
                 {option.label}

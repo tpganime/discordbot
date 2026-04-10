@@ -19,7 +19,7 @@ export const Checkbox = ({ checked, onChange, label, className }: CheckboxProps)
       <div
         className={cn(
           'w-6 h-6 rounded-lg border flex items-center justify-center transition-all duration-300',
-          checked ? 'bg-orange-600 border-orange-600' : 'bg-white/5 border-white/10 group-hover:border-white/20'
+          checked ? 'bg-blue-600 border-blue-600' : 'bg-white/5 border-white/10 group-hover:border-white/20'
         )}
       >
         <AnimatePresence>

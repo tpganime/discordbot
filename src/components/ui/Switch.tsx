@@ -14,7 +14,7 @@ export const Switch = ({ checked, onChange, className }: SwitchProps) => {
       onClick={() => onChange(!checked)}
       className={cn(
         'w-12 h-6 rounded-full p-1 transition-colors duration-300',
-        checked ? 'bg-orange-600' : 'bg-white/10',
+        checked ? 'bg-blue-600' : 'bg-white/10',
         className
       )}
     >

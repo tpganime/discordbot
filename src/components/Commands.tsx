@@ -51,10 +51,10 @@ export const Commands = () => {
             Slash Commands
           </Badge>
           <Typography variant="h2" weight="black" className="mb-8">
-            Powerful <span className="text-orange-600">Commands</span> At Your Fingertips
+            Powerful <span className="text-blue-600">Commands</span> At Your Fingertips
           </Typography>
           <Typography variant="lead" className="max-w-3xl mx-auto">
-            Fusion comes packed with over 150+ commands to help you manage and entertain your community.
+            Fusion comes packed with 39 commands to help you manage and entertain your community.
           </Typography>
         </div>
 
@@ -68,16 +68,16 @@ export const Commands = () => {
               transition={{ delay: i * 0.1, duration: 0.8 }}
             >
               <div className="mb-8 flex items-center gap-4">
-                <div className="w-10 h-10 rounded-xl bg-orange-600/20 flex items-center justify-center">
-                  <category.icon className="w-5 h-5 text-orange-600" />
+                <div className="w-10 h-10 rounded-xl bg-blue-600/20 flex items-center justify-center">
+                  <category.icon className="w-5 h-5 text-blue-600" />
                 </div>
                 <Typography variant="h4" weight="bold">{category.name}</Typography>
               </div>
               
               <div className="space-y-4">
                 {category.commands.map((cmd, j) => (
-                  <Card key={j} className="p-6 border-white/5 hover:border-orange-600/30 transition-colors duration-300">
-                    <Typography variant="h4" weight="bold" className="text-orange-600 mb-2">
+                  <Card key={j} className="p-6 border-white/5 hover:border-blue-600/30 transition-colors duration-300">
+                    <Typography variant="h4" weight="bold" className="text-blue-600 mb-2">
                       {cmd.name}
                     </Typography>
                     <Typography variant="small" className="text-white/60">

@@ -8,7 +8,7 @@ interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 
 export const Badge = ({ className, variant = 'primary', children, ...props }: BadgeProps) => {
   const variants = {
-    primary: 'bg-orange-500/10 border-orange-500/20 text-orange-500',
+    primary: 'bg-blue-500/10 border-blue-500/20 text-blue-500',
     secondary: 'bg-white/5 border-white/10 text-white/60',
     outline: 'bg-transparent border border-white/10 text-white/40',
   };

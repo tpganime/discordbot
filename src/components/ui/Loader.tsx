@@ -20,7 +20,7 @@ export const Loader = ({ size = 'md', className }: LoaderProps) => {
         animate={{ rotate: 360 }}
         transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
         className={cn(
-          'rounded-full border-white/10 border-t-orange-600',
+          'rounded-full border-white/10 border-t-blue-600',
           sizes[size]
         )}
       />

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Play, Disc, Music, Shield, Zap, Sparkles, Star, Users, MessageSquare } from 'lucide-react';
 import { Button } from './ui/Button';
@@ -21,7 +22,7 @@ export const Hero = () => {
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <motion.div
           style={{ y: y1, rotate }}
-          className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-orange-600/20 blur-[120px] rounded-full"
+          className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-blue-600/20 blur-[120px] rounded-full"
         />
         <motion.div
           style={{ y: y2, rotate: -rotate }}
@@ -42,7 +43,7 @@ export const Hero = () => {
               The Future of Discord Music
             </Badge>
             <Typography variant="h1" weight="black" className="mb-8 max-w-5xl mx-auto">
-              Elevate Your <span className="text-orange-600">Discord</span> Experience
+              Elevate Your <span className="text-blue-600">Discord</span> Experience
             </Typography>
             <Typography variant="lead" className="max-w-3xl mx-auto mb-12">
               High-fidelity music, powerful moderation, and seamless AI integration. All in one bot.
@@ -59,9 +60,6 @@ export const Hero = () => {
                 Add to Discord
                 <Play className="w-5 h-5 ml-2 fill-current" />
               </Button>
-              <Button size="lg" variant="outline" onClick={() => window.open(SUPPORT_SERVER_URL)}>
-                Support Server
-              </Button>
             </Flex>
           </motion.div>
 
@@ -74,14 +72,14 @@ export const Hero = () => {
           >
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 p-10 glass rounded-[40px] border border-white/5">
               {[
-                { label: 'Servers', value: '50K+', icon: Shield },
-                { label: 'Users', value: '2M+', icon: Users },
-                { label: 'Commands', value: '150+', icon: Zap },
+                { label: 'Servers', value: '4', icon: Shield },
+                { label: 'Users', value: '100', icon: Users },
+                { label: 'Commands', value: '39', icon: Zap },
                 { label: 'Uptime', value: '99.9%', icon: Star },
               ].map((stat, i) => (
                 <div key={i} className="text-center group">
-                  <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mx-auto mb-4 group-hover:bg-orange-600/20 transition-colors duration-300">
-                    <stat.icon className="w-6 h-6 text-orange-600" />
+                  <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-600/20 transition-colors duration-300">
+                    <stat.icon className="w-6 h-6 text-blue-600" />
                   </div>
                   <Typography variant="h4" weight="bold" className="mb-1">{stat.value}</Typography>
                   <Typography variant="small">{stat.label}</Typography>
