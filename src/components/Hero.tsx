@@ -11,6 +11,15 @@ import { Badge } from './ui/Badge';
 import { DISCORD_INVITE_URL, SUPPORT_SERVER_URL } from '../constants';
 
 export const Hero = () => {
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 500], [0, 200]);
   const y2 = useTransform(scrollY, [0, 500], [0, -150]);
@@ -21,14 +30,14 @@ export const Hero = () => {
       {/* Background Elements */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <motion.div
-          style={{ y: y1, rotate }}
-          className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-blue-600/20 blur-[120px] rounded-full"
+          style={{ y: !isMobile ? y1 : 0, rotate: !isMobile ? rotate : 0 }}
+          className="absolute top-[-10%] right-[-5%] w-[300px] h-[300px] lg:w-[600px] lg:h-[600px] bg-blue-600/20 blur-[80px] lg:blur-[120px] rounded-full"
         />
         <motion.div
-          style={{ y: y2, rotate: -rotate }}
-          className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] bg-blue-600/10 blur-[100px] rounded-full"
+          style={{ y: !isMobile ? y2 : 0, rotate: !isMobile ? -rotate : 0 }}
+          className="absolute bottom-[-10%] left-[-5%] w-[250px] h-[250px] lg:w-[500px] lg:h-[500px] bg-blue-600/10 blur-[60px] lg:blur-[100px] rounded-full"
         />
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 lg:opacity-20 mix-blend-overlay" />
       </div>
 
       <Container size="xl" className="relative z-10">

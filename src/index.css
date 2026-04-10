@@ -30,6 +30,7 @@
       0 4px 24px -1px rgba(0, 0, 0, 0.2),
       inset 0 0 0 1px rgba(255, 255, 255, 0.02);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: backdrop-filter, transform;
   }
 
   .glass:hover {
@@ -56,6 +57,9 @@
   body {
     @apply bg-black text-white antialiased selection:bg-blue-600 selection:text-white;
     scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
   }
 
   /* Custom Scrollbar */
