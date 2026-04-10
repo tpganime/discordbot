@@ -4,6 +4,7 @@ import { cn } from '../../lib/utils';
 
 interface IconProps extends LucideIcons.LucideProps {
   name: keyof typeof LucideIcons;
+  className?: string;
 }
 
 export const Icon = ({ name, className, ...props }: IconProps) => {

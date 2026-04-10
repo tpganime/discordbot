@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Music, Shield, Zap, Sparkles, Star, Users, MessageSquare, Headphones, Volume2, Mic2, Radio, Settings, Lock, Globe, Cpu, Layout, BarChart3, Layers } from 'lucide-react';
 import { Container } from './ui/Container';
 import { Section } from './ui/Section';

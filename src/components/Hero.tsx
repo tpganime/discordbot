@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Play, Disc, Music, Shield, Zap, Sparkles, Star, Users, MessageSquare } from 'lucide-react';
 import { Button } from './ui/Button';
 import { Container } from './ui/Container';

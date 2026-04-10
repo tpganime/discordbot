@@ -1,3 +1,3 @@
 export const APP_NAME = 'FUSION｜BOT';
-export const DISCORD_INVITE_URL = 'https://discord.com/api/oauth2/authorize?client_id=YOUR_CLIENT_ID&permissions=8&scope=bot%20applications.commands';
-export const SUPPORT_SERVER_URL = 'https://discord.gg/YOUR_SUPPORT_SERVER';
+export const DISCORD_INVITE_URL = 'https://discord.com/oauth2/authorize?client_id=1485375910562758967&permissions=8&response_type=code&redirect_uri=https%3A%2F%2Fbot.fusionhub.in&integration_type=0&scope=bot';
+export const SUPPORT_SERVER_URL = 'https://discord.gg/XqJwKFPny5';

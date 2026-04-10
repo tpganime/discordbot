@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { Disc, Github, Twitter, Youtube, MessageSquare, Globe, Mail, MapPin, Phone } from 'lucide-react';
 import { Container } from './ui/Container';
 import { Flex } from './ui/Flex';

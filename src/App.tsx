@@ -2,6 +2,7 @@ import React from 'react';
 import { Nav } from './components/Nav';
 import { Hero } from './components/Hero';
 import { Features } from './components/Features';
+import { Commands } from './components/Commands';
 import { Footer } from './components/Footer';
 import { Section } from './components/ui/Section';
 import { Container } from './components/ui/Container';
@@ -17,6 +18,7 @@ const App = () => {
       <main>
         <Hero />
         <Features />
+        <Commands />
         
         {/* CTA Section */}
         <Section spacing="xl" className="relative overflow-hidden">
