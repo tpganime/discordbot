@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Menu, X, Disc, Github, Twitter } from 'lucide-react';
+import { Menu, X, Disc, Github, Twitter, LayoutDashboard } from 'lucide-react';
 import { Button } from './ui/Button';
 import { Container } from './ui/Container';
 import { Flex } from './ui/Flex';
 import { Typography } from './ui/Typography';
-import { APP_NAME, DISCORD_INVITE_URL, LOGO_URL } from '../constants';
+import { APP_NAME, DISCORD_INVITE_URL, LOGO_URL, DASHBOARD_URL } from '../constants';
 
 export const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -52,6 +52,15 @@ export const Nav = () => {
 
           <Flex gap={4} className="hidden lg:flex">
             <Button 
+              variant="outline" 
+              size="sm" 
+              className="hidden lg:flex"
+              onClick={() => window.open(DASHBOARD_URL)}
+            >
+              <LayoutDashboard className="w-4 h-4 mr-2" />
+              Dashboard
+            </Button>
+            <Button 
               variant="ghost" 
               size="sm" 
               className="hidden xl:flex group relative"
@@ -89,6 +98,16 @@ export const Nav = () => {
           <Flex direction="col" gap={6} align="start">
             <a href="/#features" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors">Features</a>
             <Link to="/commands" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors">Commands</Link>
+            <button 
+              onClick={() => {
+                setIsOpen(false);
+                window.open(DASHBOARD_URL);
+              }} 
+              className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors flex items-center"
+            >
+              <LayoutDashboard className="w-6 h-6 mr-3" />
+              Dashboard
+            </button>
             <div className="w-full h-px bg-white/5 my-2" />
             <Button variant="primary" className="w-full py-6 text-lg" onClick={() => window.open(DISCORD_INVITE_URL)}>
               Add to Discord

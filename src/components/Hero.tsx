@@ -1,17 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Play, Disc, Music, Shield, Zap, Sparkles, Star, Users, MessageSquare } from 'lucide-react';
+import { Play, Disc, Music, Shield, Zap, Sparkles, Star, Users, MessageSquare, LayoutDashboard } from 'lucide-react';
 import { Button } from './ui/Button';
 import { Container } from './ui/Container';
 import { Flex } from './ui/Flex';
 import { Section } from './ui/Section';
 import { Typography } from './ui/Typography';
 import { Badge } from './ui/Badge';
-import { DISCORD_INVITE_URL, SUPPORT_SERVER_URL } from '../constants';
+import { DISCORD_INVITE_URL, SUPPORT_SERVER_URL, DASHBOARD_URL } from '../constants';
 
 export const Hero = () => {
   const [isMobile, setIsMobile] = React.useState(false);
+  const [showComingSoon, setShowComingSoon] = React.useState(false);
 
   React.useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
@@ -69,6 +70,10 @@ export const Hero = () => {
                 Add to Discord
                 <Play className="w-5 h-5 ml-2 fill-current" />
               </Button>
+              <Button size="lg" variant="outline" onClick={() => window.open(DASHBOARD_URL)}>
+                Dashboard
+                <LayoutDashboard className="w-5 h-5 ml-2" />
+              </Button>
             </Flex>
           </motion.div>
 
@@ -98,6 +103,30 @@ export const Hero = () => {
           </motion.div>
         </Flex>
       </Container>
+
+      {/* Coming Soon Popup */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: showComingSoon ? 1 : 0 }}
+        className={`fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 ${showComingSoon ? 'pointer-events-auto' : 'pointer-events-none'}`}
+      >
+        <motion.div
+          initial={{ scale: 0.9, y: 20 }}
+          animate={{ scale: showComingSoon ? 1 : 0.9, y: showComingSoon ? 0 : 20 }}
+          className="glass p-12 rounded-[40px] border border-white/10 text-center max-w-sm w-full"
+        >
+          <div className="w-20 h-20 rounded-3xl bg-blue-600/20 flex items-center justify-center mx-auto mb-8">
+            <Disc className="w-10 h-10 text-blue-600 animate-spin-slow" />
+          </div>
+          <Typography variant="h3" weight="black" className="mb-4">Coming Soon</Typography>
+          <Typography variant="p" className="text-white/60 mb-8">
+            This feature is currently under development. Stay tuned for updates!
+          </Typography>
+          <Button variant="primary" className="w-full" onClick={() => setShowComingSoon(false)}>
+            Got it
+          </Button>
+        </motion.div>
+      </motion.div>
     </Section>
   );
 };
