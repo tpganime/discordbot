@@ -13,8 +13,6 @@ import { Typography } from '../components/ui/Typography';
 import { Card } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
 import { Flex } from '../components/ui/Flex';
-import { Nav } from '../components/Nav';
-import { Footer } from '../components/Footer';
 
 const commandCategories = [
   {
@@ -119,131 +117,125 @@ const commandCategories = [
 
 export const CommandsPage = () => {
   return (
-    <div className="min-h-screen bg-black text-white">
-      <Nav />
-      
-      <main className="pt-32 pb-24">
-        <Section spacing="xl">
-          <Container size="xl">
-            <Link to="/" className="inline-flex items-center gap-2 text-white/40 hover:text-white mb-12 transition-colors group">
-              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-              Back to Home
-            </Link>
-            
-            <div className="text-center mb-20">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                <Badge variant="primary" className="mb-6">
-                  <Zap className="w-3 h-3 mr-2" />
-                  Fusion Bot
-                </Badge>
-                <Typography variant="h1" weight="black" className="mb-6">
-                  Command <span className="text-blue-600">List</span>
-                </Typography>
-                <Typography variant="lead" className="max-w-2xl mx-auto">
-                  Everything you need to know about Fusion's capabilities. 
-                  Use these slash commands to control your experience.
-                </Typography>
-              </motion.div>
+    <main className="pt-32 pb-24">
+      <Section spacing="xl">
+        <Container size="xl">
+          <Link to="/" className="inline-flex items-center gap-2 text-white/40 hover:text-white mb-12 transition-colors group">
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            Back to Home
+          </Link>
+          
+          <div className="text-center mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <Badge variant="primary" className="mb-6">
+                <Zap className="w-3 h-3 mr-2" />
+                Fusion Bot
+              </Badge>
+              <Typography variant="h1" weight="black" className="mb-6">
+                Command <span className="text-blue-600">List</span>
+              </Typography>
+              <Typography variant="lead" className="max-w-2xl mx-auto">
+                Everything you need to know about Fusion's capabilities. 
+                Use these slash commands to control your experience.
+              </Typography>
+            </motion.div>
 
-              {/* Search Bar */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.6 }}
-                className="mt-12 max-w-xl mx-auto relative"
+            {/* Search Bar */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="mt-12 max-w-xl mx-auto relative"
+            >
+              <div className="glass rounded-2xl p-1 flex items-center border border-white/10 group focus-within:border-blue-600/50 transition-all">
+                <div className="pl-4">
+                  <SearchIcon className="w-5 h-5 text-white/40 group-focus-within:text-blue-600 transition-colors" />
+                </div>
+                <input 
+                  type="text" 
+                  placeholder="Search for a command..." 
+                  className="w-full bg-transparent border-none focus:ring-0 py-3 px-4 text-white placeholder:text-white/20"
+                />
+                <div className="pr-2">
+                  <kbd className="hidden sm:inline-flex h-8 items-center gap-1 rounded border border-white/10 bg-white/5 px-2 font-mono text-[10px] font-medium text-white/40">
+                    <span className="text-xs">⌘</span>K
+                  </kbd>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-16">
+            {commandCategories.map((category, i) => (
+              <motion.div
+                key={category.name}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.8 }}
               >
-                <div className="glass rounded-2xl p-1 flex items-center border border-white/10 group focus-within:border-blue-600/50 transition-all">
-                  <div className="pl-4">
-                    <SearchIcon className="w-5 h-5 text-white/40 group-focus-within:text-blue-600 transition-colors" />
+                <div className="flex items-center gap-4 mb-8">
+                  <div className={`w-12 h-12 rounded-2xl ${category.bg} flex items-center justify-center`}>
+                    <category.icon className={`w-6 h-6 ${category.color}`} />
                   </div>
-                  <input 
-                    type="text" 
-                    placeholder="Search for a command..." 
-                    className="w-full bg-transparent border-none focus:ring-0 py-3 px-4 text-white placeholder:text-white/20"
-                  />
-                  <div className="pr-2">
-                    <kbd className="hidden sm:inline-flex h-8 items-center gap-1 rounded border border-white/10 bg-white/5 px-2 font-mono text-[10px] font-medium text-white/40">
-                      <span className="text-xs">⌘</span>K
-                    </kbd>
+                  <div>
+                    <Typography variant="h3" weight="bold">{category.name}</Typography>
+                    <Typography variant="small" className="text-white/40">
+                      {category.commands.length} Commands Available
+                    </Typography>
                   </div>
                 </div>
-              </motion.div>
-            </div>
 
-            <div className="grid grid-cols-1 gap-16">
-              {commandCategories.map((category, i) => (
-                <motion.div
-                  key={category.name}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.8 }}
-                >
-                  <div className="flex items-center gap-4 mb-8">
-                    <div className={`w-12 h-12 rounded-2xl ${category.bg} flex items-center justify-center`}>
-                      <category.icon className={`w-6 h-6 ${category.color}`} />
-                    </div>
-                    <div>
-                      <Typography variant="h3" weight="bold">{category.name}</Typography>
-                      <Typography variant="small" className="text-white/40">
-                        {category.commands.length} Commands Available
-                      </Typography>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {category.commands.map((cmd) => (
-                      <Card 
-                        key={cmd.name} 
-                        className="glass p-8 border-white/5 hover:border-blue-600/30 transition-all duration-500 group"
-                      >
-                        <Flex justify="between" align="start" className="mb-4">
-                          <Typography variant="h4" weight="black" className="text-blue-600">
-                            {cmd.name}
-                          </Typography>
-                          <Badge variant="outline" className="text-[10px] opacity-0 group-hover:opacity-100 transition-opacity">
-                            Slash
-                          </Badge>
-                        </Flex>
-                        
-                        {cmd.usage && (
-                          <div className="mb-4 font-mono text-xs bg-black/40 p-2 rounded-lg border border-white/5 text-white/40">
-                            <span className="text-blue-600/60">Usage:</span> {cmd.name} {cmd.usage}
-                          </div>
-                        )}
-                        
-                        <Typography variant="p" className="text-white/60 text-sm leading-relaxed">
-                          {cmd.description}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {category.commands.map((cmd) => (
+                    <Card 
+                      key={cmd.name} 
+                      className="glass p-8 border-white/5 hover:border-blue-600/30 transition-all duration-500 group"
+                    >
+                      <Flex justify="between" align="start" className="mb-4">
+                        <Typography variant="h4" weight="black" className="text-blue-600">
+                          {cmd.name}
                         </Typography>
-                        
-                        <div className="mt-6 pt-6 border-t border-white/5 flex items-center text-xs font-bold text-white/20 group-hover:text-blue-600 transition-colors">
-                          LEARN MORE <ChevronRight className="w-3 h-3 ml-1" />
+                        <Badge variant="outline" className="text-[10px] opacity-0 group-hover:opacity-100 transition-opacity">
+                          Slash
+                        </Badge>
+                      </Flex>
+                      
+                      {cmd.usage && (
+                        <div className="mb-4 font-mono text-xs bg-black/40 p-2 rounded-lg border border-white/5 text-white/40">
+                          <span className="text-blue-600/60">Usage:</span> {cmd.name} {cmd.usage}
                         </div>
-                      </Card>
-                    ))}
-                  </div>
-                  {category.isMusic && (
-                    <div className="mt-8 p-6 glass rounded-2xl border-blue-500/20 bg-blue-500/5 flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center">
-                        <Info className="w-5 h-5 text-blue-500" />
-                      </div>
-                      <Typography variant="p" className="text-blue-500 font-bold">
-                        Music Temporarily Disabled
+                      )}
+                      
+                      <Typography variant="p" className="text-white/60 text-sm leading-relaxed">
+                        {cmd.description}
                       </Typography>
+                      
+                      <div className="mt-6 pt-6 border-t border-white/5 flex items-center text-xs font-bold text-white/20 group-hover:text-blue-600 transition-colors">
+                        LEARN MORE <ChevronRight className="w-3 h-3 ml-1" />
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+                {category.isMusic && (
+                  <div className="mt-8 p-6 glass rounded-2xl border-blue-500/20 bg-blue-500/5 flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center">
+                      <Info className="w-5 h-5 text-blue-500" />
                     </div>
-                  )}
-                </motion.div>
-              ))}
-            </div>
-          </Container>
-        </Section>
-      </main>
-
-      <Footer />
-    </div>
+                    <Typography variant="p" className="text-blue-500 font-bold">
+                      Music Temporarily Disabled
+                    </Typography>
+                  </div>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </Container>
+      </Section>
+    </main>
   );
 };
