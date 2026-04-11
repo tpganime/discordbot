@@ -55,7 +55,7 @@ export const Nav = () => {
               variant="outline" 
               size="sm" 
               className="hidden lg:flex"
-              onClick={() => window.open(DASHBOARD_URL)}
+              onClick={() => window.location.href = DASHBOARD_URL}
             >
               <LayoutDashboard className="w-4 h-4 mr-2" />
               Dashboard
@@ -101,7 +101,7 @@ export const Nav = () => {
             <button 
               onClick={() => {
                 setIsOpen(false);
-                window.open(DASHBOARD_URL);
+                window.location.href = DASHBOARD_URL;
               }} 
               className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors flex items-center"
             >

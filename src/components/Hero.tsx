@@ -70,7 +70,7 @@ export const Hero = () => {
                 Add to Discord
                 <Play className="w-5 h-5 ml-2 fill-current" />
               </Button>
-              <Button size="lg" variant="outline" onClick={() => window.open(DASHBOARD_URL)}>
+              <Button size="lg" variant="outline" onClick={() => window.location.href = DASHBOARD_URL}>
                 Dashboard
                 <LayoutDashboard className="w-5 h-5 ml-2" />
               </Button>
