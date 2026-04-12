@@ -32,7 +32,7 @@ export const TermsPage = () => {
               <section>
                 <Typography variant="h4" weight="bold" className="mb-4 text-blue-500">Agreement</Typography>
                 <Typography variant="p" className="text-white/60 leading-relaxed">
-                  By using Fusion, you agree to our terms of service. We prioritize server security 
+                  By using FUSIONBOT, you agree to our terms of service. We prioritize server security 
                   and user privacy above all else.
                 </Typography>
               </section>
