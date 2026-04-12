@@ -1,9 +1,10 @@
 {
   "version": 2,
   "rewrites": [
-    { "source": "/auth/login", "destination": "/api/index.js" },
-    { "source": "/auth/callback", "destination": "/api/index.js" },
-    { "source": "/panel", "destination": "/api/index.js" },
-    { "source": "/bot/(.*)", "destination": "/api/index.js" }
+    { "source": "/auth/login", "destination": "/api/index.ts" },
+    { "source": "/auth/callback", "destination": "/api/index.ts" },
+    { "source": "/panel", "destination": "/api/index.ts" },
+    { "source": "/bot/(.*)", "destination": "/api/index.ts" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

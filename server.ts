@@ -7,7 +7,7 @@ import { createServer as createViteServer } from 'vite';
 
 dotenv.config();
 
-const app = express();
+export const app = express();
 const PORT = Number(process.env.PORT) || 3000;
 
 // --- MONGODB SETUP ---
@@ -111,4 +111,6 @@ async function startServer() {
   });
 }
 
-startServer();
+if (process.env.VERCEL !== '1') {
+  startServer();
+}
