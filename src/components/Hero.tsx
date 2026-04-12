@@ -86,9 +86,9 @@ export const Hero = () => {
           >
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 p-10 glass rounded-[40px] border border-white/5">
               {[
-                { label: 'Servers', value: '1,200+', icon: Shield },
-                { label: 'Users', value: '450K+', icon: Users },
-                { label: 'Commands', value: '150+', icon: Zap },
+                { label: 'Servers', value: '6', icon: Shield },
+                { label: 'Users', value: '30', icon: Users },
+                { label: 'Commands', value: '30', icon: Zap },
                 { label: 'Uptime', value: '99.9%', icon: Star },
               ].map((stat, i) => (
                 <div key={i} className="text-center group">
