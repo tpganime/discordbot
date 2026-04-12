@@ -21,11 +21,6 @@ const features = [
     title: 'Drive Integration',
     description: 'Securely authorize your own Google Drive for an extra layer of backup redundancy.',
     icon: Lock,
-  },
-  {
-    title: 'Real-time Protection',
-    description: 'Our system detects and blocks suspicious administrative actions before they cause damage.',
-    icon: ShieldCheck,
   }
 ];
 
@@ -94,7 +89,6 @@ export const NukeGuard = () => {
               <div className="space-y-6">
                 {[
                   { label: 'Server Backup', status: 'Completed', time: '2 mins ago' },
-                  { label: 'Rogue Detection', status: 'Monitoring', time: 'Real-time' },
                   { label: 'Role Protection', status: 'Enabled', time: 'Permanent' },
                 ].map((item, i) => (
                   <div key={i} className="p-4 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-between">
