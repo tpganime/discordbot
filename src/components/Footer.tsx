@@ -7,7 +7,7 @@ import { Container } from './ui/Container';
 import { Flex } from './ui/Flex';
 import { Section } from './ui/Section';
 import { Typography } from './ui/Typography';
-import { APP_NAME, SUPPORT_SERVER_URL, COMMUNITY_URL, YOUTUBE_URL, SUPPORT_EMAIL } from '../constants';
+import { APP_NAME, SUPPORT_SERVER_URL, COMMUNITY_URL, YOUTUBE_URL, SUPPORT_EMAIL, DASHBOARD_URL } from '../constants';
 
 export const Footer = () => {
   const [showComingSoon, setShowComingSoon] = useState(false);
@@ -52,11 +52,10 @@ export const Footer = () => {
           <div>
             <Typography variant="h4" weight="bold" className="mb-8">Product</Typography>
             <ul className="space-y-4">
-              {['Features', 'Commands', 'Dashboard', 'Status'].map((item) => (
-                <li key={item}>
-                  <a href={item === 'Commands' ? '/commands' : '#'} className="text-white/40 hover:text-white transition-colors">{item}</a>
-                </li>
-              ))}
+              <li><a href="/#features" className="text-white/40 hover:text-white transition-colors">Features</a></li>
+              <li><Link to="/commands" className="text-white/40 hover:text-white transition-colors">Commands</Link></li>
+              <li><button onClick={() => window.location.href = DASHBOARD_URL} className="text-white/40 hover:text-white transition-colors">Dashboard</button></li>
+              <li><button onClick={() => setShowComingSoon(true)} className="text-white/40 hover:text-white transition-colors">Status</button></li>
             </ul>
           </div>
 

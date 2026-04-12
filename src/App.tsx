@@ -4,6 +4,7 @@ import { Nav } from './components/Nav';
 import { ScrollToTop } from './components/ScrollToTop';
 import { Hero } from './components/Hero';
 import { Features } from './components/Features';
+import { NukeGuard } from './components/NukeGuard';
 import { Commands } from './components/Commands';
 import { Footer } from './components/Footer';
 import { Section } from './components/ui/Section';
@@ -20,6 +21,7 @@ const HomePage = () => (
   <main>
     <Hero />
     <Features />
+    <NukeGuard />
   </main>
 );
 
