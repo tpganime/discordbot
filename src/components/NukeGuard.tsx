@@ -88,13 +88,13 @@ export const NukeGuard = () => {
 
               <div className="space-y-6">
                 {[
-                  { label: 'Server Backup', status: 'Completed', time: '2 mins ago' },
-                  { label: 'Role Protection', status: 'Enabled', time: 'Permanent' },
+                  { label: 'Server Backup', status: 'Completed', time: '' },
+                  { label: 'automatic backup', status: 'Enabled', time: '' },
                 ].map((item, i) => (
                   <div key={i} className="p-4 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-between">
                     <div>
                       <Typography variant="small" weight="bold">{item.label}</Typography>
-                      <Typography variant="p" className="text-[10px] text-white/40">{item.time}</Typography>
+                      {item.time && <Typography variant="p" className="text-[10px] text-white/40">{item.time}</Typography>}
                     </div>
                     <Badge variant="secondary" className="text-[10px]">{item.status}</Badge>
                   </div>

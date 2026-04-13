@@ -91,7 +91,7 @@ const TiltCard = ({ children, index }: { children: React.ReactNode; index: numbe
 const features = [
   {
     title: 'High-Fidelity Audio',
-    description: 'Experience crystal-clear music with our advanced audio engine and 24-bit support.',
+    description: 'Experience crystal-clear music with our advanced audio engine and 24-bit support. (works only 7:00am to 12:00am (GMT+5:30))',
     icon: Headphones,
     color: 'text-blue-500',
     bg: 'bg-blue-500/10',

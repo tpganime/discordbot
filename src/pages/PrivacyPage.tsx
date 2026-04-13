@@ -33,8 +33,7 @@ export const PrivacyPage = () => {
                 <Typography variant="h4" weight="bold" className="mb-4 text-blue-500">Data Access</Typography>
                 <Typography variant="p" className="text-white/60 leading-relaxed">
                   We access user Google Drive to store their server data only for nuke protection. 
-                  Our team cannot access user drives; data is handled securely and automatically 
-                  by the Fusion Bot system.
+                  All process are end to end encrypted no one can access in between accept bot.
                 </Typography>
               </section>
 
