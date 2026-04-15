@@ -7,7 +7,7 @@ import { Container } from './ui/Container';
 import { Flex } from './ui/Flex';
 import { Section } from './ui/Section';
 import { Typography } from './ui/Typography';
-import { APP_NAME, SUPPORT_SERVER_URL, COMMUNITY_URL, YOUTUBE_URL, SUPPORT_EMAIL, DASHBOARD_URL } from '../constants';
+import { APP_NAME, SUPPORT_SERVER_URL, COMMUNITY_URL, YOUTUBE_URL, SUPPORT_EMAIL, DASHBOARD_URL, GITHUB_URL } from '../constants';
 
 export const Footer = () => {
   const [showComingSoon, setShowComingSoon] = useState(false);
@@ -32,10 +32,9 @@ export const Footer = () => {
               The most advanced Discord bot for moderation, utility, and AI integration.
             </Typography>
             <Flex gap={4}>
-              <button onClick={() => setShowComingSoon(true)} className="w-10 h-10 rounded-xl glass flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all duration-300 group relative">
+              <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-xl glass flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all duration-300">
                 <Github className="w-5 h-5" />
-                <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-black border border-white/10 px-2 py-1 rounded text-[10px] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Coming Soon</span>
-              </button>
+              </a>
               <button onClick={() => setShowComingSoon(true)} className="w-10 h-10 rounded-xl glass flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all duration-300 group relative">
                 <Twitter className="w-5 h-5" />
                 <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-black border border-white/10 px-2 py-1 rounded text-[10px] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Coming Soon</span>

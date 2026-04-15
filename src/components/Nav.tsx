@@ -6,7 +6,7 @@ import { Button } from './ui/Button';
 import { Container } from './ui/Container';
 import { Flex } from './ui/Flex';
 import { Typography } from './ui/Typography';
-import { APP_NAME, DISCORD_INVITE_URL, LOGO_URL, DASHBOARD_URL } from '../constants';
+import { APP_NAME, DISCORD_INVITE_URL, LOGO_URL, DASHBOARD_URL, GITHUB_URL } from '../constants';
 
 export const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -64,11 +64,10 @@ export const Nav = () => {
               variant="ghost" 
               size="sm" 
               className="hidden xl:flex group relative"
-              onClick={() => setShowComingSoon(true)}
+              onClick={() => window.open(GITHUB_URL)}
             >
               <Github className="w-4 h-4 mr-2" />
               GitHub
-              <span className="absolute -bottom-10 left-1/2 -translate-x-1/2 bg-black border border-white/10 px-2 py-1 rounded text-[10px] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Coming Soon</span>
             </Button>
             <Button variant="primary" size="sm" onClick={() => window.open(DISCORD_INVITE_URL)}>
               Add to Discord
