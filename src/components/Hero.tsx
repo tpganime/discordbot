@@ -86,7 +86,7 @@ export const Hero = () => {
           >
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 p-10 glass rounded-[40px] border border-white/5">
               {[
-                { label: 'Servers', value: '7', icon: Shield },
+                { label: 'Servers', value: '9', icon: Shield },
                 { label: 'Users', value: '30', icon: Users },
                 { label: 'Commands', value: '41', icon: Zap },
                 { label: 'Uptime', value: '99.9%', icon: Star },

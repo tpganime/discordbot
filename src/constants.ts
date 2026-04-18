@@ -6,4 +6,4 @@ export const SUPPORT_SERVER_URL = 'https://discord.gg/qc26U4WVfF';
 export const COMMUNITY_URL = 'https://discord.gg/QK8KJrZv55';
 export const YOUTUBE_URL = 'https://www.youtube.com/@tpggamer1';
 export const GITHUB_URL = 'https://github.com/fusionhub122-ux';
-export const LOGO_URL = 'https://cdn.discordapp.com/attachments/1479524006242549979/1485250262103887982/IMG_20260322_174353.jpg?ex=69da3b19&is=69d8e999&hm=d1c9fec37f35d6374706da08174f98a95ef507ef5b67b26860aea5d844864913';
+export const LOGO_URL = 'https://i.ibb.co/vC79Nthr/Whats-App-Image-2026-03-23-at-6-49-47-PM.jpg';
