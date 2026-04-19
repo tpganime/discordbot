@@ -48,6 +48,7 @@ export const Nav = () => {
           <Flex gap={8} className="hidden lg:flex">
             <a href="/#features" className="text-sm font-bold text-white/40 hover:text-white transition-colors">Features</a>
             <Link to="/commands" className="text-sm font-bold text-white/40 hover:text-white transition-colors">Commands</Link>
+            <Link to="/updates" className="text-sm font-bold text-white/40 hover:text-white transition-colors">Updates</Link>
           </Flex>
 
           <Flex gap={4} className="hidden lg:flex">
@@ -97,6 +98,7 @@ export const Nav = () => {
           <Flex direction="col" gap={6} align="start">
             <a href="/#features" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors">Features</a>
             <Link to="/commands" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors">Commands</Link>
+            <Link to="/updates" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors">Updates</Link>
             <button 
               onClick={() => {
                 setIsOpen(false);

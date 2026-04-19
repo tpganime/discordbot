@@ -16,6 +16,7 @@ import { DISCORD_INVITE_URL } from './constants';
 import { CommandsPage } from './pages/CommandsPage';
 import { PrivacyPage } from './pages/PrivacyPage';
 import { TermsPage } from './pages/TermsPage';
+import { UpdatesPage } from './pages/UpdatesPage';
 
 const HomePage = () => (
   <main>
@@ -36,6 +37,7 @@ const App = () => {
           <Route path="/commands" element={<CommandsPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />
+          <Route path="/updates" element={<UpdatesPage />} />
         </Routes>
         <Footer />
       </div>
