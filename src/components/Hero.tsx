@@ -13,6 +13,24 @@ import { DISCORD_INVITE_URL, SUPPORT_SERVER_URL, DASHBOARD_URL } from '../consta
 export const Hero = () => {
   const [isMobile, setIsMobile] = React.useState(false);
   const [showComingSoon, setShowComingSoon] = React.useState(false);
+  const [stats, setStats] = React.useState({ servers: 11, users: 40 });
+
+  React.useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await fetch('/api/stats');
+        if (res.ok) {
+          const data = await res.json();
+          setStats(data);
+        }
+      } catch (err) {
+        console.error('Failed to fetch stats:', err);
+      }
+    };
+    fetchStats();
+    const interval = setInterval(fetchStats, 60000); // Polling every minute
+    return () => clearInterval(interval);
+  }, []);
 
   React.useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
@@ -86,8 +104,8 @@ export const Hero = () => {
           >
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 p-10 glass rounded-[40px] border border-white/5">
               {[
-                { label: 'Servers', value: '11', icon: Shield },
-                { label: 'Users', value: '40', icon: Users },
+                { label: 'Servers', value: stats.servers.toString(), icon: Shield },
+                { label: 'Users', value: stats.users.toString(), icon: Users },
                 { label: 'Commands', value: '41', icon: Zap },
                 { label: 'Uptime', value: '99.9%', icon: Star },
               ].map((stat, i) => (

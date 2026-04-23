@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import cors from 'cors';
 import { Client, GatewayIntentBits, Collection } from 'discord.js';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
@@ -8,12 +9,83 @@ import { createServer as createViteServer } from 'vite';
 dotenv.config();
 
 export const app = express();
+app.use(cors());
+app.use(express.json());
 const PORT = Number(process.env.PORT) || 3000;
+
+// --- STATS STORAGE ---
+const StatsSchema = new mongoose.Schema({
+  servers: { type: Number, default: 11 },
+  users: { type: Number, default: 40 },
+}, { timestamps: true });
+
+const StatsModel = mongoose.models.Stats || mongoose.model('Stats', StatsSchema);
+
+let botStats = {
+  servers: 11,
+  users: 40
+};
+
+// Function to load initial stats from DB
+const loadStats = async () => {
+  if (process.env.MONGODB_URI) {
+    try {
+      const stats = await StatsModel.findOne();
+      if (stats) {
+        botStats.servers = stats.servers;
+        botStats.users = stats.users;
+        console.log('✅ Stats loaded from MongoDB');
+      } else {
+        await StatsModel.create(botStats);
+        console.log('✅ Initial stats created in MongoDB');
+      }
+    } catch (err) {
+      console.error('❌ Error loading stats from MongoDB:', err);
+    }
+  }
+};
+
+// --- API ENDPOINTS ---
+app.get('/api/stats', (req, res) => {
+  res.json(botStats);
+});
+
+app.post('/api/stats', async (req, res) => {
+  const apiKey = req.headers['x-api-key'];
+  const secretKey = process.env.FUSION_API_KEY;
+
+  if (!secretKey) {
+    return res.status(500).json({ error: 'FUSION_API_KEY not configured on server' });
+  }
+
+  if (apiKey !== secretKey) {
+    return res.status(401).json({ error: 'Unauthorized: Invalid API Key' });
+  }
+
+  const { servers, users } = req.body;
+
+  if (typeof servers === 'number') botStats.servers = servers;
+  if (typeof users === 'number') botStats.users = users;
+
+  // Persist to MongoDB if possible
+  if (process.env.MONGODB_URI) {
+    try {
+      await StatsModel.findOneAndUpdate({}, botStats, { upsert: true });
+    } catch (err) {
+      console.error('❌ Error persisting stats to MongoDB:', err);
+    }
+  }
+
+  res.json({ message: 'Stats updated successfully', stats: botStats });
+});
 
 // --- MONGODB SETUP ---
 if (process.env.MONGODB_URI) {
   mongoose.connect(process.env.MONGODB_URI)
-    .then(() => console.log('✅ Connected to MongoDB'))
+    .then(() => {
+      console.log('✅ Connected to MongoDB');
+      loadStats();
+    })
     .catch(err => console.error('❌ MongoDB Connection Error:', err));
 }
 
