@@ -20,12 +20,18 @@ export const Hero = () => {
       try {
         console.log('Fetching live stats...');
         const res = await fetch('/api/stats');
-        if (res.ok) {
-          const data = await res.json();
-          console.log('Live stats received:', data);
-          setStats(data);
-        } else {
-          console.error('Failed to fetch stats:', res.status, res.statusText);
+        const text = await res.text();
+        
+        try {
+          const data = JSON.parse(text);
+          if (res.ok) {
+            console.log('Live stats received:', data);
+            setStats(data);
+          } else {
+            console.error('Failed to fetch stats:', res.status, data);
+          }
+        } catch (parseError) {
+          console.error('Failed to parse stats JSON. Response text:', text.substring(0, 100));
         }
       } catch (err) {
         console.error('Failed to fetch stats:', err);

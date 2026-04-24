@@ -50,13 +50,23 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'live', timestamp: new Date().toISOString() });
 });
 
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'API is working!' });
+});
+
+// Alias for bot compatibility
+app.get('/live-stats', (req, res) => {
+  console.log('GET /live-stats requested (alias)');
+  res.json(botStats);
+});
+
 app.get('/api/stats', (req, res) => {
   console.log('GET /api/stats requested');
   res.json(botStats);
 });
 
-app.post('/api/stats', async (req, res) => {
-  console.log('POST /api/stats received');
+app.post(['/api/stats', '/live-stats'], async (req, res) => {
+  console.log(`POST ${req.path} received`);
   const apiKey = req.headers['x-api-key'];
   const secretKey = process.env.FUSION_API_KEY;
 
