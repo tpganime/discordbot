@@ -18,10 +18,14 @@ export const Hero = () => {
   React.useEffect(() => {
     const fetchStats = async () => {
       try {
+        console.log('Fetching live stats...');
         const res = await fetch('/api/stats');
         if (res.ok) {
           const data = await res.json();
+          console.log('Live stats received:', data);
           setStats(data);
+        } else {
+          console.error('Failed to fetch stats:', res.status, res.statusText);
         }
       } catch (err) {
         console.error('Failed to fetch stats:', err);

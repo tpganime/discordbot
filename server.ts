@@ -46,23 +46,32 @@ const loadStats = async () => {
 };
 
 // --- API ENDPOINTS ---
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'live', timestamp: new Date().toISOString() });
+});
+
 app.get('/api/stats', (req, res) => {
+  console.log('GET /api/stats requested');
   res.json(botStats);
 });
 
 app.post('/api/stats', async (req, res) => {
+  console.log('POST /api/stats received');
   const apiKey = req.headers['x-api-key'];
   const secretKey = process.env.FUSION_API_KEY;
 
   if (!secretKey) {
+    console.error('❌ FUSION_API_KEY is missing in environment variables');
     return res.status(500).json({ error: 'FUSION_API_KEY not configured on server' });
   }
 
   if (apiKey !== secretKey) {
+    console.warn(`⚠️ Unauthorized access attempt with key: ${apiKey}`);
     return res.status(401).json({ error: 'Unauthorized: Invalid API Key' });
   }
 
   const { servers, users } = req.body;
+  console.log(`📊 Updating stats: Servers=${servers}, Users=${users}`);
 
   if (typeof servers === 'number') botStats.servers = servers;
   if (typeof users === 'number') botStats.users = users;
@@ -164,6 +173,7 @@ if (process.env.DISCORD_TOKEN) {
 
 // --- VITE MIDDLEWARE / STATIC SERVING ---
 async function startServer() {
+  console.log(`Starting server in ${process.env.NODE_ENV || 'development'} mode`);
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
       server: { middlewareMode: true },
@@ -183,6 +193,4 @@ async function startServer() {
   });
 }
 
-if (process.env.VERCEL !== '1') {
-  startServer();
-}
+startServer();
