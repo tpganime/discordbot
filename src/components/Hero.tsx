@@ -79,24 +79,32 @@ export const Hero = () => {
 
           {/* Stats */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={!isMobile ? { opacity: 0, y: 40, perspective: 1000 } : { opacity: 1, y: 0 }}
+            animate={!isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="mt-24 w-full max-w-4xl mx-auto"
+            className="mt-24 w-full max-w-4xl mx-auto group"
+            style={!isMobile ? { transformStyle: 'preserve-3d' } : undefined}
           >
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 p-10 glass rounded-[40px] border border-white/5">
+            <div 
+              className="grid grid-cols-2 md:grid-cols-4 gap-8 p-10 glass rounded-[40px] border border-white/5 shadow-[0_20px_50px_-20px_rgba(0,0,0,1),0_0_0_1px_rgba(255,255,255,0.05)] transition-all duration-700 hover:shadow-[0_40px_100px_-20px_rgba(37,99,235,0.2),0_0_0_1px_rgba(255,255,255,0.1)] hover:-translate-y-2 group"
+              style={!isMobile ? { transform: 'rotateX(10deg)', transformStyle: 'preserve-3d' } : undefined}
+            >
               {[
                 { label: 'Servers', value: stats.servers.toString(), icon: Shield },
                 { label: 'Users', value: stats.users.toString(), icon: Users },
                 { label: 'Commands', value: '41', icon: Zap },
                 { label: 'Uptime', value: '99.9%', icon: Star },
               ].map((stat, i) => (
-                <div key={i} className="text-center group">
-                  <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-600/20 transition-colors duration-300">
+                <div 
+                  key={i} 
+                  className="text-center group/item"
+                  style={!isMobile ? { transform: 'translateZ(30px)' } : undefined}
+                >
+                  <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mx-auto mb-4 group-hover/item:bg-blue-600/20 transition-all duration-300 group-hover/item:scale-110 group-hover/item:shadow-lg group-hover/item:shadow-blue-600/20">
                     <stat.icon className="w-6 h-6 text-blue-600" />
                   </div>
                   <Typography variant="h4" weight="bold" className="mb-1">{stat.value}</Typography>
-                  <Typography variant="small">{stat.label}</Typography>
+                  <Typography variant="small" className="text-white/40 group-hover/item:text-white/80 transition-colors">{stat.label}</Typography>
                 </div>
               ))}
             </div>

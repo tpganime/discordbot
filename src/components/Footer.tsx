@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Disc, Github, Twitter, Youtube, MessageSquare, Globe, Mail, MapPin, Phone, ExternalLink } from 'lucide-react';
+import { Bot, Github, Twitter, Youtube, MessageSquare, Globe, Mail, MapPin, Phone, ExternalLink } from 'lucide-react';
 import { Button } from './ui/Button';
 import { Container } from './ui/Container';
 import { Flex } from './ui/Flex';
@@ -24,7 +24,7 @@ export const Footer = () => {
           <div className="space-y-8">
             <Flex gap={4}>
               <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-600/20">
-                <Disc className="w-6 h-6 text-white animate-spin-slow" />
+                <Bot className="w-6 h-6 text-white" />
               </div>
               <span className="font-display text-2xl font-black tracking-tighter">{APP_NAME}</span>
             </Flex>
@@ -53,6 +53,7 @@ export const Footer = () => {
             <ul className="space-y-4">
               <li><a href="/#features" className="text-white/40 hover:text-white transition-colors">Features</a></li>
               <li><Link to="/commands" className="text-white/40 hover:text-white transition-colors">Commands</Link></li>
+              <li><Link to="/updates" className="text-white/40 hover:text-white transition-colors">Updates</Link></li>
               <li><button onClick={() => window.location.href = DASHBOARD_URL} className="text-white/40 hover:text-white transition-colors">Dashboard</button></li>
               <li><button onClick={() => setShowComingSoon(true)} className="text-white/40 hover:text-white transition-colors">Status</button></li>
             </ul>
@@ -117,11 +118,11 @@ export const Footer = () => {
             className="glass p-12 rounded-[40px] border border-white/10 text-center max-w-sm w-full"
           >
             <div className="w-20 h-20 rounded-3xl bg-blue-600/20 flex items-center justify-center mx-auto mb-8">
-              <Disc className="w-10 h-10 text-blue-600 animate-spin-slow" />
+              <Bot className="w-10 h-10 text-blue-600" />
             </div>
             <Typography variant="h3" weight="black" className="mb-4">Coming Soon</Typography>
             <Typography variant="p" className="text-white/60 mb-8">
-              This feature is currently under development. Stay tuned for updates!
+              This module is currently under development. Stay tuned for updates!
             </Typography>
             <Button variant="primary" className="w-full" onClick={() => setShowComingSoon(false)}>
               Got it

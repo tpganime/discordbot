@@ -16,6 +16,7 @@ import { DISCORD_INVITE_URL } from './constants';
 import { CommandsPage } from './pages/CommandsPage';
 import { PrivacyPage } from './pages/PrivacyPage';
 import { TermsPage } from './pages/TermsPage';
+import { UpdatesPage } from './pages/UpdatesPage';
 import { CustomCursor } from './components/CustomCursor';
 
 const HomePage = () => (
@@ -47,6 +48,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/commands" element={<CommandsPage />} />
+            <Route path="/updates" element={<UpdatesPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />
           </Routes>

@@ -52,6 +52,7 @@ const TiltCard = ({ children, index }: { children: React.ReactNode; index: numbe
   };
 
   const glowBackground = useMotionTemplate`radial-gradient(400px circle at ${mouseX}px ${mouseY}px, rgba(37, 99, 235, 0.15), transparent 80%)`;
+  const tiltShadow = useMotionTemplate`0 ${useSpring(useTransform(y, [-0.5, 0.5], [10, 40]), springConfig)}px ${useSpring(useTransform(y, [-0.5, 0.5], [20, 80]), springConfig)}px -20px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.05)`;
 
   return (
     <motion.div
@@ -59,11 +60,9 @@ const TiltCard = ({ children, index }: { children: React.ReactNode; index: numbe
       onMouseMove={!isMobile ? handleMouseMove : undefined}
       onMouseLeave={!isMobile ? handleMouseLeave : undefined}
       style={{
-        rotateX: !isMobile ? rotateX : 0,
-        rotateY: !isMobile ? rotateY : 0,
-        transformStyle: 'preserve-3d',
+        perspective: !isMobile ? 1200 : undefined,
       }}
-      initial={{ opacity: 0, y: 30 }}
+      initial={!isMobile ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ 
@@ -73,28 +72,38 @@ const TiltCard = ({ children, index }: { children: React.ReactNode; index: numbe
       }}
       className="relative h-full group"
     >
-      <Card className="h-full relative overflow-hidden bg-white/[0.02] border-white/5 hover:border-blue-500/30 transition-colors duration-500">
-        {!isMobile && (
-          <motion.div 
-            className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-            style={{ background: glowBackground }}
-          />
-        )}
-        <div style={{ transform: !isMobile ? 'translateZ(50px)' : 'none' }} className="relative z-10">
-          {children}
-        </div>
-      </Card>
+      <motion.div
+        style={{
+          rotateX: !isMobile ? rotateX : 0,
+          rotateY: !isMobile ? rotateY : 0,
+          transformStyle: 'preserve-3d',
+          boxShadow: !isMobile ? tiltShadow : undefined,
+        }}
+        className="h-full rounded-[32px] transition-all duration-500"
+      >
+        <Card className="h-full relative overflow-hidden bg-white/[0.02] border-none rounded-[32px] hover:bg-white/[0.05] transition-colors duration-500">
+          {!isMobile && (
+            <motion.div 
+              className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+              style={{ background: glowBackground }}
+            />
+          )}
+          <div style={{ transform: !isMobile ? 'translateZ(60px)' : 'none', transformStyle: 'preserve-3d' }} className="relative z-10 p-1">
+            {children}
+          </div>
+        </Card>
+      </motion.div>
     </motion.div>
   );
 };
 
 const features = [
   {
-    title: 'High-Fidelity Audio',
-    description: 'Experience crystal-clear music with our advanced audio engine and 24-bit support. (works only 7:00am to 12:00am (GMT+5:30))',
-    icon: Headphones,
-    color: 'text-blue-500',
-    bg: 'bg-blue-500/10',
+    title: 'Advanced Protection',
+    description: 'Enterprise-grade Nuke Guard and RAID protection to keep your server secure at all times.',
+    icon: Lock,
+    color: 'text-red-500',
+    bg: 'bg-red-500/10',
   },
   {
     title: 'Smart Moderation',
@@ -105,7 +114,7 @@ const features = [
   },
   {
     title: 'Lightning Fast',
-    description: 'Zero latency commands and instant music playback across all global regions.',
+    description: 'Zero latency commands and instant responses across all global regions.',
     icon: Zap,
     color: 'text-yellow-500',
     bg: 'bg-yellow-500/10',
@@ -119,7 +128,7 @@ const features = [
   },
   {
     title: 'Custom Dashboard',
-    description: 'Manage your bot settings, commands, and music queues from a beautiful web interface.',
+    description: 'Manage your bot settings, commands, and server configurations from a beautiful web interface.',
     icon: Layout,
     color: 'text-green-500',
     bg: 'bg-green-500/10',
