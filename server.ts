@@ -2,7 +2,6 @@ import express from 'express';
 import path from 'path';
 import cors from 'cors';
 import { Client, GatewayIntentBits, Collection } from 'discord.js';
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { createServer as createViteServer } from 'vite';
 
@@ -13,38 +12,6 @@ app.use(cors());
 app.use(express.json());
 const PORT = Number(process.env.PORT) || 3000;
 
-// --- STATS STORAGE ---
-const StatsSchema = new mongoose.Schema({
-  servers: { type: Number, default: 11 },
-  users: { type: Number, default: 40 },
-}, { timestamps: true });
-
-const StatsModel = mongoose.models.Stats || mongoose.model('Stats', StatsSchema);
-
-let botStats = {
-  servers: 11,
-  users: 40
-};
-
-// Function to load initial stats from DB
-const loadStats = async () => {
-  if (process.env.MONGODB_URI) {
-    try {
-      const stats = await StatsModel.findOne();
-      if (stats) {
-        botStats.servers = stats.servers;
-        botStats.users = stats.users;
-        console.log('✅ Stats loaded from MongoDB');
-      } else {
-        await StatsModel.create(botStats);
-        console.log('✅ Initial stats created in MongoDB');
-      }
-    } catch (err) {
-      console.error('❌ Error loading stats from MongoDB:', err);
-    }
-  }
-};
-
 // --- API ENDPOINTS ---
 app.get('/api/health', (req, res) => {
   res.json({ status: 'live', timestamp: new Date().toISOString() });
@@ -53,60 +20,6 @@ app.get('/api/health', (req, res) => {
 app.get('/api/test', (req, res) => {
   res.json({ message: 'API is working!' });
 });
-
-// Alias for bot compatibility
-app.get('/live-stats', (req, res) => {
-  console.log('GET /live-stats requested (alias)');
-  res.json(botStats);
-});
-
-app.get('/api/stats', (req, res) => {
-  console.log('GET /api/stats requested');
-  res.json(botStats);
-});
-
-app.post(['/api/stats', '/live-stats'], async (req, res) => {
-  console.log(`POST ${req.path} received`);
-  const apiKey = req.headers['x-api-key'];
-  const secretKey = process.env.FUSION_API_KEY;
-
-  if (!secretKey) {
-    console.error('❌ FUSION_API_KEY is missing in environment variables');
-    return res.status(500).json({ error: 'FUSION_API_KEY not configured on server' });
-  }
-
-  if (apiKey !== secretKey) {
-    console.warn(`⚠️ Unauthorized access attempt with key: ${apiKey}`);
-    return res.status(401).json({ error: 'Unauthorized: Invalid API Key' });
-  }
-
-  const { servers, users } = req.body;
-  console.log(`📊 Updating stats: Servers=${servers}, Users=${users}`);
-
-  if (typeof servers === 'number') botStats.servers = servers;
-  if (typeof users === 'number') botStats.users = users;
-
-  // Persist to MongoDB if possible
-  if (process.env.MONGODB_URI) {
-    try {
-      await StatsModel.findOneAndUpdate({}, botStats, { upsert: true });
-    } catch (err) {
-      console.error('❌ Error persisting stats to MongoDB:', err);
-    }
-  }
-
-  res.json({ message: 'Stats updated successfully', stats: botStats });
-});
-
-// --- MONGODB SETUP ---
-if (process.env.MONGODB_URI) {
-  mongoose.connect(process.env.MONGODB_URI)
-    .then(() => {
-      console.log('✅ Connected to MongoDB');
-      loadStats();
-    })
-    .catch(err => console.error('❌ MongoDB Connection Error:', err));
-}
 
 // --- DISCORD BOT SETUP ---
 const client = new Client({

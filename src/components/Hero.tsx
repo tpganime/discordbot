@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Play, Disc, Music, Shield, Zap, Sparkles, Star, Users, MessageSquare, LayoutDashboard } from 'lucide-react';
+import { Shield, Zap, Sparkles, Star, Users, MessageSquare, LayoutDashboard, Cpu, Bot } from 'lucide-react';
 import { Button } from './ui/Button';
 import { Container } from './ui/Container';
 import { Flex } from './ui/Flex';
@@ -13,34 +13,7 @@ import { DISCORD_INVITE_URL, SUPPORT_SERVER_URL, DASHBOARD_URL } from '../consta
 export const Hero = () => {
   const [isMobile, setIsMobile] = React.useState(false);
   const [showComingSoon, setShowComingSoon] = React.useState(false);
-  const [stats, setStats] = React.useState({ servers: 11, users: 40 });
-
-  React.useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        console.log('Fetching live stats...');
-        const res = await fetch('/api/stats');
-        const text = await res.text();
-        
-        try {
-          const data = JSON.parse(text);
-          if (res.ok) {
-            console.log('Live stats received:', data);
-            setStats(data);
-          } else {
-            console.error('Failed to fetch stats:', res.status, data);
-          }
-        } catch (parseError) {
-          console.error('Failed to parse stats JSON. Response text:', text.substring(0, 100));
-        }
-      } catch (err) {
-        console.error('Failed to fetch stats:', err);
-      }
-    };
-    fetchStats();
-    const interval = setInterval(fetchStats, 60000); // Polling every minute
-    return () => clearInterval(interval);
-  }, []);
+  const stats = { servers: 17, users: 642 };
 
   React.useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
@@ -55,8 +28,8 @@ export const Hero = () => {
   const rotate = useTransform(scrollY, [0, 1000], [0, 360]);
 
   return (
-    <Section spacing="xl" className="min-h-screen flex items-center justify-center pt-32 pb-48">
-      {/* Background Elements */}
+    <Section spacing="xl" className="min-h-screen flex items-center justify-center pt-32 pb-48 relative overflow-hidden">
+      {/* Background Parallax Elements */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <motion.div
           style={{ y: !isMobile ? y1 : 0, rotate: !isMobile ? rotate : 0 }}
@@ -66,7 +39,6 @@ export const Hero = () => {
           style={{ y: !isMobile ? y2 : 0, rotate: !isMobile ? -rotate : 0 }}
           className="absolute bottom-[-10%] left-[-5%] w-[250px] h-[250px] lg:w-[500px] lg:h-[500px] bg-blue-600/10 blur-[60px] lg:blur-[100px] rounded-full"
         />
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 lg:opacity-20 mix-blend-overlay" />
       </div>
 
       <Container size="xl" className="relative z-10">
@@ -78,13 +50,13 @@ export const Hero = () => {
           >
             <Badge variant="primary" className="mb-8">
               <Sparkles className="w-3 h-3 mr-2" />
-              The Future of Discord Music
+              The Future of Discord Management
             </Badge>
             <Typography variant="h1" weight="black" className="mb-8 max-w-5xl mx-auto">
               Elevate Your <span className="text-blue-600">Discord</span> Experience
             </Typography>
             <Typography variant="lead" className="max-w-3xl mx-auto mb-12">
-              best auto moderation, powerful moderation, and seamless AI integration. All in one bot.
+              Best auto moderation, powerful management tools, and seamless AI integration. All in one bot.
             </Typography>
           </motion.div>
 
@@ -96,7 +68,7 @@ export const Hero = () => {
             <Flex gap={6} justify="center" className="flex-col sm:flex-row">
               <Button size="lg" onClick={() => window.open(DISCORD_INVITE_URL)}>
                 Add to Discord
-                <Play className="w-5 h-5 ml-2 fill-current" />
+                <Zap className="w-5 h-5 ml-2 fill-current" />
               </Button>
               <Button size="lg" variant="outline" onClick={() => window.location.href = DASHBOARD_URL}>
                 Dashboard
@@ -144,11 +116,11 @@ export const Hero = () => {
           className="glass p-12 rounded-[40px] border border-white/10 text-center max-w-sm w-full"
         >
           <div className="w-20 h-20 rounded-3xl bg-blue-600/20 flex items-center justify-center mx-auto mb-8">
-            <Disc className="w-10 h-10 text-blue-600 animate-spin-slow" />
+            <Bot className="w-10 h-10 text-blue-600" />
           </div>
           <Typography variant="h3" weight="black" className="mb-4">Coming Soon</Typography>
           <Typography variant="p" className="text-white/60 mb-8">
-            This feature is currently under development. Stay tuned for updates!
+            This module is currently under development. Stay tuned for updates!
           </Typography>
           <Button variant="primary" className="w-full" onClick={() => setShowComingSoon(false)}>
             Got it

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Menu, X, Disc, Github, Twitter, LayoutDashboard } from 'lucide-react';
+import { Menu, X, Bot, Github, Twitter, LayoutDashboard } from 'lucide-react';
 import { Button } from './ui/Button';
 import { Container } from './ui/Container';
 import { Flex } from './ui/Flex';
@@ -48,7 +48,6 @@ export const Nav = () => {
           <Flex gap={8} className="hidden lg:flex">
             <a href="/#features" className="text-sm font-bold text-white/40 hover:text-white transition-colors">Features</a>
             <Link to="/commands" className="text-sm font-bold text-white/40 hover:text-white transition-colors">Commands</Link>
-            <Link to="/updates" className="text-sm font-bold text-white/40 hover:text-white transition-colors">Updates</Link>
           </Flex>
 
           <Flex gap={4} className="hidden lg:flex">
@@ -98,7 +97,6 @@ export const Nav = () => {
           <Flex direction="col" gap={6} align="start">
             <a href="/#features" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors">Features</a>
             <Link to="/commands" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors">Commands</Link>
-            <Link to="/updates" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors">Updates</Link>
             <button 
               onClick={() => {
                 setIsOpen(false);
@@ -129,11 +127,11 @@ export const Nav = () => {
           className="glass p-12 rounded-[40px] border border-white/10 text-center max-w-sm w-full"
         >
           <div className="w-20 h-20 rounded-3xl bg-blue-600/20 flex items-center justify-center mx-auto mb-8">
-            <Disc className="w-10 h-10 text-blue-600 animate-spin-slow" />
+            <Bot className="w-10 h-10 text-blue-600" />
           </div>
           <Typography variant="h3" weight="black" className="mb-4">Coming Soon</Typography>
           <Typography variant="p" className="text-white/60 mb-8">
-            This feature is currently under development. Stay tuned for updates!
+            This module is currently under development. Stay tuned for updates!
           </Typography>
           <Button variant="primary" className="w-full" onClick={() => setShowComingSoon(false)}>
             Got it

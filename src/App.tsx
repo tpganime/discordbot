@@ -16,7 +16,7 @@ import { DISCORD_INVITE_URL } from './constants';
 import { CommandsPage } from './pages/CommandsPage';
 import { PrivacyPage } from './pages/PrivacyPage';
 import { TermsPage } from './pages/TermsPage';
-import { UpdatesPage } from './pages/UpdatesPage';
+import { CustomCursor } from './components/CustomCursor';
 
 const HomePage = () => (
   <main>
@@ -30,16 +30,28 @@ const App = () => {
   return (
     <Router>
       <ScrollToTop />
-      <div className="min-h-screen bg-black text-white selection:bg-blue-600 selection:text-white">
-        <Nav />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/commands" element={<CommandsPage />} />
-          <Route path="/privacy" element={<PrivacyPage />} />
-          <Route path="/terms" element={<TermsPage />} />
-          <Route path="/updates" element={<UpdatesPage />} />
-        </Routes>
-        <Footer />
+      <div className="min-h-screen bg-black text-white selection:bg-blue-600 selection:text-white relative">
+        {/* Global Background */}
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed"
+            style={{ backgroundImage: 'url("https://i.ibb.co/Cp5Jms2H/IMG-20260323-031453.png")' }}
+          />
+          <div className="absolute inset-0 bg-black/80 backdrop-blur-[1px]" />
+          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay" />
+        </div>
+
+        <div className="relative z-10">
+          <CustomCursor />
+          <Nav />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/commands" element={<CommandsPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/terms" element={<TermsPage />} />
+          </Routes>
+          <Footer />
+        </div>
       </div>
     </Router>
   );
