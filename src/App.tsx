@@ -4,6 +4,7 @@ import { Nav } from './components/Nav';
 import { ScrollToTop } from './components/ScrollToTop';
 import { Hero } from './components/Hero';
 import { Features } from './components/Features';
+import { AIConsole } from './components/AIConsole';
 import { NukeGuard } from './components/NukeGuard';
 import { Commands } from './components/Commands';
 import { Footer } from './components/Footer';
@@ -23,23 +24,38 @@ const HomePage = () => (
   <main>
     <Hero />
     <Features />
+    <AIConsole />
     <NukeGuard />
   </main>
 );
 
 const App = () => {
+  React.useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const x = (e.clientX / window.innerWidth) * 100;
+      const y = (e.clientY / window.innerHeight) * 100;
+      document.documentElement.style.setProperty('--mouse-x', `${x}%`);
+      document.documentElement.style.setProperty('--mouse-y', `${y}%`);
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
     <Router>
       <ScrollToTop />
       <div className="min-h-screen bg-black text-white selection:bg-blue-600 selection:text-white relative">
         {/* Global Background */}
-        <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+          <div className="absolute inset-0 bg-[#020617]" />
           <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed"
-            style={{ backgroundImage: 'url("https://i.ibb.co/Cp5Jms2H/IMG-20260323-031453.png")' }}
+            className="absolute -top-[20%] -left-[10%] w-[70%] h-[70%] rounded-full bg-blue-900/10 blur-[120px] animate-pulse"
+            style={{ animationDuration: '8s' }}
           />
-          <div className="absolute inset-0 bg-black/80 backdrop-blur-[1px]" />
-          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay" />
+          <div 
+            className="absolute -bottom-[20%] -right-[10%] w-[70%] h-[70%] rounded-full bg-blue-800/10 blur-[120px] animate-pulse"
+            style={{ animationDuration: '12s' }}
+          />
         </div>
 
         <div className="relative z-10">

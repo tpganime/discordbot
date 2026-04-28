@@ -62,11 +62,63 @@
     transform: translateX(-100%);
     animation: shimmer 5s infinite linear;
   }
+
+  .liquid-glass {
+    @apply relative overflow-hidden backdrop-blur-[20px] lg:backdrop-blur-[40px] saturate-[150%] lg:saturate-[200%];
+    background: radial-gradient(
+      circle at top left,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(37, 99, 235, 0.03) 50%,
+      rgba(0, 0, 0, 0.1) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 
+      0 10px 30px -10px rgba(0, 0, 0, 0.5),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    will-change: transform, opacity;
+  }
+
+  .liquid-glass::after {
+    content: "";
+    @apply absolute inset-0 -z-10 opacity-20 lg:opacity-30;
+    background: radial-gradient(
+      600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(37, 99, 235, 0.15),
+      transparent 40%
+    );
+    display: none;
+  }
+
+  .lg\:liquid-glass::after {
+    display: block;
+  }
+
+  .liquid-glass-glow {
+    animation: liquid-glow 8s ease-in-out infinite;
+    will-change: filter;
+  }
+
+  @keyframes liquid-glow {
+    0%, 100% { filter: brightness(1) saturate(1.5); }
+    50% { filter: brightness(1.1) saturate(1.8); }
+  }
 }
 
 @layer base {
   body {
-    @apply bg-black text-white antialiased selection:bg-blue-600 selection:text-white cursor-none;
+    @apply bg-[#020617] text-white antialiased selection:bg-blue-600 selection:text-white cursor-none;
+    background-image: 
+      radial-gradient(
+        at 0% 0%,
+        rgba(30, 58, 138, 0.15) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 100% 100%,
+        rgba(30, 58, 138, 0.1) 0px,
+        transparent 50%
+      );
+    background-attachment: fixed;
     scroll-behavior: smooth;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;

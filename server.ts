@@ -1,102 +1,58 @@
 import express from 'express';
-import path from 'path';
-import cors from 'cors';
-import { Client, GatewayIntentBits, Collection } from 'discord.js';
-import dotenv from 'dotenv';
 import { createServer as createViteServer } from 'vite';
+import path from 'path';
+import Groq from 'groq-sdk';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
-export const app = express();
-app.use(cors());
+const GROQ_API_KEY = process.env.GROQ_API_KEY;
+
+const app = express();
+const PORT = 3000;
+
 app.use(express.json());
-const PORT = Number(process.env.PORT) || 3000;
 
-// --- API ENDPOINTS ---
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'live', timestamp: new Date().toISOString() });
-});
+// API Route for Groq
+app.post('/api/chat', async (req, res) => {
+  try {
+    if (!GROQ_API_KEY) {
+      return res.status(500).json({ error: 'Groq API Key not configured' });
+    }
 
-app.get('/api/test', (req, res) => {
-  res.json({ message: 'API is working!' });
-});
+    const { messages } = req.body;
+    const groq = new Groq({ apiKey: GROQ_API_KEY });
 
-// --- DISCORD BOT SETUP ---
-const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent,
-    GatewayIntentBits.GuildVoiceStates,
-  ],
-});
+    const chatCompletion = await groq.chat.completions.create({
+      messages: [
+        {
+          role: 'system',
+          content: `You are FUSION BOT, an advanced AI-powered Discord bot. You are helpful, professional, and tech-savvy. You specialize in moderation, server management, and community features.
 
-// @ts-ignore
-client.commands = new Collection();
+Official Commands:
+- Music: /play (song/playlist), /skip, /queue, /volume (0-100)
+- Moderation: /ban, /kick, /mute, /purge
+- General: /help, /ping, /info, /stats
 
-// --- OAUTH CALLBACK HANDLER ---
-app.get('/auth/callback', (req, res) => {
-  const { code } = req.query;
-  
-  if (!code) {
-    return res.status(400).send('No code provided');
-  }
+How to Setup:
+1. Invite the bot using the "Add to Discord" button on the homepage.
+2. Grant necessary permissions (Administrator recommended for full features, or at least Manage Messages, Ban/Kick Members).
+3. Use /setup music to create a dedicated music channel.
+4. Use /setup secure to activate Nuke Guard protection.`,
+        },
+        ...messages,
+      ],
+      model: 'llama-3.3-70b-versatile',
+    });
 
-  // In a real app, you would exchange this code for an access token
-  // using your CLIENT_SECRET.
-  
-  res.send(`
-    <html>
-      <head>
-        <title>Authentication Successful</title>
-        <style>
-          body { font-family: sans-serif; background: #000; color: #fff; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-          .card { background: #111; padding: 2rem; border-radius: 1rem; border: 1px solid #333; text-align: center; }
-          h1 { color: #f97316; }
-        </style>
-      </head>
-      <body>
-        <div class="card">
-          <h1>✅ Fusion Authorized</h1>
-          <p>The bot has been successfully added to your server.</p>
-          <script>
-            setTimeout(() => {
-              if (window.opener) {
-                window.opener.postMessage({ type: 'DISCORD_AUTH_SUCCESS' }, '*');
-                window.close();
-              } else {
-                window.location.href = '/';
-              }
-            }, 3000);
-          </script>
-        </div>
-      </body>
-    </html>
-  `);
-});
-
-client.once('ready', () => {
-  console.log(`✅ Logged in as ${client.user?.tag}!`);
-});
-
-client.on('messageCreate', async message => {
-  if (message.author.bot) return;
-  if (message.content === '!ping') {
-    message.reply('Pong! 🏓');
+    res.json({ content: chatCompletion.choices[0]?.message?.content || 'I am sorry, I could not process your request.' });
+  } catch (error) {
+    console.error('Groq API Error:', error);
+    res.status(500).json({ error: 'Failed to fetch response from AI' });
   }
 });
 
-if (process.env.DISCORD_TOKEN) {
-  client.login(process.env.DISCORD_TOKEN).catch(err => {
-    console.error('❌ Discord Login Error:', err.message);
-  });
-} else {
-  console.warn('⚠️ DISCORD_TOKEN not found in environment variables.');
-}
-
-// --- VITE MIDDLEWARE / STATIC SERVING ---
 async function startServer() {
-  console.log(`Starting server in ${process.env.NODE_ENV || 'development'} mode`);
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
       server: { middlewareMode: true },
@@ -106,14 +62,15 @@ async function startServer() {
   } else {
     const distPath = path.join(process.cwd(), 'dist');
     app.use(express.static(distPath));
-    app.get('*', (req, res) => {
+    app.get('*all', (req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
     });
   }
 
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
   });
 }
 
+export { app };
 startServer();

@@ -44,8 +44,8 @@ export const Hero = () => {
       <Container size="xl" className="relative z-10">
         <Flex direction="col" gap={12} className="text-center">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={!isMobile ? { opacity: 0, y: 20 } : { opacity: 1 }}
+            animate={!isMobile ? { opacity: 1, y: 0 } : { opacity: 1 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
           >
             <Badge variant="primary" className="mb-8">
@@ -61,8 +61,8 @@ export const Hero = () => {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={!isMobile ? { opacity: 0, scale: 0.9 } : { opacity: 1 }}
+            animate={!isMobile ? { opacity: 1, scale: 1 } : { opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.8 }}
           >
             <Flex gap={6} justify="center" className="flex-col sm:flex-row">
@@ -86,7 +86,7 @@ export const Hero = () => {
             style={!isMobile ? { transformStyle: 'preserve-3d' } : undefined}
           >
             <div 
-              className="grid grid-cols-2 md:grid-cols-4 gap-8 p-10 glass rounded-[40px] border border-white/5 shadow-[0_20px_50px_-20px_rgba(0,0,0,1),0_0_0_1px_rgba(255,255,255,0.05)] transition-all duration-700 hover:shadow-[0_40px_100px_-20px_rgba(37,99,235,0.2),0_0_0_1px_rgba(255,255,255,0.1)] hover:-translate-y-2 group"
+              className="grid grid-cols-2 md:grid-cols-4 gap-8 p-10 liquid-glass rounded-[40px] border-white/5 shadow-[0_20px_50px_-20px_rgba(0,0,0,1),0_0_0_1px_rgba(255,255,255,0.05)] transition-all duration-700 hover:shadow-[0_40px_100px_-20px_rgba(37,99,235,0.2),0_0_0_1px_rgba(255,255,255,0.1)] hover:-translate-y-2 group lg:liquid-glass-glow"
               style={!isMobile ? { transform: 'rotateX(10deg)', transformStyle: 'preserve-3d' } : undefined}
             >
               {[

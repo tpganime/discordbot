@@ -25,15 +25,27 @@ const features = [
 ];
 
 export const NukeGuard = () => {
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <Section spacing="xl" className="relative overflow-hidden">
+      {/* Background Decorative Tab */}
+      <div className="absolute top-[20%] right-[-5%] w-[400px] h-[600px] liquid-glass rounded-[80px] opacity-20 rotate-[15deg] blur-[2px] pointer-events-none hidden lg:block" />
+      
       {/* Background Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none" />
       
       <Container size="xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={!isMobile ? { opacity: 0, x: -30 } : { opacity: 1 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
@@ -66,13 +78,13 @@ export const NukeGuard = () => {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={!isMobile ? { opacity: 0, scale: 0.9 } : { opacity: 1 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            <div className="glass p-8 rounded-[40px] border-white/10 relative z-10">
+            <div className="liquid-glass p-8 rounded-[40px] border-white/10 relative z-10 lg:liquid-glass-glow">
               <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center">

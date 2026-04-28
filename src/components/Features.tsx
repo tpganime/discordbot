@@ -51,8 +51,15 @@ const TiltCard = ({ children, index }: { children: React.ReactNode; index: numbe
     y.set(0);
   };
 
-  const glowBackground = useMotionTemplate`radial-gradient(400px circle at ${mouseX}px ${mouseY}px, rgba(37, 99, 235, 0.15), transparent 80%)`;
-  const tiltShadow = useMotionTemplate`0 ${useSpring(useTransform(y, [-0.5, 0.5], [10, 40]), springConfig)}px ${useSpring(useTransform(y, [-0.5, 0.5], [20, 80]), springConfig)}px -20px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.05)`;
+  const glowBackground = useMotionTemplate`radial-gradient(600px circle at ${mouseX}px ${mouseY}px, rgba(37, 99, 235, 0.1), transparent 80%)`;
+  const shineBackground = useMotionTemplate`radial-gradient(400px circle at ${mouseX}px ${mouseY}px, rgba(255, 255, 255, 0.08), transparent 60%)`;
+  const tiltShadow = useMotionTemplate`
+    0 ${useSpring(useTransform(y, [-0.5, 0.5], [10, 50]), springConfig)}px 
+    ${useSpring(useTransform(y, [-0.5, 0.5], [20, 100]), springConfig)}px 
+    -20px rgba(0,0,0,0.8), 
+    0 0 0 1px rgba(255,255,255,0.08),
+    inset 0 0 0 1px rgba(255,255,255,0.02)
+  `;
 
   return (
     <motion.div
@@ -76,19 +83,25 @@ const TiltCard = ({ children, index }: { children: React.ReactNode; index: numbe
         style={{
           rotateX: !isMobile ? rotateX : 0,
           rotateY: !isMobile ? rotateY : 0,
-          transformStyle: 'preserve-3d',
+          transformStyle: !isMobile ? 'preserve-3d' : undefined,
           boxShadow: !isMobile ? tiltShadow : undefined,
         }}
         className="h-full rounded-[32px] transition-all duration-500"
       >
-        <Card className="h-full relative overflow-hidden bg-white/[0.02] border-none rounded-[32px] hover:bg-white/[0.05] transition-colors duration-500">
+        <Card className="h-full relative overflow-hidden liquid-glass border-none rounded-[32px] transition-colors duration-500 lg:liquid-glass-glow bg-white/[0.01]">
           {!isMobile && (
-            <motion.div 
-              className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-              style={{ background: glowBackground }}
-            />
+            <>
+              <motion.div 
+                className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{ background: glowBackground }}
+              />
+              <motion.div 
+                className="absolute inset-0 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                style={{ background: shineBackground }}
+              />
+            </>
           )}
-          <div style={{ transform: !isMobile ? 'translateZ(60px)' : 'none', transformStyle: 'preserve-3d' }} className="relative z-10 p-1">
+          <div style={{ transform: !isMobile ? 'translateZ(80px)' : 'none', transformStyle: !isMobile ? 'preserve-3d' : 'flat' }} className="relative z-10 p-1">
             {children}
           </div>
         </Card>
@@ -137,7 +150,7 @@ const features = [
 
 export const Features = () => {
   return (
-    <Section spacing="xl" id="features" className="bg-black/50">
+    <Section spacing="xl" id="features" className="bg-transparent">
       <Container size="xl">
         <div className="text-center mb-32">
           <Badge variant="secondary" className="mb-8">
