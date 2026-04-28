@@ -1,12 +1,9 @@
 import express from 'express';
-import { createServer as createViteServer } from 'vite';
 import path from 'path';
 import Groq from 'groq-sdk';
 import dotenv from 'dotenv';
 
 dotenv.config();
-
-const GROQ_API_KEY = process.env.GROQ_API_KEY;
 
 const app = express();
 const PORT = 3000;
@@ -15,13 +12,23 @@ app.use(express.json());
 
 // API Route for Groq
 app.post('/api/chat', async (req, res) => {
+  const apiKey = process.env.GROQ_API_KEY;
+  
+  if (!apiKey) {
+    console.error('SERVER ERROR: GROQ_API_KEY is missing');
+    return res.status(500).json({ 
+      error: 'AI configuration error', 
+      details: 'GROQ_API_KEY is not set in environment variables.' 
+    });
+  }
+
   try {
-    if (!GROQ_API_KEY) {
-      return res.status(500).json({ error: 'Groq API Key not configured' });
+    const { messages } = req.body;
+    if (!messages || !Array.isArray(messages)) {
+      return res.status(400).json({ error: 'Invalid request body', details: 'Messages array is required.' });
     }
 
-    const { messages } = req.body;
-    const groq = new Groq({ apiKey: GROQ_API_KEY });
+    const groq = new Groq({ apiKey });
 
     const chatCompletion = await groq.chat.completions.create({
       messages: [
@@ -45,15 +52,29 @@ How to Setup:
       model: 'llama-3.3-70b-versatile',
     });
 
-    res.json({ content: chatCompletion.choices[0]?.message?.content || 'I am sorry, I could not process your request.' });
-  } catch (error) {
-    console.error('Groq API Error:', error);
-    res.status(500).json({ error: 'Failed to fetch response from AI' });
+    const content = chatCompletion.choices[0]?.message?.content;
+    if (!content) {
+      throw new Error('Groq returned an empty response.');
+    }
+
+    res.json({ content });
+  } catch (error: any) {
+    console.error('Groq API Error:', error?.message || error);
+    
+    // Check for specific Groq errors
+    const errorMessage = error?.message || 'Unknown error';
+    const status = error?.status || 500;
+    
+    res.status(status).json({ 
+      error: 'AI service error',
+      details: errorMessage
+    });
   }
 });
 
 async function startServer() {
   if (process.env.NODE_ENV !== 'production') {
+    const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
@@ -67,10 +88,13 @@ async function startServer() {
     });
   }
 
-  app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-  });
+  // Only listen if not imported as a module (e.g. for Vercel)
+  if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+    });
+  }
 }
 
-export { app };
+export default app;
 startServer();

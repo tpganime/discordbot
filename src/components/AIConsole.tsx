@@ -74,14 +74,27 @@ export const AIConsole = () => {
       });
 
       const data = await response.json();
-      if (data.content) {
+      
+      if (response.ok && data.content) {
         setHistory((prev) => [...prev, { role: 'bot', content: data.content }]);
       } else {
-        throw new Error('Invalid response');
+        // Detailed error message from server
+        const detail = data.details || data.error || 'Unknown error';
+        throw new Error(detail);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Chat error:', error);
-      setHistory((prev) => [...prev, { role: 'bot', content: "I'm having trouble connecting right now. Please try again later." }]);
+      let errorMessage = "I'm having trouble connecting to the AI brain right now.";
+      
+      if (error.message.includes('GROQ_API_KEY')) {
+        errorMessage = "The AI service is missing its API key. If you are on Vercel, please add GROQ_API_KEY to your environment variables.";
+      } else if (error.message.includes('Unexpected token')) {
+        errorMessage = "Server returned an invalid response. This might happen if the /api/chat route is not correctly configured on Vercel.";
+      } else {
+        errorMessage = `Error: ${error.message}. Please try again in a few seconds.`;
+      }
+      
+      setHistory((prev) => [...prev, { role: 'bot', content: errorMessage }]);
     } finally {
       setIsTyping(false);
     }

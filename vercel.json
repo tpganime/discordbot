@@ -1,10 +1,14 @@
 {
   "version": 2,
   "rewrites": [
-    { "source": "/auth/login", "destination": "/api/index.ts" },
-    { "source": "/auth/callback", "destination": "/api/index.ts" },
-    { "source": "/panel", "destination": "/api/index.ts" },
-    { "source": "/bot/(.*)", "destination": "/api/index.ts" },
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
+    {
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ],
+  "framework": "vite"
 }
