@@ -64,38 +64,37 @@
   }
 
   .liquid-glass {
-    @apply relative overflow-hidden backdrop-blur-[20px] lg:backdrop-blur-[40px] saturate-[150%] lg:saturate-[200%];
-    background: radial-gradient(
-      circle at top left,
+    @apply relative overflow-hidden backdrop-blur-3xl saturate-[160%];
+    background: linear-gradient(
+      135deg,
       rgba(255, 255, 255, 0.05) 0%,
-      rgba(37, 99, 235, 0.03) 50%,
-      rgba(0, 0, 0, 0.1) 100%
+      rgba(37, 99, 235, 0.02) 50%,
+      rgba(2, 6, 23, 0.4) 100%
     );
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 
-      0 10px 30px -10px rgba(0, 0, 0, 0.5),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+      0 10px 40px -10px rgba(0, 0, 0, 0.8),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.03);
     will-change: transform, opacity;
   }
 
-  .liquid-glass::after {
-    content: "";
-    @apply absolute inset-0 -z-10 opacity-20 lg:opacity-30;
-    background: radial-gradient(
-      600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-      rgba(37, 99, 235, 0.15),
-      transparent 40%
-    );
-    display: none;
-  }
-
-  .lg\:liquid-glass::after {
-    display: block;
-  }
-
   .liquid-glass-glow {
-    animation: liquid-glow 8s ease-in-out infinite;
-    will-change: filter;
+    position: relative;
+    border: none;
+  }
+
+  .liquid-glass-glow::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent 50%, rgba(37,99,235,0.1));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
   }
 
   @keyframes liquid-glow {

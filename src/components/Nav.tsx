@@ -34,15 +34,17 @@ export const Nav = () => {
   return (
     <motion.nav
       style={{ backgroundColor: navBg, backdropFilter: navBlur, borderColor: navBorder }}
-      className="fixed top-0 left-0 right-0 z-[100] border-b transition-all duration-300"
+      className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] w-[calc(100%-2rem)] max-w-7xl rounded-[32px] border transition-all duration-300"
     >
       <Container size="xl">
-        <Flex justify="between" className="h-24">
+        <Flex justify="between" className="h-20 px-2 lg:px-6">
           <Flex gap={4}>
-            <div className="w-12 h-12 rounded-2xl overflow-hidden border border-white/10 shadow-lg shadow-blue-600/20">
-              <img src={LOGO_URL} alt="Logo" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-            </div>
-            <span className="font-display text-2xl font-black tracking-tighter">{APP_NAME}</span>
+            <Link to="/" className="flex items-center gap-4">
+              <div className="w-10 h-10 rounded-xl overflow-hidden border border-white/10 shadow-lg shadow-blue-600/20">
+                <img src={LOGO_URL} alt="Logo" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+              </div>
+              <span className="font-display text-xl font-black tracking-tighter hidden sm:block">{APP_NAME}</span>
+            </Link>
           </Flex>
 
           <Flex gap={8} className="hidden lg:flex">
@@ -55,22 +57,13 @@ export const Nav = () => {
             <Button 
               variant="outline" 
               size="sm" 
-              className="hidden lg:flex"
+              className="bg-white/5 border-white/5 hover:bg-white/10"
               onClick={() => window.location.href = DASHBOARD_URL}
             >
               <LayoutDashboard className="w-4 h-4 mr-2" />
               Dashboard
             </Button>
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="hidden xl:flex group relative"
-              onClick={() => window.open(GITHUB_URL)}
-            >
-              <Github className="w-4 h-4 mr-2" />
-              GitHub
-            </Button>
-            <Button variant="primary" size="sm" onClick={() => window.open(DISCORD_INVITE_URL)}>
+            <Button variant="primary" size="sm" className="shadow-lg shadow-blue-600/20" onClick={() => window.open(DISCORD_INVITE_URL)}>
               Add to Discord
             </Button>
           </Flex>
@@ -86,13 +79,14 @@ export const Nav = () => {
 
       {/* Mobile Menu */}
       <motion.div
-        initial={{ clipPath: 'circle(0% at 90% 0%)' }}
+        initial={{ y: -20, opacity: 0, scale: 0.95 }}
         animate={{ 
-          clipPath: isOpen ? 'circle(150% at 90% 0%)' : 'circle(0% at 90% 0%)',
-          opacity: isOpen ? 1 : 0 
+          y: isOpen ? 12 : -20,
+          opacity: isOpen ? 1 : 0,
+          scale: isOpen ? 1 : 0.95
         }}
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        className="lg:hidden absolute top-full left-0 right-0 z-[90] bg-black/98 backdrop-blur-3xl border-b border-white/10 overflow-hidden"
+        className={`lg:hidden absolute top-full left-0 right-0 z-[90] bg-[#020617]/95 backdrop-blur-3xl border border-white/10 rounded-[32px] overflow-hidden shadow-2xl shadow-blue-500/10 ${isOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
       >
         <Container className="py-10">
           <Flex direction="col" gap={6} align="start">

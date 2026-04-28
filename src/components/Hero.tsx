@@ -14,6 +14,7 @@ export const Hero = () => {
   const [isMobile, setIsMobile] = React.useState(false);
   const [showComingSoon, setShowComingSoon] = React.useState(false);
   const stats = { servers: 17, users: 642 };
+  const containerRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
@@ -26,6 +27,22 @@ export const Hero = () => {
   const y1 = useTransform(scrollY, [0, 500], [0, 200]);
   const y2 = useTransform(scrollY, [0, 500], [0, -150]);
   const rotate = useTransform(scrollY, [0, 1000], [0, 360]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isMobile || !containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    
+    containerRef.current.style.setProperty('--tilt-x', `${(y - 0.5) * 10}deg`);
+    containerRef.current.style.setProperty('--tilt-y', `${(x - 0.5) * -10}deg`);
+  };
+
+  const resetTilt = () => {
+    if (!containerRef.current) return;
+    containerRef.current.style.setProperty('--tilt-x', '0deg');
+    containerRef.current.style.setProperty('--tilt-y', '0deg');
+  };
 
   return (
     <Section spacing="xl" className="min-h-screen flex items-center justify-center pt-32 pb-48 relative overflow-hidden">
@@ -41,8 +58,8 @@ export const Hero = () => {
         />
       </div>
 
-      <Container size="xl" className="relative z-10">
-        <Flex direction="col" gap={12} className="text-center">
+      <Container size="xl" className="relative z-10" ref={containerRef} onMouseMove={handleMouseMove} onMouseLeave={resetTilt}>
+        <Flex direction="col" gap={12} className="text-center" style={{ transform: 'perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg))', transition: 'transform 0.1s ease-out' }}>
           <motion.div
             initial={!isMobile ? { opacity: 0, y: 20 } : { opacity: 1 }}
             animate={!isMobile ? { opacity: 1, y: 0 } : { opacity: 1 }}
