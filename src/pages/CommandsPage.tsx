@@ -25,8 +25,8 @@ export const commandCategories = [
       { name: '/purge', usage: '<1-100>', description: 'Delete a specific number of messages in the channel.' },
       { name: '/purgeall', usage: '', description: 'Mass delete up to 1000 messages (Admin only).' },
       { name: '/rolecreate', usage: '<name> [color]', description: 'Create a new role with optional hex color.' },
-      { name: '/giverole', usage: '@user @role', description: 'Assign a role protected by role hierarchy.' },
-      { name: '/automod', usage: '', description: 'Deploy private #fusion-mod-logs and enable anti-spam filters.' },
+      { name: '/automod', usage: '', description: 'Activate or toggle server-wide auto-moderation filters (Anti-spam, links, spam detection).' },
+      { name: '/setuplogs', usage: '', description: 'Automatically create all 8 private staff & audit channels (#mod-logs, #member-logs, #voice-log, #message-log, #join-leave-logs, #server-logs, #moderator-chat, #fusion-invite-tracker).' },
     ]
   },
   {
