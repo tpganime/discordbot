@@ -34,10 +34,11 @@ export const Hero = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await fetch('https://panel.fusionhub.in/api/stats', {
-          headers: { 'Accept': 'application/json' }
-        });
-        if (res.ok) {
+        let res = await fetch('/api/stats', { headers: { 'Accept': 'application/json' } }).catch(() => null);
+        if (!res || !res.ok) {
+          res = await fetch('https://panel.fusionhub.in/api/stats', { headers: { 'Accept': 'application/json' } }).catch(() => null);
+        }
+        if (res && res.ok) {
           const data = await res.json();
           setStats({
             online: data.online !== false,
