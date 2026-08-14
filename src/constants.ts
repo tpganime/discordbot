@@ -1,5 +1,6 @@
 export const APP_NAME = 'FUSION HUB';
-export const SUPPORT_EMAIL = 'fusionhub122@gmail.com';
+export const BOT_NAME = 'Fusion Bot';
+export const SUPPORT_EMAIL = 'support@fusionhub.in';
 export const DISCORD_INVITE_URL = 'https://discord.com/oauth2/authorize?client_id=1485375910562758967&permissions=8&integration_type=0&scope=bot';
 export const DASHBOARD_URL = 'https://panel.fusionhub.in/';
 export const SUPPORT_SERVER_URL = 'https://discord.gg/qc26U4WVfF';
