@@ -97,7 +97,7 @@ export const Footer = () => {
         <div className="pt-16 border-t border-white/5">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <Typography variant="small">
-              © 2026 {APP_NAME}. All rights reserved.
+              © 2026 FUSIONBOT(FUSIONHUB). All rights reserved.
             </Typography>
             <Flex gap={8} className="w-auto">
               <Link to="/privacy" className="text-xs font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors">Privacy</Link>
