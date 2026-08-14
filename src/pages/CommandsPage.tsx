@@ -1,10 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  Search, List, 
-  Shield, Zap, Settings, Info, 
-  ChevronRight, Search as SearchIcon, ArrowLeft, Coins, 
-  Layout, ShieldAlert, Brain
+  Shield, Zap, Settings, ArrowLeft,
+  Layout, ShieldAlert, Sparkles, Gift, Ticket, Cpu, Search as SearchIcon
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Container } from '../components/ui/Container';
@@ -14,83 +12,85 @@ import { Card } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
 import { Flex } from '../components/ui/Flex';
 
-const commandCategories = [
+export const commandCategories = [
   {
-    name: 'Economy & Games',
-    icon: Coins,
-    color: 'text-blue-500',
-    bg: 'bg-blue-500/10',
-    commands: [
-      { name: '/lb', usage: '', description: 'View the global economy leaderboard.' },
-      { name: '/daily', usage: '', description: 'Claim your daily reward coins.' },
-      { name: '/pray', usage: '', description: 'Pray to gain extra coins or luck.' },
-      { name: '/profile', usage: '[user]', description: 'View yours or another user\'s profile.' },
-      { name: '/cash', usage: '[user]', description: 'Check your current balance.' },
-      { name: '/cf', usage: '<amount>', description: 'Flip a coin to double your bet.' },
-      { name: '/slots', usage: '<amount>', description: 'Test your luck on the slot machine.' },
-      { name: '/hunt', usage: '', description: 'Go hunting for rare items and coins.' },
-      { name: '/give', usage: '<user> <amount>', description: 'Transfer coins to another user.' },
-      { name: '/ttt', usage: '<user>', description: 'Play Tic-Tac-Toe with a friend.' },
-    ]
-  },
-  {
-    name: 'Moderation & Roles',
+    name: 'Moderation & Automod',
     icon: Shield,
-    color: 'text-blue-500',
-    bg: 'bg-blue-500/10',
+    color: 'text-red-400',
+    bg: 'bg-red-500/10',
     commands: [
-      { name: '/clear', usage: '<amount>', description: 'Delete a specific number of messages.' },
-      { name: '/clearall', usage: '', description: 'Clear all messages in the channel.' },
-      { name: '/ban', usage: '<user> [reason]', description: 'Ban a user from the server.' },
-      { name: '/kick', usage: '<user> [reason]', description: 'Kick a user from the server.' },
-      { name: '/timeout', usage: '<user> <duration>', description: 'Timeout a user for a specific duration.' },
-      { name: '/rolecreate', usage: '<name> [color]', description: 'Create a new role in the server.' },
-      { name: '/rolegive', usage: '<user> <role>', description: 'Assign a role to a user.' },
-      { name: '/disable', usage: '<command>', description: 'Disable a specific command.' },
-      { name: '/enable', usage: '<command>', description: 'Enable a previously disabled command.' },
+      { name: '/ban', usage: '@user [reason]', description: 'Ban a member permanently from the server.' },
+      { name: '/kick', usage: '@user [reason]', description: 'Kick a member from the server.' },
+      { name: '/timeout', usage: '@user <duration>', description: 'Timeout a user (e.g. 10s, 5m, 2h, 1d).' },
+      { name: '/purge', usage: '<1-100>', description: 'Delete a specific number of messages in the channel.' },
+      { name: '/purgeall', usage: '', description: 'Mass delete up to 1000 messages (Admin only).' },
+      { name: '/rolecreate', usage: '<name> [color]', description: 'Create a new role with optional hex color.' },
+      { name: '/giverole', usage: '@user @role', description: 'Assign a role protected by role hierarchy.' },
+      { name: '/automod', usage: '', description: 'Deploy private #fusion-mod-logs and enable anti-spam filters.' },
     ]
   },
   {
-    name: 'Utility',
-    icon: Settings,
-    color: 'text-blue-500',
-    bg: 'bg-blue-500/10',
-    commands: [
-      { name: '/avatar', usage: '[user]', description: 'View yours or another user\'s avatar.' },
-    ]
-  },
-  {
-    name: 'Server Config',
-    icon: Layout,
-    color: 'text-blue-500',
-    bg: 'bg-blue-500/10',
-    commands: [
-      { name: '/webpanel', usage: '', description: 'Get the link to your server\'s web dashboard.' },
-      { name: '/resetbot', usage: '', description: 'Reset bot settings for your server.' },
-      { name: '/ticketsetup', usage: '', description: 'Configure the ticket support system.' },
-      { name: '/giveaway', usage: '', description: 'Start a new giveaway.' },
-      { name: '/gmanage', usage: '', description: 'Manage active giveaways.' },
-    ]
-  },
-  {
-    name: 'Nuke Guard',
+    name: 'Nuke Guard & Backups',
     icon: ShieldAlert,
-    color: 'text-blue-500',
-    bg: 'bg-blue-500/10',
+    color: 'text-amber-400',
+    bg: 'bg-amber-500/10',
     commands: [
-      { name: '/nukebackup', usage: '', description: 'Create a backup of your server structure.' },
-      { name: '/nukerestore', usage: '', description: 'Restore your server from a backup.' },
-      { name: '/driveauth', usage: '', description: 'Authorize Google Drive for secure backups.' },
+      { name: '/nukebackup', usage: '', description: 'Save a complete snapshot of all channels, categories, and roles to Google Drive.' },
+      { name: '/nukerestore', usage: '', description: 'Restore entire server hierarchy after a raid or nuke attack (Owner only).' },
+      { name: '/driveauth', usage: '', description: 'Authorize Google Drive via OAuth2 for automated cloud backups.' },
     ]
   },
   {
-    name: 'AI Features',
-    icon: Brain,
-    color: 'text-blue-500',
+    name: 'AI & Creative Media',
+    icon: Cpu,
+    color: 'text-purple-400',
+    bg: 'bg-purple-500/10',
+    commands: [
+      { name: '@mention', usage: '<message>', description: 'Chat naturally with SUNDAY 5.1 AI in English, Hindi, or Hinglish with live web search.' },
+      { name: '/imagine', usage: '<prompt> [style] [size]', description: 'Generate AI art, custom server emojis, stickers, vector logos, anime, and 3D renders.' },
+      { name: '/meme', usage: '', description: 'Fetch a fresh, high-rated meme from Reddit.' },
+      { name: '/ai', usage: '<on / off>', description: 'Toggle AI auto-chat in the current channel without needing mentions.' },
+      { name: '/enableai', usage: '', description: 'Enable the AI engine server-wide (Admin only).' },
+      { name: '/disableai', usage: '', description: 'Disable the AI engine server-wide (Admin only).' },
+      { name: '/aiblock', usage: '<on / off>', description: 'Block AI from responding in a specific channel.' },
+    ]
+  },
+  {
+    name: 'Server & Support Tickets',
+    icon: Ticket,
+    color: 'text-blue-400',
     bg: 'bg-blue-500/10',
     commands: [
-      { name: '@Mention', usage: '<message>', description: 'Mention the bot to chat with our advanced AI.' },
-      { name: '/imagine', usage: '<prompt>', description: 'Generate high-quality AI images from text.' },
+      { name: '/ticketsetup', usage: '', description: 'Deploy an interactive dropdown support ticket intake panel with question routing.' },
+      { name: '/serverinfo', usage: '', description: 'Display full server stats, member counts, owner, boost level, and security status.' },
+      { name: '/invites info', usage: '[@user]', description: 'View detailed inviter history, invite codes, and join order sequencing.' },
+      { name: '/disablelink', usage: '', description: 'Block external invite links in a channel (Admin only).' },
+      { name: '/enablelink', usage: '', description: 'Allow external invite links in a channel (Admin only).' },
+      { name: '/suggestion', usage: '', description: 'Submit a feature suggestion or bug report directly to the developers.' },
+    ]
+  },
+  {
+    name: 'Giveaways & Community',
+    icon: Gift,
+    color: 'text-pink-400',
+    bg: 'bg-pink-500/10',
+    commands: [
+      { name: '/giveaway', usage: '', description: 'Open the giveaway creation menu to configure custom timers and prizes.' },
+      { name: '/gmanage', usage: '', description: 'Manage active giveaways: Edit prize/time, End early, or Reroll winners.' },
+      { name: '/reactrole', usage: '', description: 'Deploy multi-role reaction picker widgets for member self-assignment.' },
+    ]
+  },
+  {
+    name: 'General & Utility',
+    icon: Zap,
+    color: 'text-emerald-400',
+    bg: 'bg-emerald-500/10',
+    commands: [
+      { name: '/help', usage: '', description: 'Open the interactive Command Center with category selector and quick link buttons.' },
+      { name: '/ping', usage: '', description: 'Check Discord WebSocket gateway latency, shard status, and API ping.' },
+      { name: '/avatar', usage: '[@user]', description: 'View and download full-resolution user profile avatars.' },
+      { name: '/dashboard', usage: '', description: 'Get a direct link to the web dashboard at panel.fusionhub.in.' },
+      { name: '/support', usage: '', description: 'Join our official support server for 24/7 developer assistance.' },
     ]
   }
 ];
@@ -121,7 +121,7 @@ export const CommandsPage = () => {
             Back to Home
           </Link>
           
-          <div className="text-center mb-20">
+          <div className="text-center mb-16">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -129,14 +129,13 @@ export const CommandsPage = () => {
             >
               <Badge variant="primary" className="mb-6">
                 <Zap className="w-3 h-3 mr-2" />
-                Fusion Bot
+                Discord Command Suite
               </Badge>
               <Typography variant="h1" weight="black" className="mb-6">
-                Command <span className="text-blue-600">List</span>
+                Official <span className="text-blue-500">Commands</span>
               </Typography>
-              <Typography variant="lead" className="max-w-2xl mx-auto">
-                Everything you need to know about Fusion's capabilities. 
-                Use these slash commands to control your experience.
+              <Typography variant="lead" className="max-w-2xl mx-auto text-white/60">
+                Explore the complete slash command catalog available in Fusion Bot.
               </Typography>
             </motion.div>
 
@@ -145,31 +144,31 @@ export const CommandsPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
-              className="mt-12 max-w-xl mx-auto relative"
+              className="mt-10 max-w-xl mx-auto relative"
             >
-              <div className="glass rounded-2xl p-1 flex items-center border border-white/10 group focus-within:border-blue-600/50 transition-all">
+              <div className="glass rounded-2xl p-1.5 flex items-center border border-white/10 group focus-within:border-blue-500/50 transition-all">
                 <div className="pl-4">
-                  <SearchIcon className="w-5 h-5 text-white/40 group-focus-within:text-blue-600 transition-colors" />
+                  <SearchIcon className="w-5 h-5 text-white/40 group-focus-within:text-blue-400 transition-colors" />
                 </div>
                 <input 
                   type="text" 
-                  placeholder="Search for a command..." 
+                  placeholder="Search commands or keywords (e.g. ban, nuke, imagine)..." 
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full bg-transparent border-none focus:ring-0 py-3 px-4 text-white placeholder:text-white/20"
+                  className="w-full bg-transparent border-none focus:ring-0 py-2.5 px-4 text-white placeholder:text-white/20 text-sm"
                 />
               </div>
 
               {/* Category Filter */}
-              <Flex gap={2} justify="center" className="mt-8 flex-wrap">
+              <Flex gap={2} justify="center" className="mt-6 flex-wrap">
                 {['All', ...commandCategories.map(c => c.name)].map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                    className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all ${
                       activeCategory === cat 
-                        ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' 
-                        : 'bg-white/5 text-white/40 hover:bg-white/10'
+                        ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/25' 
+                        : 'bg-white/5 text-white/40 hover:bg-white/10 hover:text-white'
                     }`}
                   >
                     {cat}
@@ -179,50 +178,50 @@ export const CommandsPage = () => {
             </motion.div>
           </div>
 
-          <div className="grid grid-cols-1 gap-16">
+          <div className="grid grid-cols-1 gap-14">
             {filteredCategories.length > 0 ? (
               filteredCategories.map((category, i) => (
                 <motion.div
                   key={category.name}
-                  initial={{ opacity: 0, y: 40 }}
+                  initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.8 }}
+                  transition={{ delay: i * 0.08, duration: 0.6 }}
                 >
-                  <div className="flex items-center gap-4 mb-8">
-                    <div className={`w-12 h-12 rounded-2xl ${category.bg} flex items-center justify-center`}>
-                      <category.icon className={`w-6 h-6 ${category.color}`} />
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className={`w-11 h-11 rounded-2xl ${category.bg} flex items-center justify-center shrink-0`}>
+                      <category.icon className={`w-5 h-5 ${category.color}`} />
                     </div>
                     <div>
-                      <Typography variant="h3" weight="bold">{category.name}</Typography>
-                      <Typography variant="small" className="text-white/40">
-                        {category.commands.length} Commands Found
+                      <Typography variant="h3" weight="bold" className="text-xl text-white">{category.name}</Typography>
+                      <Typography variant="small" className="text-white/40 text-xs">
+                        {category.commands.length} Commands Available
                       </Typography>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                     {category.commands.map((cmd) => (
                       <Card 
                         key={cmd.name} 
-                        className="glass p-8 border-white/5 hover:border-blue-600/30 transition-all duration-500 group"
+                        className="glass p-6 border-white/5 hover:border-blue-500/30 transition-all duration-300 group rounded-2xl"
                       >
-                        <Flex justify="between" align="start" className="mb-4">
-                          <Typography variant="h4" weight="black" className="text-blue-600">
+                        <Flex justify="between" align="start" className="mb-3">
+                          <Typography variant="h4" weight="bold" className="text-blue-400 font-mono text-base">
                             {cmd.name}
                           </Typography>
-                          <Badge variant="outline" className="text-[10px] opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Badge variant="outline" className="text-[10px] text-white/40 border-white/10">
                             Slash
                           </Badge>
                         </Flex>
                         
                         {cmd.usage && (
-                          <div className="mb-4 font-mono text-xs bg-black/40 p-2 rounded-lg border border-white/5 text-white/40">
-                            <span className="text-blue-600/60">Usage:</span> {cmd.name} {cmd.usage}
+                          <div className="mb-3 font-mono text-xs bg-black/40 px-3 py-1.5 rounded-lg border border-white/5 text-white/50">
+                            <span className="text-blue-400/80">Usage:</span> {cmd.name} {cmd.usage}
                           </div>
                         )}
                         
-                        <Typography variant="p" className="text-white/60 text-sm leading-relaxed">
+                        <Typography variant="p" className="text-white/70 text-xs leading-relaxed">
                           {cmd.description}
                         </Typography>
                       </Card>
@@ -232,7 +231,7 @@ export const CommandsPage = () => {
               ))
             ) : (
               <div className="text-center py-20">
-                <Typography variant="h3" className="text-white/20">No commands found matching "{search}"</Typography>
+                <Typography variant="h3" className="text-white/30 text-lg">No commands found matching "{search}"</Typography>
               </div>
             )}
           </div>
