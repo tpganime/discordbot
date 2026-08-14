@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Rocket, Zap, Shield, Sparkles, LayoutDashboard, Gift, Bot, Star, Cloud } from 'lucide-react';
+import { Rocket, Zap, Shield, Sparkles, LayoutDashboard, Gift, Bot, Star, Cloud, Clock } from 'lucide-react';
 import { Container } from '../components/ui/Container';
 import { Section } from '../components/ui/Section';
 import { Typography } from '../components/ui/Typography';
@@ -11,16 +11,16 @@ import { Flex } from '../components/ui/Flex';
 const updates = [
   {
     version: 'v3.2.0',
-    date: 'August 2026',
-    title: 'Command Center & Apple Glass Dashboard Overhaul',
-    description: 'A major milestone release introducing an interactive Discord Command Center, a redesigned Apple Glass web panel, and seamless Google Drive cloud protection.',
+    date: 'August 15, 2026 at 04:30 AM UTC',
+    title: 'Command Center & Liquid Glass Dashboard Overhaul',
+    description: 'A major milestone release introducing an interactive Discord Command Center, a redesigned Liquid Glass web panel, and seamless Google Drive cloud protection.',
     type: 'Major',
     icon: Rocket,
     color: 'text-blue-500',
     bg: 'bg-blue-500/10',
     changes: [
       'Interactive /help Command Center with categorized select menu and direct link buttons.',
-      'Completely redesigned Web Dashboard with Apple Glass dark aesthetic and fluid mobile layouts.',
+      'Completely redesigned Web Dashboard with Liquid Glass dark aesthetic and fluid mobile layouts.',
       'Google Drive Disaster Recovery integration (/nukebackup & /nukerestore) for instant channel and role restoration.',
       'Enhanced Interactive Ticket System with category dropdowns and automatic transcript logging.',
       'Automated Auto-Mod protection with anti-spam rate limiting, attachment filtering, and banned words detection.',
@@ -29,7 +29,7 @@ const updates = [
   },
   {
     version: 'v3.0.0',
-    date: 'July 2026',
+    date: 'July 28, 2026 at 06:15 PM UTC',
     title: 'Interactive Giveaways & AI Creative Engine',
     description: 'Empowering communities with fully interactive giveaway workflows and state-of-the-art AI creative media tools.',
     type: 'Feature',
@@ -45,7 +45,7 @@ const updates = [
   },
   {
     version: 'v2.8.0',
-    date: 'June 2026',
+    date: 'June 18, 2026 at 11:45 AM UTC',
     title: 'Nuke Guard & Invite Tracking',
     description: 'Reinforcing community security with automated structural snapshots and granular invite analytics.',
     type: 'Security',
@@ -60,7 +60,7 @@ const updates = [
   },
   {
     version: 'v2.5.0',
-    date: 'May 2026',
+    date: 'May 12, 2026 at 02:20 PM UTC',
     title: 'Core Engine & Performance Optimization',
     description: 'Fundamental infrastructure upgrade to provide lightning-fast command response and 99.9% uptime.',
     type: 'Performance',
@@ -88,10 +88,10 @@ export const UpdatesPage = () => {
             >
               <Badge variant="primary" className="mb-8">
                 <Sparkles className="w-3 h-3 mr-2" />
-                Latest Releases
+                Release History & Changelog
               </Badge>
               <Typography variant="h1" weight="black" className="mb-8">
-                Bot <span className="text-blue-600">Updates</span>
+                System <span className="text-blue-600">Updates</span>
               </Typography>
               <Typography variant="lead" className="max-w-2xl mx-auto">
                 Explore the latest features, security enhancements, and performance upgrades released for Fusion Bot.
@@ -108,7 +108,7 @@ export const UpdatesPage = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: i * 0.1 }}
               >
-                <Card className="glass p-8 md:p-10 border-white/5 relative overflow-hidden group">
+                <Card className="liquid-glass p-8 md:p-10 border border-white/10 rounded-[32px] relative overflow-hidden group">
                   <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity pointer-events-none">
                     <update.icon className={`w-32 h-32 ${update.color}`} />
                   </div>
@@ -122,8 +122,9 @@ export const UpdatesPage = () => {
                         <Typography variant="h3" weight="bold">{update.title}</Typography>
                         <Badge variant="outline">{update.type}</Badge>
                       </Flex>
-                      <Typography variant="small" className="text-white/40">
-                        {update.version} • Released {update.date}
+                      <Typography variant="small" className="text-white/40 flex items-center gap-1.5 mt-1">
+                        <Clock className="w-3.5 h-3.5 text-blue-400" />
+                        {update.version} • {update.date}
                       </Typography>
                     </div>
                   </Flex>
@@ -133,7 +134,7 @@ export const UpdatesPage = () => {
                   </Typography>
 
                   <div className="space-y-4">
-                    <Typography variant="small" weight="bold" className="text-blue-500 uppercase tracking-widest text-xs">
+                    <Typography variant="small" weight="bold" className="text-blue-400 uppercase tracking-widest text-xs">
                       Key Highlights & Changelog
                     </Typography>
                     <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
