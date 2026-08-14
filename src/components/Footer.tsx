@@ -45,6 +45,7 @@ export const Footer = () => {
             <ul className="space-y-3 text-sm">
               <li><a href="/#features" className="text-white/50 hover:text-white transition-colors">Features</a></li>
               <li><Link to="/commands" className="text-white/50 hover:text-white transition-colors">Commands</Link></li>
+              <li><Link to="/status" className="text-white/50 hover:text-white transition-colors flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-emerald-400"></span> Bot Shard Status</Link></li>
               <li><Link to="/updates" className="text-white/50 hover:text-white transition-colors">Updates &amp; Changelog</Link></li>
               <li><a href={DASHBOARD_URL} className="text-white/50 hover:text-white transition-colors flex items-center gap-1.5">Web Dashboard <ExternalLink className="w-3 h-3" /></a></li>
             </ul>
@@ -53,6 +54,7 @@ export const Footer = () => {
           <div>
             <Typography variant="h4" weight="bold" className="mb-6 text-sm uppercase tracking-wider text-white">Legal &amp; Support</Typography>
             <ul className="space-y-3 text-sm">
+              <li><Link to="/status" className="text-white/50 hover:text-white transition-colors flex items-center gap-1.5"><Activity className="w-3.5 h-3.5 text-emerald-400" /> Real-Time Status</Link></li>
               <li><Link to="/terms" className="text-white/50 hover:text-white transition-colors flex items-center gap-1.5"><FileText className="w-3.5 h-3.5 text-blue-400" /> Terms of Service</Link></li>
               <li><Link to="/privacy" className="text-white/50 hover:text-white transition-colors flex items-center gap-1.5"><Lock className="w-3.5 h-3.5 text-blue-400" /> Privacy Policy</Link></li>
               <li><a href={SUPPORT_SERVER_URL} target="_blank" rel="noreferrer" className="text-white/50 hover:text-white transition-colors flex items-center gap-1.5"><HelpCircle className="w-3.5 h-3.5 text-blue-400" /> Discord Support <ExternalLink className="w-3 h-3" /></a></li>

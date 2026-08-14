@@ -47,10 +47,14 @@ export const Nav = () => {
             </Link>
           </Flex>
 
-          <Flex gap={8} className="hidden lg:flex">
+          <Flex gap={8} className="hidden lg:flex items-center">
             <a href="/#features" className="text-sm font-bold text-white/40 hover:text-white transition-colors">Features</a>
             <Link to="/commands" className="text-sm font-bold text-white/40 hover:text-white transition-colors">Commands</Link>
             <Link to="/updates" className="text-sm font-bold text-white/40 hover:text-white transition-colors">Updates</Link>
+            <Link to="/status" className="text-sm font-bold text-white/40 hover:text-white transition-colors flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              Status
+            </Link>
           </Flex>
 
           <Flex gap={4} className="hidden lg:flex">
@@ -93,6 +97,10 @@ export const Nav = () => {
             <a href="/#features" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors">Features</a>
             <Link to="/commands" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors">Commands</Link>
             <Link to="/updates" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors">Updates</Link>
+            <Link to="/status" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors flex items-center gap-3">
+              <span className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></span>
+              Bot Status
+            </Link>
             <button 
               onClick={() => {
                 setIsOpen(false);

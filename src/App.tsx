@@ -18,6 +18,7 @@ import { CommandsPage } from './pages/CommandsPage';
 import { PrivacyPage } from './pages/PrivacyPage';
 import { TermsPage } from './pages/TermsPage';
 import { UpdatesPage } from './pages/UpdatesPage';
+import { StatusPage } from './pages/StatusPage';
 import { CustomCursor } from './components/CustomCursor';
 
 const HomePage = () => (
@@ -77,6 +78,7 @@ const App = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/commands" element={<CommandsPage />} />
             <Route path="/updates" element={<UpdatesPage />} />
+            <Route path="/status" element={<StatusPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />
           </Routes>

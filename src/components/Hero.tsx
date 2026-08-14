@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, animate } from 'framer-motion';
-import { Shield, Zap, Sparkles, Star, Users, LayoutDashboard, Wifi } from 'lucide-react';
+import { Shield, Zap, Sparkles, Star, Users, LayoutDashboard, Wifi, ChevronRight } from 'lucide-react';
 import { Button } from './ui/Button';
 import { Container } from './ui/Container';
 import { Flex } from './ui/Flex';
@@ -126,7 +127,10 @@ export const Hero = () => {
             transition={{ duration: 0.8, ease: 'easeOut' }}
           >
             {/* Live Real-Time Status Pill */}
-            <div className="inline-flex items-center gap-3 bg-white/5 border border-white/10 px-5 py-2.5 rounded-full mb-8 backdrop-blur-md shadow-lg shadow-blue-600/10 transition-all hover:border-blue-500/30">
+            <Link 
+              to="/status" 
+              className="inline-flex items-center gap-3 bg-white/5 border border-white/10 px-5 py-2.5 rounded-full mb-8 backdrop-blur-md shadow-lg shadow-blue-600/10 transition-all hover:border-emerald-500/40 hover:bg-white/10 group cursor-pointer"
+            >
               <div className="flex items-center gap-2">
                 <span className={`w-2.5 h-2.5 rounded-full ${stats.online ? 'bg-emerald-400 shadow-[0_0_10px_#34d399]' : 'bg-rose-500 shadow-[0_0_10px_#f43f5e]'} animate-pulse`} />
                 <span className="text-xs font-bold uppercase tracking-wider text-white">
@@ -139,8 +143,10 @@ export const Hero = () => {
                 <span>{stats.ping}ms Ping</span>
               </div>
               <span className="text-white/20 hidden sm:inline">•</span>
-              <span className="text-[11px] font-mono text-emerald-400/80 hidden sm:inline">LIVE SYNC</span>
-            </div>
+              <span className="text-[11px] font-mono text-emerald-400/80 hidden sm:inline flex items-center gap-1 group-hover:text-emerald-300">
+                SHARDS LIVE <ChevronRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+              </span>
+            </Link>
 
             <Typography variant="h1" weight="black" className="mb-6 max-w-5xl mx-auto">
               Elevate Your <span className="text-blue-500">Discord</span> Experience
