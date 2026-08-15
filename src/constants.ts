@@ -1,6 +1,10 @@
 export const APP_NAME = 'FUSION HUB';
 export const BOT_NAME = 'Fusion Bot';
+export const LEGAL_ENTITY_NAME = 'CHAUDHARY TANMAY';
+export const BUSINESS_NAME = 'FUSIONBOT (FUSIONHUB)';
+export const OPERATIONAL_ADDRESS = 'FusionHub Internet & Digital Services, Delhi NCR, India';
 export const SUPPORT_EMAIL = 'support@fusionhub.in';
+export const SUPPORT_HOURS = '10:00 AM – 8:00 PM IST (Mon - Sat) | 24/7 Discord Live Support';
 export const DISCORD_INVITE_URL = 'https://discord.com/oauth2/authorize?client_id=1485375910562758967&permissions=8&integration_type=0&scope=bot';
 export const DASHBOARD_URL = 'https://panel.fusionhub.in/';
 export const SUPPORT_SERVER_URL = 'https://discord.gg/qc26U4WVfF';

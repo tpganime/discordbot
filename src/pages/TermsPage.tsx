@@ -1,11 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FileText, ArrowLeft, Shield, CheckCircle, Users, Cloud, Sparkles, Ban, AlertTriangle, Mail } from 'lucide-react';
+import { FileText, ArrowLeft, Shield, CheckCircle, Users, Cloud, Sparkles, Ban, AlertTriangle, Mail, CreditCard, Scale } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Container } from '../components/ui/Container';
 import { Section } from '../components/ui/Section';
 import { Typography } from '../components/ui/Typography';
-import { SUPPORT_EMAIL, SUPPORT_SERVER_URL, DASHBOARD_URL } from '../constants';
+import { 
+  SUPPORT_EMAIL, SUPPORT_SERVER_URL, DASHBOARD_URL, 
+  LEGAL_ENTITY_NAME, BUSINESS_NAME, OPERATIONAL_ADDRESS 
+} from '../constants';
 
 export const TermsPage = () => {
   return (
@@ -22,90 +25,124 @@ export const TermsPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="w-16 h-16 rounded-2xl bg-blue-600/20 flex items-center justify-center mb-8">
-              <FileText className="w-8 h-8 text-blue-600" />
+            <div className="w-16 h-16 rounded-2xl bg-blue-600/20 flex items-center justify-center mb-8 border border-blue-500/30">
+              <FileText className="w-8 h-8 text-blue-400" />
             </div>
-            <Typography variant="h1" weight="black" className="mb-3">
-              Terms of <span className="text-blue-600">Service</span>
+            <Typography variant="h1" weight="black" className="mb-3 text-3xl sm:text-5xl">
+              Terms of <span className="text-blue-500">Service</span>
             </Typography>
             <Typography variant="small" className="text-white/40 mb-10 block">
-              Effective & Last Updated: August 2026
+              Effective &amp; Last Updated: August 2026 • Compliant with Cashfree Payments Merchant Standards
             </Typography>
             
-            <div className="glass p-8 md:p-12 rounded-[32px] border-white/5 space-y-8">
+            <div className="glass p-8 md:p-12 rounded-[32px] border-white/5 space-y-8 text-white/80 text-sm leading-relaxed">
+              
               <section className="space-y-3">
-                <Typography variant="h4" weight="bold" className="text-blue-500 flex items-center gap-2">
-                  <Shield className="w-5 h-5" /> 1. Acceptance of Terms
+                <Typography variant="h4" weight="bold" className="text-blue-400 flex items-center gap-2 text-lg">
+                  <Shield className="w-5 h-5" /> 1. Acceptance of Terms &amp; Legal Entity
                 </Typography>
-                <Typography variant="p" className="text-white/70 leading-relaxed text-sm">
-                  By inviting <strong>Fusion Bot</strong> to your Discord server, accessing our web dashboard at <a href={DASHBOARD_URL} className="text-blue-400 hover:underline">panel.fusionhub.in</a>, or using any service provided by <strong>CHAUDHARY TANMAY</strong> / <strong>FUSIONHUB TEAM</strong>, you confirm that you have read, understood, and agreed to be legally bound by these Terms of Service and Discord's Terms of Service and Community Guidelines.
+                <Typography variant="p" className="text-white/70">
+                  By inviting <strong>Fusion Bot</strong> to your Discord server, accessing our web dashboard at <a href={DASHBOARD_URL} className="text-blue-400 hover:underline">panel.fusionhub.in</a>, or using any digital service provided by <strong>{LEGAL_ENTITY_NAME}</strong> (trading as <strong>{BUSINESS_NAME}</strong>), you confirm that you have read, understood, and agreed to be legally bound by these Terms of Service and Discord's Terms of Service and Community Guidelines.
                 </Typography>
               </section>
 
               <section className="space-y-3">
-                <Typography variant="h4" weight="bold" className="text-blue-500 flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5" /> 2. License & Service Access
+                <Typography variant="h4" weight="bold" className="text-blue-400 flex items-center gap-2 text-lg">
+                  <CheckCircle className="w-5 h-5" /> 2. License &amp; Digital SaaS Services
                 </Typography>
-                <Typography variant="p" className="text-white/70 leading-relaxed text-sm">
-                  <strong>CHAUDHARY TANMAY (FUSIONHUB TEAM)</strong> grants you a revocable, non-exclusive, non-transferable, limited license to use Fusion Bot and its web dashboard strictly in accordance with these Terms. We reserve the right to modify, update, or discontinue features or commands at any time.
+                <Typography variant="p" className="text-white/70">
+                  <strong>{LEGAL_ENTITY_NAME}</strong> grants you a revocable, non-exclusive, non-transferable, limited license to use Fusion Bot and its web dashboard strictly in accordance with these Terms. Our services include automated moderation, interactive support tickets, Google Drive cloud backup disaster recovery, reaction roles, and generative AI media.
                 </Typography>
               </section>
 
               <section className="space-y-3">
-                <Typography variant="h4" weight="bold" className="text-blue-500 flex items-center gap-2">
-                  <Users className="w-5 h-5" /> 3. Administrator Responsibilities
+                <Typography variant="h4" weight="bold" className="text-blue-400 flex items-center gap-2 text-lg">
+                  <CreditCard className="w-5 h-5" /> 3. Subscriptions, Payments &amp; Cashfree Aggregator
                 </Typography>
-                <Typography variant="p" className="text-white/70 leading-relaxed text-sm">
+                <div className="space-y-2 text-white/70">
+                  <p>• <strong>Payment Processing:</strong> All payments, subscriptions, and billing transactions on FusionHub are processed through our authorized payment partner, <strong>Cashfree Payments India</strong>, utilizing 128-bit bank grade encryption and PCI-DSS compliant secure infrastructure.</p>
+                  <p>• <strong>Pricing &amp; Currencies:</strong> Subscription fees are billed in Indian Rupees (INR ₹) or US Dollars (USD $) as displayed on our <Link to="/premium" className="text-blue-400 hover:underline">Premium Plans</Link> page. All prices are inclusive of applicable statutory taxes.</p>
+                  <p>• <strong>Digital Fulfillment:</strong> Services are provisioned electronically within 0 to 5 minutes upon payment confirmation as detailed in our <Link to="/shipping-policy" className="text-blue-400 hover:underline">Digital Delivery Policy</Link>.</p>
+                  <p>• <strong>Refunds &amp; Cancellations:</strong> Subscriptions may be canceled anytime. Refund requests are subject to our 7-day money-back policy as defined in our <Link to="/refund-policy" className="text-blue-400 hover:underline">Refund &amp; Cancellation Policy</Link>.</p>
+                </div>
+              </section>
+
+              <section className="space-y-3">
+                <Typography variant="h4" weight="bold" className="text-blue-400 flex items-center gap-2 text-lg">
+                  <Users className="w-5 h-5" /> 4. Administrator Responsibilities
+                </Typography>
+                <Typography variant="p" className="text-white/70">
                   Server administrators configuring Fusion Bot are responsible for ensuring server rules and automated moderation policies comply with applicable laws and Discord policies. Administrators are solely responsible for executing destructive actions (e.g. bans, kicks, automated rollbacks, or nuke restores).
                 </Typography>
               </section>
 
               <section className="space-y-3">
-                <Typography variant="h4" weight="bold" className="text-blue-500 flex items-center gap-2">
-                  <Cloud className="w-5 h-5" /> 4. Google Drive Cloud Backups & Nuke Guard
+                <Typography variant="h4" weight="bold" className="text-blue-400 flex items-center gap-2 text-lg">
+                  <Cloud className="w-5 h-5" /> 5. Google Drive Cloud Backups &amp; Nuke Guard
                 </Typography>
-                <Typography variant="p" className="text-white/70 leading-relaxed text-sm">
+                <Typography variant="p" className="text-white/70">
                   Fusion Bot provides disaster recovery features (including <code>/nukebackup</code> and <code>/nukerestore</code>) that snapshot server structure hierarchies (channel names, categories, roles, permissions) to Google Drive via user-authorized OAuth2 authentication. Backups are stored in user-controlled storage and are never monetized or shared.
                 </Typography>
               </section>
 
               <section className="space-y-3">
-                <Typography variant="h4" weight="bold" className="text-blue-500 flex items-center gap-2">
-                  <Sparkles className="w-5 h-5" /> 5. AI Conversation & Creative Media
+                <Typography variant="h4" weight="bold" className="text-blue-400 flex items-center gap-2 text-lg">
+                  <Sparkles className="w-5 h-5" /> 6. AI Conversation &amp; Creative Media
                 </Typography>
-                <Typography variant="p" className="text-white/70 leading-relaxed text-sm">
+                <Typography variant="p" className="text-white/70">
                   Fusion Bot includes AI conversation and generative media tools (<code>/imagine</code>). Users agree not to submit illegal, abusive, harmful, or sexually explicit prompts. AI responses are generated automatically and provided on an "as is" basis without warranties of factual accuracy.
                 </Typography>
               </section>
 
               <section className="space-y-3">
-                <Typography variant="h4" weight="bold" className="text-blue-500 flex items-center gap-2">
-                  <Ban className="w-5 h-5" /> 6. Prohibited Activities
+                <Typography variant="h4" weight="bold" className="text-blue-400 flex items-center gap-2 text-lg">
+                  <Ban className="w-5 h-5" /> 7. Prohibited Activities
                 </Typography>
-                <Typography variant="p" className="text-white/70 leading-relaxed text-sm">
-                  You agree not to reverse-engineer, exploit rate limits, attempt denial-of-service attacks, facilitate server raids or harassment, or bypass security permissions through bot vulnerabilities. Violation may result in permanent blacklisting from all Fusion Bot services.
+                <Typography variant="p" className="text-white/70">
+                  You agree not to reverse-engineer, exploit rate limits, attempt denial-of-service attacks, facilitate server raids or harassment, or bypass security permissions through bot vulnerabilities. Violation will result in immediate termination of service and permanent blacklisting without refund.
                 </Typography>
               </section>
 
               <section className="space-y-3">
-                <Typography variant="h4" weight="bold" className="text-blue-500 flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5" /> 7. Limitation of Liability
+                <Typography variant="h4" weight="bold" className="text-blue-400 flex items-center gap-2 text-lg">
+                  <Scale className="w-5 h-5" /> 8. Governing Law &amp; Jurisdiction
                 </Typography>
-                <Typography variant="p" className="text-white/70 leading-relaxed text-sm">
-                  Fusion Bot and the Dashboard are provided on an <strong>"AS IS"</strong> and <strong>"AS AVAILABLE"</strong> basis. Under no circumstances shall <strong>CHAUDHARY TANMAY</strong>, FUSIONHUB TEAM, or its developers be held liable for any damages resulting from server downtime, data loss, misconfiguration, or Discord API outages.
+                <Typography variant="p" className="text-white/70">
+                  These Terms of Service shall be governed by and construed in accordance with the laws of <strong>India</strong>. Any legal disputes or claims arising out of these Terms or use of the services shall be subject to the exclusive jurisdiction of the courts located in Delhi NCR, India.
                 </Typography>
               </section>
 
-              <section className="space-y-3 pt-4 border-t border-white/5">
-                <Typography variant="h4" weight="bold" className="text-blue-500 flex items-center gap-2">
-                  <Mail className="w-5 h-5" /> 8. Legal Representative & Support Contact
+              <section className="space-y-3">
+                <Typography variant="h4" weight="bold" className="text-blue-400 flex items-center gap-2 text-lg">
+                  <AlertTriangle className="w-5 h-5" /> 9. Limitation of Liability
                 </Typography>
-                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2">
-                  <p className="text-xs text-white/80"><strong>Owner & Legal Entity:</strong> CHAUDHARY TANMAY</p>
-                  <p className="text-xs text-white/80"><strong>Official Support Email:</strong> <a href={`mailto:${SUPPORT_EMAIL}`} className="text-blue-400 hover:underline">{SUPPORT_EMAIL}</a></p>
-                  <p className="text-xs text-white/80"><strong>Discord Support Community:</strong> <a href={SUPPORT_SERVER_URL} target="_blank" rel="noreferrer" className="text-blue-400 hover:underline">{SUPPORT_SERVER_URL}</a></p>
+                <Typography variant="p" className="text-white/70">
+                  Fusion Bot and the Dashboard are provided on an <strong>"AS IS"</strong> and <strong>"AS AVAILABLE"</strong> basis. Under no circumstances shall <strong>{LEGAL_ENTITY_NAME}</strong>, FUSIONHUB TEAM, or its developers be held liable for any indirect or consequential damages resulting from server downtime, data loss, misconfiguration, or Discord API outages.
+                </Typography>
+              </section>
+
+              <section className="space-y-3 pt-6 border-t border-white/10">
+                <Typography variant="h4" weight="bold" className="text-blue-400 flex items-center gap-2 text-lg">
+                  <Mail className="w-5 h-5" /> 10. Legal Representative &amp; Support Contact
+                </Typography>
+                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2 text-xs">
+                  <p className="text-white/80"><strong>Merchant Legal Entity:</strong> {LEGAL_ENTITY_NAME} ({BUSINESS_NAME})</p>
+                  <p className="text-white/80"><strong>Operational Address:</strong> {OPERATIONAL_ADDRESS}</p>
+                  <p className="text-white/80"><strong>Official Support Email:</strong> <a href={`mailto:${SUPPORT_EMAIL}`} className="text-blue-400 hover:underline">{SUPPORT_EMAIL}</a></p>
+                  <p className="text-white/80"><strong>Discord Support Community:</strong> <a href={SUPPORT_SERVER_URL} target="_blank" rel="noreferrer" className="text-blue-400 hover:underline">{SUPPORT_SERVER_URL}</a></p>
                 </div>
               </section>
+
+              <div className="pt-4 flex items-center justify-center gap-4 flex-wrap text-xs text-white/40 border-t border-white/5">
+                <Link to="/privacy" className="hover:text-white transition">Privacy Policy</Link>
+                <span>•</span>
+                <Link to="/refund-policy" className="hover:text-white transition">Refund Policy</Link>
+                <span>•</span>
+                <Link to="/shipping-policy" className="hover:text-white transition">Delivery Policy</Link>
+                <span>•</span>
+                <Link to="/contact" className="hover:text-white transition">Contact Us</Link>
+              </div>
+
             </div>
           </motion.div>
         </Container>
