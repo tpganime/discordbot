@@ -354,7 +354,7 @@ export const StatusPage = () => {
             transition={{ duration: 0.3 }}
             className="p-6 sm:p-8 rounded-3xl bg-[#070b14]/90 border border-white/10 backdrop-blur-2xl shadow-2xl mb-12"
           >
-            <div className="grid grid-cols-6 sm:grid-cols-9 md:grid-cols-12 lg:grid-cols-18 gap-2 sm:gap-2.5">
+            <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-12 lg:grid-cols-[repeat(16,minmax(0,1fr))] xl:grid-cols-[repeat(18,minmax(0,1fr))] gap-2 sm:gap-2.5">
               {gridTiles.map((tile) => {
                 const isOnline = tile.active && (tile.shard.status.toLowerCase() === 'ready' || tile.shard.status.toLowerCase() === 'operational');
                 const isSelected = selectedShard?.id === tile.id;
