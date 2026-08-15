@@ -76,15 +76,17 @@ const updates = [
 ];
 
 export const UpdatesPage = () => {
+  const [isMobile] = React.useState(() => (typeof window !== 'undefined' ? window.innerWidth < 1024 : false));
+
   return (
     <main className="pt-32 pb-24">
       <Section spacing="xl">
         <Container size="xl">
           <div className="text-center mb-24">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.6 }}
             >
               <Badge variant="primary" className="mb-8">
                 <Sparkles className="w-3 h-3 mr-2" />
@@ -103,10 +105,10 @@ export const UpdatesPage = () => {
             {updates.map((update, i) => (
               <motion.div
                 key={update.version}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -40 : 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
+                whileInView={isMobile ? undefined : { opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: i * 0.1 }}
+                transition={{ duration: 0.6, delay: isMobile ? 0 : i * 0.08 }}
               >
                 <Card className="liquid-glass p-8 md:p-10 border border-white/10 rounded-[32px] relative overflow-hidden group">
                   <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity pointer-events-none">

@@ -20,14 +20,14 @@ const Counter = ({ value }: { value: number | string }) => {
 };
 
 export const Hero = () => {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => (typeof window !== 'undefined' ? window.innerWidth < 1024 : false));
   const containerRef = useRef<HTMLDivElement>(null);
   
   const [stats, setStats] = useState({
     online: true,
     ping: 24,
-    servers: 17,
-    users: 642,
+    servers: 29,
+    users: 1066,
     commands: 41,
     uptime: '99.9%',
   });
@@ -133,7 +133,7 @@ export const Hero = () => {
       </div>
 
       <Container size="xl" className="relative z-10" ref={containerRef} onMouseMove={handleMouseMove} onMouseLeave={resetTilt}>
-        <Flex direction="col" gap={10} className="text-center" style={{ transform: 'perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg))', transition: 'transform 0.1s ease-out' }}>
+        <Flex direction="col" gap={10} className="text-center" style={!isMobile ? { transform: 'perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg))', transition: 'transform 0.1s ease-out' } : undefined}>
           
           <motion.div
             initial={!isMobile ? { opacity: 0, y: 20 } : { opacity: 1 }}

@@ -98,6 +98,7 @@ export const commandCategories = [
 export const CommandsPage = () => {
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
+  const [isMobile, setIsMobile] = useState(() => (typeof window !== 'undefined' ? window.innerWidth < 1024 : false));
 
   const filteredCategories = useMemo(() => {
     return commandCategories.map(cat => ({
@@ -123,9 +124,9 @@ export const CommandsPage = () => {
           
           <div className="text-center mb-16">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.5 }}
             >
               <Badge variant="primary" className="mb-6">
                 <Zap className="w-3 h-3 mr-2" />
@@ -138,34 +139,32 @@ export const CommandsPage = () => {
                 Explore the complete slash command catalog available in Fusion Bot.
               </Typography>
             </motion.div>
+          </div>
 
-            {/* Search Bar */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
+          {/* Search and Filters */}
+          <div className="max-w-3xl mx-auto mb-16 space-y-6">
+            <div className="relative">
+              <SearchIcon className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+              <input 
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search commands by name or keyword (e.g. ban, backup, ticket, ai)..."
+                className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-14 pr-6 text-white placeholder:text-white/30 focus:outline-none focus:border-blue-500/50 transition-colors backdrop-blur-md"
+              />
+            </div>
+
+            <motion.div
+              initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className="mt-10 max-w-xl mx-auto relative"
+              transition={{ delay: 0.1 }}
             >
-              <div className="glass rounded-2xl p-1.5 flex items-center border border-white/10 group focus-within:border-blue-500/50 transition-all">
-                <div className="pl-4">
-                  <SearchIcon className="w-5 h-5 text-white/40 group-focus-within:text-blue-400 transition-colors" />
-                </div>
-                <input 
-                  type="text" 
-                  placeholder="Search commands or keywords (e.g. ban, nuke, imagine)..." 
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  className="w-full bg-transparent border-none focus:ring-0 py-2.5 px-4 text-white placeholder:text-white/20 text-sm"
-                />
-              </div>
-
-              {/* Category Filter */}
-              <Flex gap={2} justify="center" className="mt-6 flex-wrap">
-                {['All', ...commandCategories.map(c => c.name)].map((cat) => (
+              <Flex gap={2} className="flex-wrap justify-center">
+                {['All', 'Moderation & Automod', 'Nuke Guard & Backups', 'AI & Creative Media', 'Server & Support Tickets', 'Roles & Verification', 'Utility & Info'].map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
-                    className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                    className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-300 ${
                       activeCategory === cat 
                         ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/25' 
                         : 'bg-white/5 text-white/40 hover:bg-white/10 hover:text-white'
@@ -183,10 +182,10 @@ export const CommandsPage = () => {
               filteredCategories.map((category, i) => (
                 <motion.div
                   key={category.name}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                  whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.08, duration: 0.6 }}
+                  transition={{ delay: isMobile ? 0 : i * 0.08, duration: 0.5 }}
                 >
                   <div className="flex items-center gap-4 mb-6">
                     <div className={`w-11 h-11 rounded-2xl ${category.bg} flex items-center justify-center shrink-0`}>

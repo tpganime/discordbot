@@ -37,7 +37,7 @@ export const AIConsole = () => {
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => (typeof window !== 'undefined' ? window.innerWidth < 1024 : false));
   const [remainingMessages, setRemainingMessages] = useState(DAILY_MAX_MESSAGES);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -127,10 +127,10 @@ export const AIConsole = () => {
       <Container size="xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div
-            initial={!isMobile ? { opacity: 0, x: -30 } : { opacity: 1 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+            whileInView={isMobile ? undefined : { opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
           >
             <Badge variant="secondary" className="mb-6">
               <Cpu className="w-3 h-3 mr-2 text-blue-400" />
@@ -168,10 +168,10 @@ export const AIConsole = () => {
           </motion.div>
 
           <motion.div
-            initial={!isMobile ? { opacity: 0, scale: 0.95 } : { opacity: 1 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={isMobile ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+            whileInView={isMobile ? undefined : { opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
             className="relative"
           >
             {/* Liquid Glass Console */}

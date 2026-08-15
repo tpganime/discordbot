@@ -25,7 +25,7 @@ const features = [
 ];
 
 export const NukeGuard = () => {
-  const [isMobile, setIsMobile] = React.useState(false);
+  const [isMobile, setIsMobile] = React.useState(() => (typeof window !== 'undefined' ? window.innerWidth < 1024 : false));
 
   React.useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
@@ -78,10 +78,10 @@ export const NukeGuard = () => {
           </motion.div>
 
           <motion.div
-            initial={!isMobile ? { opacity: 0, scale: 0.9 } : { opacity: 1 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={isMobile ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+            whileInView={isMobile ? undefined : { opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
             className="relative"
           >
             <div className="liquid-glass p-8 rounded-[40px] border-white/10 relative z-10 lg:liquid-glass-glow">
