@@ -8,3 +8,5 @@ export const COMMUNITY_URL = 'https://discord.gg/QK8KJrZv55';
 export const YOUTUBE_URL = 'https://www.youtube.com/@tpggamer1';
 export const GITHUB_URL = 'https://github.com/fusionhub122-ux';
 export const LOGO_URL = 'https://i.ibb.co/vC79Nthr/Whats-App-Image-2026-03-23-at-6-49-47-PM.jpg';
+export const TOPGG_URL = 'https://top.gg/bot/1485375910562758967';
+export const TOPGG_VOTE_URL = 'https://top.gg/bot/1485375910562758967/vote';
