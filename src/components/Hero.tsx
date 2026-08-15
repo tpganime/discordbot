@@ -161,7 +161,7 @@ export const Hero = () => {
             animate={!isMobile ? { opacity: 1, scale: 1 } : { opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.8 }}
           >
-            <Flex gap={5} justify="center" className="flex-col sm:flex-row">
+            <Flex gap={4} justify="center" className="flex-col sm:flex-row">
               <Button size="lg" onClick={() => window.open(DISCORD_INVITE_URL)}>
                 Add to Discord
                 <Zap className="w-5 h-5 ml-2 fill-current" />

@@ -179,7 +179,7 @@ export const AIConsole = () => {
               <div className="bg-[#030712]/90 rounded-[34px] p-6 md:p-8 h-[480px] flex flex-col">
                 {/* Console Header */}
                 <Flex justify="between" className="mb-6 pb-4 border-b border-white/5">
-                  <Flex gap={3}>
+                  <Flex gap={4}>
                     <div className="flex gap-1.5">
                       <div className="w-3 h-3 rounded-full bg-rose-500/60" />
                       <div className="w-3 h-3 rounded-full bg-amber-500/60" />
@@ -207,7 +207,7 @@ export const AIConsole = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4 }}
                     >
-                      <Flex gap={3} align="start" className={msg.role === 'user' ? 'justify-end' : ''}>
+                      <Flex gap={4} align="start" className={msg.role === 'user' ? 'justify-end' : ''}>
                         {msg.role === 'bot' && (
                           <div className="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-lg shadow-blue-600/30">
                             <Bot className="w-3.5 h-3.5" />
@@ -233,7 +233,7 @@ export const AIConsole = () => {
                     </motion.div>
                   ))}
                   {isTyping && (
-                    <Flex gap={3} align="start">
+                    <Flex gap={4} align="start">
                       <div className="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0">
                         <Bot className="w-3.5 h-3.5" />
                       </div>

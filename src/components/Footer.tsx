@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Bot, Github, Twitter, Youtube, MessageSquare, Globe, Mail, ExternalLink, ShieldCheck, FileText, Lock, HelpCircle } from 'lucide-react';
+import { Bot, Github, Twitter, Youtube, MessageSquare, Globe, Mail, ExternalLink, ShieldCheck, FileText, Lock, HelpCircle, Activity } from 'lucide-react';
 import { Container } from './ui/Container';
 import { Flex } from './ui/Flex';
 import { Typography } from './ui/Typography';
@@ -27,7 +27,7 @@ export const Footer = () => {
             <Typography variant="p" className="max-w-xs text-sm text-white/60 leading-relaxed">
               The premier all-in-one Discord bot for auto moderation, Google Drive backups, ticketing, and AI integration.
             </Typography>
-            <Flex gap={3}>
+            <Flex gap={4}>
               <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="w-9 h-9 rounded-xl glass flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
                 <Github className="w-4 h-4" />
               </a>
