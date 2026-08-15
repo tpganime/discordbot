@@ -9,7 +9,7 @@ import { Badge } from './ui/Badge';
 
 const TiltCard = ({ children, index }: { children: React.ReactNode; index: number }) => {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => (typeof window !== 'undefined' ? window.innerWidth < 1024 : false));
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
@@ -39,29 +39,40 @@ const TiltCard = ({ children, index }: { children: React.ReactNode; index: numbe
     y.set(0);
   };
 
+  // On mobile screens: render pure, instant, unconditionally visible CSS cards (no opacity delays or clipping)
+  if (isMobile) {
+    return (
+      <div className="h-full rounded-[32px] opacity-100 transform-none">
+        <Card className="h-full relative overflow-hidden liquid-glass border border-white/10 rounded-[32px] p-6 sm:p-8 bg-white/[0.02] hover:bg-white/[0.05] hover:border-blue-500/30">
+          <div className="relative z-10">
+            {children}
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <motion.div
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{
-        perspective: isMobile ? undefined : 1200,
-      }}
-      initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-      whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
+      style={{ perspective: 1200 }}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "0px" }}
       transition={{ 
         duration: 0.6, 
-        delay: isMobile ? 0 : index * 0.08,
+        delay: index * 0.08,
         ease: [0.21, 0.47, 0.32, 0.98]
       }}
       className="relative h-full group transform-gpu"
     >
       <motion.div
         style={{
-          rotateX: isMobile ? 0 : rotateX,
-          rotateY: isMobile ? 0 : rotateY,
-          transformStyle: isMobile ? undefined : 'preserve-3d',
+          rotateX: rotateX,
+          rotateY: rotateY,
+          transformStyle: 'preserve-3d',
         }}
         className="h-full rounded-[32px] transition-transform duration-300"
       >
@@ -124,7 +135,7 @@ export const Features = () => {
   return (
     <Section spacing="xl" id="features" className="bg-transparent pt-12 pb-32">
       <Container size="xl">
-        <div className="text-center mb-24">
+        <div className="text-center mb-16 sm:mb-24">
           <Badge variant="secondary" className="mb-6">
             <Star className="w-3 h-3 mr-2 text-blue-400" />
             Core Capabilities
@@ -137,7 +148,7 @@ export const Features = () => {
           </Typography>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {features.map((feature, i) => (
             <TiltCard key={i} index={i}>
               <div className={`w-14 h-14 rounded-2xl ${feature.bg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>

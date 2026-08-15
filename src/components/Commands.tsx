@@ -46,6 +46,8 @@ const featuredCategories = [
 ];
 
 export const Commands = () => {
+  const [isMobile] = React.useState(() => (typeof window !== 'undefined' ? window.innerWidth < 1024 : false));
+
   return (
     <Section spacing="xl" id="commands" className="pt-12 pb-32">
       <Container size="xl">
@@ -66,10 +68,10 @@ export const Commands = () => {
           {featuredCategories.map((category, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.6 }}
+              transition={{ delay: isMobile ? 0 : i * 0.1, duration: 0.5 }}
             >
               <div className="mb-6 flex items-center gap-3">
                 <div className={`w-10 h-10 rounded-xl ${category.bg} flex items-center justify-center`}>
