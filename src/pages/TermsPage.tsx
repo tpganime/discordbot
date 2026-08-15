@@ -1,70 +1,93 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FileText, ArrowLeft, Shield, CheckCircle, Users, Cloud, Sparkles, Ban, AlertTriangle, Mail, CreditCard, Scale } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { 
+  ShieldCheck, 
+  FileText, 
+  Scale, 
+  AlertTriangle, 
+  Ban, 
+  Users, 
+  Cloud, 
+  Sparkles, 
+  Mail, 
+  ArrowLeft,
+  CreditCard
+} from 'lucide-react';
 import { Container } from '../components/ui/Container';
 import { Section } from '../components/ui/Section';
 import { Typography } from '../components/ui/Typography';
 import { 
-  SUPPORT_EMAIL, SUPPORT_SERVER_URL, DASHBOARD_URL, 
-  LEGAL_ENTITY_NAME, BUSINESS_NAME, OPERATIONAL_ADDRESS 
+  APP_NAME, 
+  SUPPORT_EMAIL, 
+  SUPPORT_SERVER_URL, 
+  LEGAL_ENTITY_NAME, 
+  BUSINESS_NAME, 
+  OPERATIONAL_ADDRESS 
 } from '../constants';
 
 export const TermsPage = () => {
   return (
-    <main className="pt-32 pb-24">
-      <Section spacing="xl">
+    <main className="pt-24 pb-20">
+      <Section className="py-12">
         <Container size="md">
-          <Link to="/" className="inline-flex items-center gap-2 text-white/40 hover:text-white mb-12 transition-colors group">
+          {/* Back button */}
+          <Link 
+            to="/" 
+            className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white mb-8 transition-colors group"
+          >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Back to Home
+            <span>Back to Home</span>
           </Link>
-          
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.5 }}
+            className="space-y-12"
           >
-            <div className="w-16 h-16 rounded-2xl bg-blue-600/20 flex items-center justify-center mb-8 border border-blue-500/30">
-              <FileText className="w-8 h-8 text-blue-400" />
+            {/* Header */}
+            <div className="space-y-4 border-b border-white/10 pb-8">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono">
+                <FileText className="w-3.5 h-3.5" />
+                <span>LEGAL COMPLIANCE</span>
+              </div>
+              <Typography variant="h1" weight="black" className="text-3xl sm:text-4xl">
+                Terms of Service
+              </Typography>
+              <p className="text-sm text-white/50">
+                Effective &amp; Last Updated: August 15, 2026 • Official Merchant: <strong>{LEGAL_ENTITY_NAME}</strong>
+              </p>
             </div>
-            <Typography variant="h1" weight="black" className="mb-3 text-3xl sm:text-5xl">
-              Terms of <span className="text-blue-500">Service</span>
-            </Typography>
-            <Typography variant="small" className="text-white/40 mb-10 block">
-              Effective &amp; Last Updated: August 2026 • Compliant with Cashfree Payments Merchant Standards
-            </Typography>
-            
-            <div className="glass p-8 md:p-12 rounded-[32px] border-white/5 space-y-8 text-white/80 text-sm leading-relaxed">
+
+            {/* Document Content */}
+            <div className="space-y-8 text-sm text-white/80 leading-relaxed">
               
               <section className="space-y-3">
                 <Typography variant="h4" weight="bold" className="text-blue-400 flex items-center gap-2 text-lg">
-                  <Shield className="w-5 h-5" /> 1. Acceptance of Terms &amp; Legal Entity
+                  <Scale className="w-5 h-5" /> 1. Acceptance of Terms
                 </Typography>
                 <Typography variant="p" className="text-white/70">
-                  By inviting <strong>Fusion Bot</strong> to your Discord server, accessing our web dashboard at <a href={DASHBOARD_URL} className="text-blue-400 hover:underline">panel.fusionhub.in</a>, or using any digital service provided by <strong>{LEGAL_ENTITY_NAME}</strong> (trading as <strong>{BUSINESS_NAME}</strong>), you confirm that you have read, understood, and agreed to be legally bound by these Terms of Service and Discord's Terms of Service and Community Guidelines.
+                  By inviting <strong>{APP_NAME}</strong> to your Discord server, accessing our Web Dashboard (<code>panel.fusionhub.in</code>), or utilizing our services, you confirm that you have read, understood, and agreed to be legally bound by these Terms of Service. If you do not agree to these Terms, you must remove the Bot from your server and discontinue use of the Dashboard.
                 </Typography>
               </section>
 
               <section className="space-y-3">
                 <Typography variant="h4" weight="bold" className="text-blue-400 flex items-center gap-2 text-lg">
-                  <CheckCircle className="w-5 h-5" /> 2. License &amp; Digital SaaS Services
+                  <ShieldCheck className="w-5 h-5" /> 2. License &amp; Service Provision
                 </Typography>
                 <Typography variant="p" className="text-white/70">
-                  <strong>{LEGAL_ENTITY_NAME}</strong> grants you a revocable, non-exclusive, non-transferable, limited license to use Fusion Bot and its web dashboard strictly in accordance with these Terms. Our services include automated moderation, interactive support tickets, Google Drive cloud backup disaster recovery, reaction roles, and generative AI media.
+                  <strong>{LEGAL_ENTITY_NAME}</strong> (trading as <strong>{BUSINESS_NAME}</strong>) grants you a revocable, non-exclusive, non-transferable license to access and configure {APP_NAME} in compliance with Discord's Terms of Service and Developer Terms.
                 </Typography>
               </section>
 
               <section className="space-y-3">
                 <Typography variant="h4" weight="bold" className="text-blue-400 flex items-center gap-2 text-lg">
-                  <CreditCard className="w-5 h-5" /> 3. Subscriptions, Payments &amp; Cashfree Aggregator
+                  <CreditCard className="w-5 h-5" /> 3. Payment Processing &amp; No-Refund Policy
                 </Typography>
-                <div className="space-y-2 text-white/70">
-                  <p>• <strong>Payment Processing:</strong> All payments, subscriptions, and billing transactions on FusionHub are processed through our authorized payment partner, <strong>Cashfree Payments India</strong>, utilizing 128-bit bank grade encryption and PCI-DSS compliant secure infrastructure.</p>
-                  <p>• <strong>Pricing &amp; Currencies:</strong> Subscription fees are billed in Indian Rupees (INR ₹) or US Dollars (USD $) as displayed on our <Link to="/premium" className="text-blue-400 hover:underline">Premium Plans</Link> page. All prices are inclusive of applicable statutory taxes.</p>
-                  <p>• <strong>Digital Fulfillment:</strong> Services are provisioned electronically within 0 to 5 minutes upon payment confirmation as detailed in our <Link to="/shipping-policy" className="text-blue-400 hover:underline">Digital Delivery Policy</Link>.</p>
-                  <p>• <strong>Refunds &amp; Cancellations:</strong> Subscriptions may be canceled anytime. Refund requests are subject to our 7-day money-back policy as defined in our <Link to="/refund-policy" className="text-blue-400 hover:underline">Refund &amp; Cancellation Policy</Link>.</p>
-                </div>
+                <Typography variant="p" className="text-white/70">
+                  All subscription and digital licensing transactions are processed through <strong>Cashfree Payments India</strong>. Due to the digital nature of SaaS features and immediate electronic provisioning upon order completion, <strong>we do not provide refunds once a purchase has been completed</strong>. Users may cancel upcoming renewals at any time via the Web Dashboard before the start of the next billing cycle.
+                </Typography>
               </section>
 
               <section className="space-y-3">
@@ -136,11 +159,9 @@ export const TermsPage = () => {
               <div className="pt-4 flex items-center justify-center gap-4 flex-wrap text-xs text-white/40 border-t border-white/5">
                 <Link to="/privacy" className="hover:text-white transition">Privacy Policy</Link>
                 <span>•</span>
-                <Link to="/refund-policy" className="hover:text-white transition">Refund Policy</Link>
+                <Link to="/terms" className="hover:text-white transition">Terms of Service</Link>
                 <span>•</span>
-                <Link to="/shipping-policy" className="hover:text-white transition">Delivery Policy</Link>
-                <span>•</span>
-                <Link to="/contact" className="hover:text-white transition">Contact Us</Link>
+                <a href={`mailto:${SUPPORT_EMAIL}`} className="hover:text-white transition">Support</a>
               </div>
 
             </div>

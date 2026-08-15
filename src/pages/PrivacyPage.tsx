@@ -123,11 +123,9 @@ export const PrivacyPage = () => {
               <div className="pt-4 flex items-center justify-center gap-4 flex-wrap text-xs text-white/40 border-t border-white/5">
                 <Link to="/terms" className="hover:text-white transition">Terms of Service</Link>
                 <span>•</span>
-                <Link to="/refund-policy" className="hover:text-white transition">Refund Policy</Link>
+                <Link to="/privacy" className="hover:text-white transition">Privacy Policy</Link>
                 <span>•</span>
-                <Link to="/shipping-policy" className="hover:text-white transition">Delivery Policy</Link>
-                <span>•</span>
-                <Link to="/contact" className="hover:text-white transition">Contact Us</Link>
+                <a href={`mailto:${SUPPORT_EMAIL}`} className="hover:text-white transition">Support</a>
               </div>
 
             </div>
