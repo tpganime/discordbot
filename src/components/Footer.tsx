@@ -15,12 +15,7 @@ import {
   Lock, 
   HelpCircle, 
   Activity,
-  Star,
-  Crown,
-  RefreshCw,
-  Zap,
-  MapPin,
-  CreditCard
+  Star
 } from 'lucide-react';
 import { Container } from './ui/Container';
 import { Flex } from './ui/Flex';
@@ -35,9 +30,7 @@ import {
   GITHUB_URL,
   TOPGG_URL,
   LEGAL_ENTITY_NAME,
-  BUSINESS_NAME,
-  OPERATIONAL_ADDRESS,
-  SUPPORT_HOURS
+  BUSINESS_NAME
 } from '../constants';
 
 export const Footer = () => {
@@ -84,7 +77,7 @@ export const Footer = () => {
         </div>
 
         {/* Footer Navigation Columns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
           <div className="space-y-6">
             <Flex gap={4}>
               <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-600/20">
@@ -114,70 +107,55 @@ export const Footer = () => {
           <div>
             <Typography variant="h4" weight="bold" className="mb-6 text-sm uppercase tracking-wider text-white">Product</Typography>
             <ul className="space-y-3 text-sm">
-              <li><a href="/#features" className="text-white/50 hover:text-white transition-colors">Core Features</a></li>
-              <li><Link to="/commands" className="text-white/50 hover:text-white transition-colors">Slash Commands</Link></li>
-              <li>
-                <Link to="/premium" className="text-amber-400 hover:text-amber-300 transition-colors flex items-center gap-1.5 font-semibold">
-                  <Crown className="w-3.5 h-3.5" /> Premium Plans <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-amber-400/20 text-amber-300">Soon</span>
-                </Link>
-              </li>
-              <li><Link to="/status" className="text-white/50 hover:text-white transition-colors flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-emerald-400"></span> Live Shard Status</Link></li>
+              <li><a href="/#features" className="text-white/50 hover:text-white transition-colors">Features</a></li>
+              <li><Link to="/commands" className="text-white/50 hover:text-white transition-colors">Commands</Link></li>
+              <li><Link to="/status" className="text-white/50 hover:text-white transition-colors flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-emerald-400"></span> Bot Shard Status</Link></li>
+              <li><a href={TOPGG_URL} target="_blank" rel="noreferrer" className="text-[#ff3366] hover:text-[#ff668f] transition-colors flex items-center gap-1.5 font-semibold"><span>⭐</span> Vote on Top.gg <ExternalLink className="w-3 h-3" /></a></li>
               <li><Link to="/updates" className="text-white/50 hover:text-white transition-colors">Updates &amp; Changelog</Link></li>
               <li><a href={DASHBOARD_URL} className="text-white/50 hover:text-white transition-colors flex items-center gap-1.5">Web Dashboard <ExternalLink className="w-3 h-3" /></a></li>
             </ul>
           </div>
 
           <div>
-            <Typography variant="h4" weight="bold" className="mb-6 text-sm uppercase tracking-wider text-white">Cashfree &amp; Legal Policies</Typography>
+            <Typography variant="h4" weight="bold" className="mb-6 text-sm uppercase tracking-wider text-white">Legal &amp; Support</Typography>
             <ul className="space-y-3 text-sm">
+              <li><Link to="/status" className="text-white/50 hover:text-white transition-colors flex items-center gap-1.5"><Activity className="w-3.5 h-3.5 text-emerald-400" /> Real-Time Status</Link></li>
               <li><Link to="/terms" className="text-white/50 hover:text-white transition-colors flex items-center gap-1.5"><FileText className="w-3.5 h-3.5 text-blue-400" /> Terms of Service</Link></li>
               <li><Link to="/privacy" className="text-white/50 hover:text-white transition-colors flex items-center gap-1.5"><Lock className="w-3.5 h-3.5 text-blue-400" /> Privacy Policy</Link></li>
-              <li><Link to="/refund-policy" className="text-white/50 hover:text-white transition-colors flex items-center gap-1.5"><RefreshCw className="w-3.5 h-3.5 text-emerald-400" /> Refund &amp; Cancellation</Link></li>
-              <li><Link to="/shipping-policy" className="text-white/50 hover:text-white transition-colors flex items-center gap-1.5"><Zap className="w-3.5 h-3.5 text-blue-400" /> Digital Delivery Policy</Link></li>
-              <li><Link to="/contact" className="text-white/50 hover:text-white transition-colors flex items-center gap-1.5"><Mail className="w-3.5 h-3.5 text-indigo-400" /> Contact Us &amp; Grievance</Link></li>
-              <li><a href={SUPPORT_SERVER_URL} target="_blank" rel="noreferrer" className="text-white/50 hover:text-white transition-colors flex items-center gap-1.5"><HelpCircle className="w-3.5 h-3.5 text-blue-400" /> Discord Support 24/7 <ExternalLink className="w-3 h-3" /></a></li>
+              <li><a href={SUPPORT_SERVER_URL} target="_blank" rel="noreferrer" className="text-white/50 hover:text-white transition-colors flex items-center gap-1.5"><HelpCircle className="w-3.5 h-3.5 text-blue-400" /> Discord Support <ExternalLink className="w-3 h-3" /></a></li>
+              <li><a href={TOPGG_URL} target="_blank" rel="noreferrer" className="text-white/50 hover:text-white transition-colors flex items-center gap-1.5"><Star className="w-3.5 h-3.5 text-yellow-400" /> Review on Top.gg <ExternalLink className="w-3 h-3" /></a></li>
             </ul>
           </div>
 
           <div>
-            <Typography variant="h4" weight="bold" className="mb-6 text-sm uppercase tracking-wider text-white">Merchant Details</Typography>
-            <ul className="space-y-3 text-xs text-white/60 leading-relaxed">
-              <li className="flex items-center gap-2">
-                <span className="text-white/40">Entity:</span>
-                <strong className="text-white">{LEGAL_ENTITY_NAME}</strong>
+            <Typography variant="h4" weight="bold" className="mb-6 text-sm uppercase tracking-wider text-white">Official Contact</Typography>
+            <ul className="space-y-4 text-sm">
+              <li className="flex items-center gap-3 group">
+                <div className="w-9 h-9 rounded-xl glass flex items-center justify-center text-blue-400">
+                  <Mail className="w-4 h-4" />
+                </div>
+                <a href={`mailto:${SUPPORT_EMAIL}`} className="text-white/60 hover:text-white transition-colors">{SUPPORT_EMAIL}</a>
               </li>
-              <li className="flex items-center gap-2">
-                <span className="text-white/40">Trade Name:</span>
-                <strong className="text-white">{BUSINESS_NAME}</strong>
+              <li className="flex items-center gap-3 group">
+                <div className="w-9 h-9 rounded-xl glass flex items-center justify-center text-blue-400">
+                  <Globe className="w-4 h-4" />
+                </div>
+                <span className="text-white/60">bot.fusionhub.in</span>
               </li>
-              <li className="flex items-start gap-2">
-                <MapPin className="w-3.5 h-3.5 text-blue-400 shrink-0 mt-0.5" />
-                <span>{OPERATIONAL_ADDRESS}</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <Mail className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-                <a href={`mailto:${SUPPORT_EMAIL}`} className="text-blue-400 hover:underline">{SUPPORT_EMAIL}</a>
-              </li>
-              <li className="pt-2 border-t border-white/5 text-[11px] text-white/40">
-                Payment Processing via <strong>Cashfree Payments India</strong>
+              <li className="pt-2 text-xs text-white/40">
+                Legal Representative: <strong className="text-white/80">{LEGAL_ENTITY_NAME}</strong>
               </li>
             </ul>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/40">
+        <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/40">
           <p>© 2026 {BUSINESS_NAME}. All rights reserved.</p>
-          <div className="flex items-center gap-6 flex-wrap justify-center text-[11px]">
-            <Link to="/terms" className="hover:text-white transition">Terms</Link>
-            <span>•</span>
-            <Link to="/privacy" className="hover:text-white transition">Privacy</Link>
-            <span>•</span>
-            <Link to="/refund-policy" className="hover:text-white transition">Refunds</Link>
-            <span>•</span>
-            <Link to="/shipping-policy" className="hover:text-white transition">Delivery</Link>
-            <span>•</span>
-            <Link to="/contact" className="hover:text-white transition">Contact Us</Link>
+          <div className="flex items-center gap-6">
+            <Link to="/privacy" className="hover:text-white transition">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-white transition">Terms of Service</Link>
+            <a href={`mailto:${SUPPORT_EMAIL}`} className="hover:text-white transition">Support</a>
           </div>
         </div>
       </Container>

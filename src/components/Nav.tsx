@@ -71,10 +71,6 @@ export const Nav = () => {
             <a href="/#features" className="text-sm font-bold text-white/40 hover:text-white transition-colors">Features</a>
             <Link to="/commands" className="text-sm font-bold text-white/40 hover:text-white transition-colors">Commands</Link>
             <Link to="/updates" className="text-sm font-bold text-white/40 hover:text-white transition-colors">Updates</Link>
-            <Link to="/premium" className="text-sm font-bold text-white/40 hover:text-white transition-colors flex items-center gap-1.5 group">
-              <span className="text-amber-400 group-hover:text-amber-300">Premium</span>
-              <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-full bg-amber-400/15 text-amber-300 border border-amber-400/30">Soon</span>
-            </Link>
             <Link to="/status" className="text-sm font-bold text-white/40 hover:text-white transition-colors flex items-center gap-1.5">
               <span className={`w-2 h-2 rounded-full ${isBotOnline ? 'bg-emerald-400 animate-pulse shadow-[0_0_6px_#34d399]' : 'bg-rose-500 shadow-[0_0_6px_#f43f5e]'}`}></span>
               <span className={isBotOnline ? 'text-white/40 hover:text-white' : 'text-rose-400/80 hover:text-rose-300'}>Status</span>
@@ -121,10 +117,6 @@ export const Nav = () => {
             <a href="/#features" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors">Features</a>
             <Link to="/commands" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors">Commands</Link>
             <Link to="/updates" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors">Updates</Link>
-            <Link to="/premium" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-amber-400 hover:text-amber-300 transition-colors flex items-center gap-3">
-              <span>Premium</span>
-              <span className="text-xs font-bold uppercase px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30">Coming Soon</span>
-            </Link>
             <Link to="/status" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors flex items-center gap-3">
               <span className={`w-3 h-3 rounded-full ${isBotOnline ? 'bg-emerald-400 animate-pulse' : 'bg-rose-500'}`}></span>
               <span>Bot Status</span>

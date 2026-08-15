@@ -2,20 +2,16 @@
 // 🚀 FUSIONHUB MOBILE FULL-WEBSITE PWA CACHE WORKER
 // ==========================================
 
-const CACHE_NAME = 'fusionhub-mobile-v2';
+const CACHE_NAME = 'fusionhub-mobile-v3';
 
 // Core routes and assets to cache immediately on mobile
 const PRECACHE_URLS = [
   '/',
-  '/premium',
   '/commands',
   '/status',
   '/updates',
   '/terms',
   '/privacy',
-  '/refund-policy',
-  '/shipping-policy',
-  '/contact',
   '/index.html',
   'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap',
   'https://i.ibb.co/vC79Nthr/Whats-App-Image-2026-03-23-at-6-49-47-PM.jpg'

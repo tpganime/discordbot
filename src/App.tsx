@@ -12,10 +12,6 @@ import { PrivacyPage } from './pages/PrivacyPage';
 import { TermsPage } from './pages/TermsPage';
 import { UpdatesPage } from './pages/UpdatesPage';
 import { StatusPage } from './pages/StatusPage';
-import { PremiumPage } from './pages/PremiumPage';
-import { RefundPolicyPage } from './pages/RefundPolicyPage';
-import { ShippingPolicyPage } from './pages/ShippingPolicyPage';
-import { ContactUsPage } from './pages/ContactUsPage';
 import { CustomCursor } from './components/CustomCursor';
 
 const HomePage = () => (
@@ -83,12 +79,8 @@ const App = () => {
             <Route path="/commands" element={<CommandsPage />} />
             <Route path="/updates" element={<UpdatesPage />} />
             <Route path="/status" element={<StatusPage />} />
-            <Route path="/premium" element={<PremiumPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />
-            <Route path="/refund-policy" element={<RefundPolicyPage />} />
-            <Route path="/shipping-policy" element={<ShippingPolicyPage />} />
-            <Route path="/contact" element={<ContactUsPage />} />
           </Routes>
           <Footer />
         </div>
