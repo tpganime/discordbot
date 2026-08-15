@@ -39,16 +39,16 @@ export const NukeGuard = () => {
       {/* Background Decorative Tab */}
       <div className="absolute top-[20%] right-[-5%] w-[400px] h-[600px] liquid-glass rounded-[80px] opacity-20 rotate-[15deg] blur-[2px] pointer-events-none hidden lg:block" />
       
-      {/* Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none" />
+      {/* Background Glow (Desktop Only) */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-600/10 blur-[90px] rounded-full pointer-events-none hidden md:block" />
       
       <Container size="xl">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <motion.div
-            initial={!isMobile ? { opacity: 0, x: -30 } : { opacity: 1 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+            whileInView={isMobile ? undefined : { opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
           >
             <Badge variant="primary" className="mb-8">
               <ShieldAlert className="w-3 h-3 mr-2" />

@@ -119,16 +119,16 @@ export const Hero = () => {
   };
 
   return (
-    <Section spacing="xl" className="min-h-screen flex items-center justify-center pt-32 pb-36 relative overflow-hidden">
-      {/* Background Parallax Glow Elements */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+    <Section spacing="xl" className="min-h-screen flex items-center justify-center pt-28 sm:pt-32 pb-24 sm:pb-36 relative overflow-hidden">
+      {/* Background Parallax Glow Elements (Desktop Only for buttery smooth mobile touch scrolling) */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none hidden md:block">
         <motion.div
           style={{ y: !isMobile ? y1 : 0, rotate: !isMobile ? rotate : 0 }}
-          className="absolute top-[-10%] right-[-5%] w-[300px] h-[300px] lg:w-[600px] lg:h-[600px] bg-blue-600/20 blur-[80px] lg:blur-[120px] rounded-full"
+          className="absolute top-[-10%] right-[-5%] w-[400px] lg:w-[600px] h-[400px] lg:h-[600px] bg-blue-600/15 blur-[100px] rounded-full transform-gpu"
         />
         <motion.div
           style={{ y: !isMobile ? y2 : 0, rotate: !isMobile ? -rotate : 0 }}
-          className="absolute bottom-[-10%] left-[-5%] w-[250px] h-[250px] lg:w-[500px] lg:h-[500px] bg-blue-600/10 blur-[60px] lg:blur-[100px] rounded-full"
+          className="absolute bottom-[-10%] left-[-5%] w-[350px] lg:w-[500px] h-[350px] lg:h-[500px] bg-blue-600/10 blur-[80px] rounded-full transform-gpu"
         />
       </div>
 

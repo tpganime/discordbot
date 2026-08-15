@@ -47,15 +47,15 @@ const TiltCard = ({ children, index }: { children: React.ReactNode; index: numbe
       style={{
         perspective: isMobile ? undefined : 1200,
       }}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ 
-        duration: 0.7, 
-        delay: index * 0.1,
+        duration: 0.6, 
+        delay: isMobile ? 0 : index * 0.08,
         ease: [0.21, 0.47, 0.32, 0.98]
       }}
-      className="relative h-full group"
+      className="relative h-full group transform-gpu"
     >
       <motion.div
         style={{
@@ -63,9 +63,9 @@ const TiltCard = ({ children, index }: { children: React.ReactNode; index: numbe
           rotateY: isMobile ? 0 : rotateY,
           transformStyle: isMobile ? undefined : 'preserve-3d',
         }}
-        className="h-full rounded-[32px] transition-all duration-300"
+        className="h-full rounded-[32px] transition-transform duration-300"
       >
-        <Card className="h-full relative overflow-hidden liquid-glass border border-white/10 rounded-[32px] p-8 transition-colors duration-500 bg-white/[0.02] hover:bg-white/[0.05] hover:border-blue-500/30">
+        <Card className="h-full relative overflow-hidden liquid-glass border border-white/10 rounded-[32px] p-6 sm:p-8 bg-white/[0.02] hover:bg-white/[0.05] hover:border-blue-500/30">
           <div className="relative z-10">
             {children}
           </div>
