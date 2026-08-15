@@ -18,7 +18,7 @@ export default async function handler(req: any, res: any) {
   for (const url of endpoints) {
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 3500);
+      const timeoutId = setTimeout(() => controller.abort(), 2500);
       const start = Date.now();
       const panelRes = await fetch(url, {
         signal: controller.signal,
@@ -28,8 +28,16 @@ export default async function handler(req: any, res: any) {
       const latency = Date.now() - start;
 
       if (panelRes.ok) {
-        const data = await panelRes.json();
-        if (data && typeof data === 'object') {
+        const text = await panelRes.text();
+        let data: any = null;
+        try {
+          data = JSON.parse(text);
+        } catch (err) {
+          // HTML response (e.g. Cloudflare error page 521), skip to next
+          continue;
+        }
+
+        if (data && typeof data === 'object' && data.online !== false) {
           const totalGuilds = data.servers != null ? data.servers : 29;
           const neededShards = Math.max(1, Math.ceil(totalGuilds / SHARD_CAPACITY));
 
@@ -53,7 +61,7 @@ export default async function handler(req: any, res: any) {
           }
 
           return res.status(200).json({
-            online: data.online !== false,
+            online: true,
             status: data.status || 'Ready',
             ping: data.ping && data.ping > 0 ? data.ping : Math.min(latency, 24),
             avgLatency: data.avgLatency || data.ping || Math.min(latency, 24),
@@ -87,51 +95,43 @@ export default async function handler(req: any, res: any) {
     }
   }
 
-  // Fallback state (e.g. 29 servers on Shard 0)
-  const defaultServers = 29;
-  const neededFallbackShards = Math.max(1, Math.ceil(defaultServers / SHARD_CAPACITY));
-  const fallbackShards = [];
-  let remFallback = defaultServers;
-
-  for (let i = 0; i < neededFallbackShards; i++) {
-    const count = Math.min(SHARD_CAPACITY, remFallback);
-    remFallback = Math.max(0, remFallback - SHARD_CAPACITY);
-    fallbackShards.push({
-      id: i,
-      clusterId: 0,
-      status: 'Ready',
-      ping: 23,
-      servers: count,
-      maxCapacity: SHARD_CAPACITY,
-      fillPercentage: Math.min(100, Math.round((count / SHARD_CAPACITY) * 1000) / 10)
-    });
-  }
-
+  // If all live endpoints fail, the bot server is OFFLINE!
   return res.status(200).json({
-    online: true,
-    status: 'Ready',
-    ping: 23,
-    avgLatency: 23,
-    servers: defaultServers,
+    online: false,
+    status: 'Offline',
+    ping: 0,
+    avgLatency: 0,
+    servers: 29,
     users: 1066,
     commands: 41,
-    uptime: '2h 31m',
-    uptimePercent: '99.99%',
+    uptime: 'Offline',
+    uptimeSeconds: 0,
+    uptimePercent: '0.00%',
     shardCapacity: SHARD_CAPACITY,
     clusters: [
       {
         id: 0,
         name: 'Cluster 0 (Primary US-East)',
-        status: 'Operational',
-        shardsCount: fallbackShards.length,
-        avgPing: 23,
-        servers: defaultServers
+        status: 'Offline',
+        shardsCount: 1,
+        avgPing: 0,
+        servers: 29
       }
     ],
-    shards: fallbackShards,
-    totalShards: fallbackShards.length,
-    operationalShards: fallbackShards.length,
+    shards: [
+      {
+        id: 0,
+        clusterId: 0,
+        status: 'Offline',
+        ping: 0,
+        servers: 29,
+        maxCapacity: SHARD_CAPACITY,
+        fillPercentage: 2.9
+      }
+    ],
+    totalShards: 1,
+    operationalShards: 0,
     timestamp: Date.now(),
-    source: 'cached'
+    source: 'live-probe-offline'
   });
 }

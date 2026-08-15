@@ -11,7 +11,27 @@ import { APP_NAME, DISCORD_INVITE_URL, LOGO_URL, DASHBOARD_URL, GITHUB_URL } fro
 export const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showComingSoon, setShowComingSoon] = useState(false);
+  const [isBotOnline, setIsBotOnline] = useState(true);
   const { scrollY } = useScroll();
+
+  useEffect(() => {
+    const checkStatus = async () => {
+      try {
+        const res = await fetch('/api/stats', { signal: AbortSignal.timeout(2500) });
+        if (res.ok) {
+          const data = await res.json();
+          setIsBotOnline(data.online !== false && data.status?.toLowerCase() !== 'offline');
+        } else {
+          setIsBotOnline(false);
+        }
+      } catch (e) {
+        setIsBotOnline(false);
+      }
+    };
+    checkStatus();
+    const interval = setInterval(checkStatus, 5000);
+    return () => clearInterval(interval);
+  }, []);
   
   const navBg = useTransform(
     scrollY,
@@ -52,8 +72,8 @@ export const Nav = () => {
             <Link to="/commands" className="text-sm font-bold text-white/40 hover:text-white transition-colors">Commands</Link>
             <Link to="/updates" className="text-sm font-bold text-white/40 hover:text-white transition-colors">Updates</Link>
             <Link to="/status" className="text-sm font-bold text-white/40 hover:text-white transition-colors flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              Status
+              <span className={`w-2 h-2 rounded-full ${isBotOnline ? 'bg-emerald-400 animate-pulse shadow-[0_0_6px_#34d399]' : 'bg-rose-500 shadow-[0_0_6px_#f43f5e]'}`}></span>
+              <span className={isBotOnline ? 'text-white/40 hover:text-white' : 'text-rose-400/80 hover:text-rose-300'}>Status</span>
             </Link>
           </Flex>
 
@@ -98,8 +118,9 @@ export const Nav = () => {
             <Link to="/commands" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors">Commands</Link>
             <Link to="/updates" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors">Updates</Link>
             <Link to="/status" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors flex items-center gap-3">
-              <span className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></span>
-              Bot Status
+              <span className={`w-3 h-3 rounded-full ${isBotOnline ? 'bg-emerald-400 animate-pulse' : 'bg-rose-500'}`}></span>
+              <span>Bot Status</span>
+              {!isBotOnline && <span className="text-xs bg-rose-500/20 text-rose-400 px-2 py-0.5 rounded font-mono">Offline</span>}
             </Link>
             <button 
               onClick={() => {

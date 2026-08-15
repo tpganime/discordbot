@@ -53,28 +53,42 @@ export const Hero = () => {
           const startTime = Date.now();
           const res = await fetch(endpoint, {
             headers: { 'Accept': 'application/json' },
-            signal: AbortSignal.timeout(3000)
+            signal: AbortSignal.timeout(2500)
           });
           const latency = Date.now() - startTime;
 
           if (res.ok) {
-            const data = await res.json();
-            if (data && typeof data === 'object') {
-              setStats({
-                online: data.online !== false,
-                ping: data.ping && data.ping > 0 ? data.ping : Math.min(latency, 45),
-                servers: data.servers != null ? data.servers : 17,
-                users: data.users != null ? data.users : 642,
-                commands: data.commands || 41,
-                uptime: data.uptime || '99.9%',
-              });
-              return; // Successfully updated from live bot!
+            const text = await res.text();
+            try {
+              const data = JSON.parse(text);
+              if (data && typeof data === 'object') {
+                const isBotOnline = data.online !== false && data.status?.toLowerCase() !== 'offline';
+                setStats({
+                  online: isBotOnline,
+                  ping: isBotOnline ? (data.ping && data.ping > 0 ? data.ping : Math.min(latency, 45)) : 0,
+                  servers: data.servers != null ? data.servers : 29,
+                  users: data.users != null ? data.users : 1066,
+                  commands: data.commands || 41,
+                  uptime: isBotOnline ? (data.uptime || '2h 31m') : 'Offline',
+                });
+                return; // Successfully updated!
+              }
+            } catch (err) {
+              // HTML error page (e.g. 521), skip
             }
           }
         } catch (err) {
           // Try next endpoint
         }
       }
+
+      // If all endpoints failed or returned errors, the bot is OFFLINE
+      setStats((prev) => ({
+        ...prev,
+        online: false,
+        ping: 0,
+        uptime: 'Offline'
+      }));
     };
 
     fetchLiveStats();
@@ -129,22 +143,28 @@ export const Hero = () => {
             {/* Live Real-Time Status Pill */}
             <Link 
               to="/status" 
-              className="inline-flex items-center gap-3 bg-white/5 border border-white/10 px-5 py-2.5 rounded-full mb-8 backdrop-blur-md shadow-lg shadow-blue-600/10 transition-all hover:border-emerald-500/40 hover:bg-white/10 group cursor-pointer"
+              className={`inline-flex items-center gap-3 bg-white/5 border px-5 py-2.5 rounded-full mb-8 backdrop-blur-md shadow-lg transition-all group cursor-pointer ${
+                stats.online 
+                  ? 'border-white/10 hover:border-emerald-500/40 hover:bg-white/10 shadow-blue-600/10' 
+                  : 'border-rose-500/30 hover:border-rose-500/60 hover:bg-rose-950/20 shadow-rose-600/10'
+              }`}
             >
               <div className="flex items-center gap-2">
                 <span className={`w-2.5 h-2.5 rounded-full ${stats.online ? 'bg-emerald-400 shadow-[0_0_10px_#34d399]' : 'bg-rose-500 shadow-[0_0_10px_#f43f5e]'} animate-pulse`} />
-                <span className="text-xs font-bold uppercase tracking-wider text-white">
-                  {stats.online ? 'BOT ONLINE' : 'BOT CONNECTING'}
+                <span className={`text-xs font-bold uppercase tracking-wider ${stats.online ? 'text-white' : 'text-rose-300'}`}>
+                  {stats.online ? 'BOT ONLINE' : 'BOT OFFLINE'}
                 </span>
               </div>
               <span className="text-white/20">•</span>
-              <div className="flex items-center gap-1.5 text-xs font-mono text-blue-400">
+              <div className={`flex items-center gap-1.5 text-xs font-mono ${stats.online ? 'text-blue-400' : 'text-rose-400'}`}>
                 <Wifi className="w-3.5 h-3.5 animate-pulse" />
-                <span>{stats.ping}ms Ping</span>
+                <span>{stats.online ? `${stats.ping}ms Ping` : '0ms (Offline)'}</span>
               </div>
               <span className="text-white/20 hidden sm:inline">•</span>
-              <span className="text-[11px] font-mono text-emerald-400/80 hidden sm:inline flex items-center gap-1 group-hover:text-emerald-300">
-                SHARDS LIVE <ChevronRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+              <span className={`text-[11px] font-mono hidden sm:inline flex items-center gap-1 ${
+                stats.online ? 'text-emerald-400/80 group-hover:text-emerald-300' : 'text-rose-400/80 group-hover:text-rose-300'
+              }`}>
+                {stats.online ? 'SHARDS LIVE' : 'UNREACHABLE'} <ChevronRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
               </span>
             </Link>
 
