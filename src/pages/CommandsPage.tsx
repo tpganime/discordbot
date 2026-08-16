@@ -49,13 +49,14 @@ export const commandCategories = [
     ]
   },
   {
-    name: 'Nuke Guard & Backups',
+    name: 'Nuke Guard & Cloud Backups',
     icon: ShieldAlert,
     color: 'text-orange-400',
     bg: 'bg-orange-500/10',
     commands: [
-      { name: '/nukebackup', usage: '', description: 'Save a complete snapshot of all channels, categories, and roles to Google Drive.' },
-      { name: '/nukerestore', usage: '', description: 'Restore entire server hierarchy after a raid or nuke attack (Owner only).' },
+      { name: '/nukebackup', usage: '', description: 'Save a complete snapshot of all channels, categories, and roles to Google Drive (3 free uses, then daily Top.gg vote).' },
+      { name: '/autobackup', usage: '<on / off>', description: 'Enable or disable automated 24-hour cloud backups to Google Drive (Top.gg daily vote required on enable).' },
+      { name: '/nukerestore', usage: '', description: 'Restore entire server hierarchy after a raid or nuke attack (Server Owner only).' },
       { name: '/driveauth', usage: '', description: 'Authorize Google Drive via OAuth2 for automated cloud backups.' },
     ]
   },
