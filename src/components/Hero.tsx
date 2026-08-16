@@ -1,22 +1,24 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { 
+  Zap, 
+  Users, 
+  Shield, 
+  Star, 
+  LayoutDashboard, 
+  Wifi,
+  ChevronRight
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { motion, useScroll, useTransform, animate } from 'framer-motion';
-import { Shield, Zap, Sparkles, Star, Users, LayoutDashboard, Wifi, ChevronRight } from 'lucide-react';
-import { Button } from './ui/Button';
 import { Container } from './ui/Container';
 import { Flex } from './ui/Flex';
-import { Section } from './ui/Section';
 import { Typography } from './ui/Typography';
+import { Button } from './ui/Button';
+import { Section } from './ui/Section';
 import { DISCORD_INVITE_URL, DASHBOARD_URL } from '../constants';
 
-const Counter = ({ value }: { value: number | string }) => {
-  const [displayValue, setDisplayValue] = useState(value);
-
-  useEffect(() => {
-    setDisplayValue(value);
-  }, [value]);
-
-  return <span>{displayValue}</span>;
+const Counter = ({ value }: { value: string }) => {
+  return <span>{value}</span>;
 };
 
 export const Hero = () => {
@@ -28,7 +30,7 @@ export const Hero = () => {
     ping: 24,
     servers: 29,
     users: 1066,
-    commands: 41,
+    commands: 52,
     uptime: '99.9%',
   });
 
@@ -68,65 +70,54 @@ export const Hero = () => {
                   ping: isBotOnline ? (data.ping && data.ping > 0 ? data.ping : Math.min(latency, 45)) : 0,
                   servers: data.servers != null ? data.servers : 29,
                   users: data.users != null ? data.users : 1066,
-                  commands: data.commands || 41,
-                  uptime: isBotOnline ? (data.uptime || '2h 31m') : 'Offline',
+                  commands: data.commands != null ? data.commands : 52,
+                  uptime: data.uptime || '99.9%',
                 });
-                return; // Successfully updated!
+                return;
               }
-            } catch (err) {
-              // HTML error page (e.g. 521), skip
-            }
+            } catch (_) {}
           }
-        } catch (err) {
-          // Try next endpoint
-        }
+        } catch (_) {}
       }
-
-      // If all endpoints failed or returned errors, the bot is OFFLINE
-      setStats((prev) => ({
-        ...prev,
-        online: false,
-        ping: 0,
-        uptime: 'Offline'
-      }));
     };
 
     fetchLiveStats();
-    // Poll every 4 seconds for instant real-time live ping & server count sync
-    const interval = setInterval(fetchLiveStats, 4000);
+    const interval = setInterval(fetchLiveStats, 30000);
     return () => clearInterval(interval);
   }, []);
 
+  // Scroll animations for desktop
   const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 500], [0, 200]);
-  const y2 = useTransform(scrollY, [0, 500], [0, -150]);
-  const rotate = useTransform(scrollY, [0, 1000], [0, 360]);
+  const y1 = useTransform(scrollY, [0, 500], [0, 100]);
+  const y2 = useTransform(scrollY, [0, 500], [0, -100]);
+  const rotate = useTransform(scrollY, [0, 500], [0, 10]);
 
+  // Mouse tilt effect for desktop
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (isMobile || !containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width;
-    const y = (e.clientY - rect.top) / rect.height;
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
     
-    containerRef.current.style.setProperty('--tilt-x', `${(y - 0.5) * 10}deg`);
-    containerRef.current.style.setProperty('--tilt-y', `${(x - 0.5) * -10}deg`);
+    containerRef.current.style.setProperty('--tilt-x', `${-y * 0.015}deg`);
+    containerRef.current.style.setProperty('--tilt-y', `${x * 0.015}deg`);
   };
 
   const resetTilt = () => {
-    if (!containerRef.current) return;
-    containerRef.current.style.setProperty('--tilt-x', '0deg');
-    containerRef.current.style.setProperty('--tilt-y', '0deg');
+    if (isMobile || !containerRef.current) return;
+    containerRef.current.style.setProperty('--tilt-x', `0deg`);
+    containerRef.current.style.setProperty('--tilt-y', `0deg`);
   };
 
   return (
-    <Section spacing="xl" className="min-h-screen flex items-center justify-center pt-28 sm:pt-32 pb-24 sm:pb-36 relative overflow-hidden">
-      {/* Background Parallax Glow Elements (Desktop Only for buttery smooth mobile touch scrolling) */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none hidden md:block">
-        <motion.div
+    <Section spacing="none" className="relative min-h-[90vh] flex items-center justify-center pt-32 pb-20 overflow-hidden">
+      {/* Dynamic Background Glows */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <motion.div 
           style={{ y: !isMobile ? y1 : 0, rotate: !isMobile ? rotate : 0 }}
-          className="absolute top-[-10%] right-[-5%] w-[400px] lg:w-[600px] h-[400px] lg:h-[600px] bg-blue-600/15 blur-[100px] rounded-full transform-gpu"
+          className="absolute top-[-10%] right-[-5%] w-[400px] lg:w-[600px] h-[400px] lg:h-[600px] bg-indigo-600/15 blur-[90px] rounded-full transform-gpu"
         />
-        <motion.div
+        <motion.div 
           style={{ y: !isMobile ? y2 : 0, rotate: !isMobile ? -rotate : 0 }}
           className="absolute bottom-[-10%] left-[-5%] w-[350px] lg:w-[500px] h-[350px] lg:h-[500px] bg-blue-600/10 blur-[80px] rounded-full transform-gpu"
         />
@@ -143,7 +134,7 @@ export const Hero = () => {
             {/* Live Real-Time Status Pill */}
             <Link 
               to="/status" 
-              className={`inline-flex items-center gap-3 bg-white/5 border px-5 py-2.5 rounded-full mb-8 backdrop-blur-md shadow-lg transition-all group cursor-pointer ${
+              className={`inline-flex items-center gap-3 bg-white/5 border px-5 py-2.5 rounded-full mb-6 backdrop-blur-md shadow-lg transition-all group cursor-pointer ${
                 stats.online 
                   ? 'border-white/10 hover:border-emerald-500/40 hover:bg-white/10 shadow-blue-600/10' 
                   : 'border-rose-500/30 hover:border-rose-500/60 hover:bg-rose-950/20 shadow-rose-600/10'
@@ -167,6 +158,13 @@ export const Hero = () => {
                 {stats.online ? 'SHARDS LIVE' : 'UNREACHABLE'} <ChevronRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
               </span>
             </Link>
+
+            {/* Official Prefixes Banner */}
+            <div className="flex justify-center mb-6">
+              <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/25 px-4 py-1.5 rounded-full backdrop-blur-md text-xs font-mono font-bold text-blue-300 shadow-sm">
+                <span className="text-white/50 font-sans font-semibold">Prefixes:</span> / ! @Fusion Bot
+              </div>
+            </div>
 
             <Typography variant="h1" weight="black" className="mb-6 max-w-5xl mx-auto">
               Elevate Your <span className="text-blue-500">Discord</span> Experience
