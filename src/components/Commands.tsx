@@ -27,9 +27,9 @@ const featuredCategories = [
     color: 'text-amber-400',
     bg: 'bg-amber-500/10',
     commands: [
-      { name: '/nukebackup', description: 'Snapshot all channels and roles directly to Google Drive.' },
-      { name: '/nukerestore', description: 'One-click full server restoration in case of emergency.' },
-      { name: '/driveauth', description: 'Link your Google Drive via secure OAuth2 tokens.' },
+      { name: '/nukebackup', description: 'Snapshot all channels and roles to Google Drive (3 free, then Top.gg vote).' },
+      { name: '/autobackup on / off', description: 'Enable 24h automatic cloud backups (Top.gg daily vote on enable).' },
+      { name: '/nukerestore', description: 'One-click full server restoration in case of emergency (Owner only).' },
     ]
   },
   {
