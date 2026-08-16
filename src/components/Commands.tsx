@@ -11,14 +11,14 @@ import { Button } from './ui/Button';
 
 const featuredCategories = [
   {
-    name: 'Moderation & Automod',
+    name: 'Moderation & Lockdown',
     icon: Shield,
     color: 'text-red-400',
     bg: 'bg-red-500/10',
     commands: [
-      { name: '/ban', description: 'Permanently ban malicious members from your server.' },
-      { name: '/timeout', description: 'Instantly timeout users for customizable durations.' },
-      { name: '/automod', description: 'Activate automated rate-limiting and anti-spam protection.' },
+      { name: '/lockdown [channel] [time]', description: 'Locks a channel to prevent regular members from chatting.' },
+      { name: '/unlock [channel]', description: 'Unlocks a previously locked channel.' },
+      { name: '/purge user/links/attachments', description: 'Advanced multi-filter purge to clear unwanted messages.' },
     ]
   },
   {
@@ -38,9 +38,9 @@ const featuredCategories = [
     color: 'text-purple-400',
     bg: 'bg-purple-500/10',
     commands: [
-      { name: '@mention', description: 'Conversational AI chat in English, Hindi, and Hinglish.' },
-      { name: '/imagine', description: 'Generate high-resolution artwork, custom emojis, and stickers.' },
-      { name: '/ai on / off', description: 'Toggle auto AI conversation in specific channels.' },
+      { name: '@Fusion Bot / @mention', description: 'Conversational AI chat in English, Hindi, and Hinglish.' },
+      { name: '/imagine <prompt>', description: 'Generate high-resolution artwork, custom emojis, and stickers.' },
+      { name: '/poll <question>', description: 'Create reaction & button polls with modal option creator.' },
     ]
   }
 ];
@@ -52,15 +52,15 @@ export const Commands = () => {
     <Section spacing="xl" id="commands" className="pt-12 pb-32">
       <Container size="xl">
         <div className="text-center mb-20">
-          <Badge variant="primary" className="mb-6">
+          <Badge variant="primary" className="mb-6 font-mono font-bold">
             <Zap className="w-3 h-3 mr-2" />
-            41+ Slash Commands
+            Prefixes: / ! @Fusion Bot
           </Badge>
           <Typography variant="h2" weight="black" className="mb-6">
             Powerful <span className="text-blue-500">Commands</span> Built for Scale
           </Typography>
           <Typography variant="lead" className="max-w-2xl mx-auto text-white/60">
-            Automate moderation, run interactive giveaways, and restore server structures with simple slash commands.
+            Automate moderation, manage channel permissions, run interactive polls, and restore server structures with multi-prefix commands.
           </Typography>
         </div>
 
@@ -98,9 +98,9 @@ export const Commands = () => {
 
         <div className="text-center">
           <Link to="/commands">
-            <Button variant="outline" size="lg" className="border-white/10 hover:border-blue-500/40">
-              View All 41+ Commands
-              <ArrowRight className="w-4 h-4 ml-2" />
+            <Button size="lg" variant="outline" className="group">
+              Explore All 52+ Commands
+              <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Link>
         </div>
