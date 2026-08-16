@@ -2,7 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Shield, Zap, Settings, ArrowLeft,
-  Layout, ShieldAlert, Sparkles, Gift, Ticket, Cpu, Search as SearchIcon
+  Layout, ShieldAlert, Sparkles, Gift, Ticket, Cpu, Search as SearchIcon,
+  Sliders, User, Coins, MessageSquare, Volume2, Lock, Tag
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Container } from '../components/ui/Container';
@@ -14,26 +15,44 @@ import { Flex } from '../components/ui/Flex';
 
 export const commandCategories = [
   {
-    name: 'Moderation & Automod',
+    name: 'Moderation & Lockdown',
     icon: Shield,
     color: 'text-red-400',
     bg: 'bg-red-500/10',
     commands: [
-      { name: '/ban', usage: '@user [reason]', description: 'Ban a member permanently from the server.' },
-      { name: '/kick', usage: '@user [reason]', description: 'Kick a member from the server.' },
-      { name: '/timeout', usage: '@user <duration>', description: 'Timeout a user (e.g. 10s, 5m, 2h, 1d).' },
-      { name: '/purge', usage: '<1-100>', description: 'Delete a specific number of messages in the channel.' },
+      { name: '/lockdown', usage: '[channel] [optional time]', description: 'Locks a channel to prevent regular members from chatting.' },
+      { name: '/unlock', usage: '[channel]', description: 'Unlocks a previously locked channel.' },
+      { name: '/slowmode', usage: '<time> [channel]', description: 'Sets channel slowmode interval (e.g. 10s, 5m, 1h, off).' },
+      { name: '/purge', usage: '[amount] [filter: user/links/attachments/bot/all]', description: 'Bulk deletes messages with advanced multi-filter matching.' },
       { name: '/purgeall', usage: '', description: 'Mass delete up to 1000 messages (Admin only).' },
-      { name: '/rolecreate', usage: '<name> [color]', description: 'Create a new role with optional hex color.' },
-      { name: '/automod', usage: '', description: 'Activate or toggle server-wide auto-moderation filters (Anti-spam, links, spam detection).' },
-      { name: '/setuplogs', usage: '', description: 'Automatically create all 8 private staff & audit channels (#mod-logs, #member-logs, #voice-log, #message-log, #join-leave-logs, #server-logs, #moderator-chat, #fusion-invite-tracker).' },
+      { name: '/ban', usage: '<@user> [optional reason]', description: 'Ban a member permanently with optional audit reason.' },
+      { name: '/kick', usage: '<@user> [optional reason]', description: 'Kick a member from the server with optional audit reason.' },
+      { name: '/timeout', usage: '<@user> <duration> [optional reason]', description: 'Timeout a user (10s, 5m, 2h, 1d) with optional audit reason.' },
+      { name: '/rolecreate', usage: '<name> [color] [emoji] [hoist]', description: 'Create a new role with custom hex color, emoji icon, and hoist status.' },
+      { name: '/giverole', usage: '<@user> <@role>', description: 'Assign or give a role to a member.' },
+      { name: '/automod', usage: '', description: 'Activate or toggle server-wide auto-moderation filters (Anti-spam, attachments, mentions).' },
+      { name: '/setuplogs', usage: '', description: 'Automatically create 8 private staff audit channels.' },
+    ]
+  },
+  {
+    name: 'Channel & Command Controls',
+    icon: Sliders,
+    color: 'text-amber-400',
+    bg: 'bg-amber-500/10',
+    commands: [
+      { name: '/ignore', usage: '<channel> [optional command]', description: 'Ignores all bot commands or a specific command in specified channel.' },
+      { name: '/unignore', usage: '<channel>', description: 'Re-enables bot commands in a previously ignored channel.' },
+      { name: '/disable', usage: '<command>', description: 'Globally disables a command in the entire server.' },
+      { name: '/enable', usage: '<command>', description: 'Re-enables a disabled command in the server.' },
+      { name: '/modonly', usage: '<command>', description: 'Restricts a command to staff (Mods/Admins) only.' },
+      { name: '/unmodonly', usage: '<command>', description: 'Removes mod-only restriction, making command public.' },
     ]
   },
   {
     name: 'Nuke Guard & Backups',
     icon: ShieldAlert,
-    color: 'text-amber-400',
-    bg: 'bg-amber-500/10',
+    color: 'text-orange-400',
+    bg: 'bg-orange-500/10',
     commands: [
       { name: '/nukebackup', usage: '', description: 'Save a complete snapshot of all channels, categories, and roles to Google Drive.' },
       { name: '/nukerestore', usage: '', description: 'Restore entire server hierarchy after a raid or nuke attack (Owner only).' },
@@ -46,7 +65,7 @@ export const commandCategories = [
     color: 'text-purple-400',
     bg: 'bg-purple-500/10',
     commands: [
-      { name: '@mention', usage: '<message>', description: 'Chat naturally with SUNDAY 5.1 AI in English, Hindi, or Hinglish with live web search.' },
+      { name: '@Fusion Bot / @mention', usage: '<message>', description: 'Chat naturally with SUNDAY 5.1 AI in English, Hindi, or Hinglish with live web search.' },
       { name: '/imagine', usage: '<prompt> [style] [size]', description: 'Generate AI art, custom server emojis, stickers, vector logos, anime, and 3D renders.' },
       { name: '/meme', usage: '', description: 'Fetch a fresh, high-rated meme from Reddit.' },
       { name: '/ai', usage: '<on / off>', description: 'Toggle AI auto-chat in the current channel without needing mentions.' },
@@ -70,22 +89,18 @@ export const commandCategories = [
     ]
   },
   {
-    name: 'Giveaways & Community',
-    icon: Gift,
+    name: 'Community, Fun & Utility',
+    icon: Sparkles,
     color: 'text-pink-400',
     bg: 'bg-pink-500/10',
     commands: [
+      { name: '/poll', usage: '<question> [options...]', description: 'Creates an interactive reaction & button poll with modal popup to add choices.' },
+      { name: '/userinfo', usage: '[@user]', description: 'Displays account details, avatar, join date, creation date, and roles.' },
+      { name: '/banner', usage: '[@user]', description: 'Fetches and displays a user profile banner in full HD.' },
+      { name: '/remindme', usage: '<time> <reminder>', description: 'Sets a direct-message reminder (e.g. 10m, 1h, 2d).' },
+      { name: '/flip', usage: '', description: 'Flips a coin with animated Heads or Tails result.' },
       { name: '/giveaway', usage: '', description: 'Open the giveaway creation menu to configure custom timers and prizes.' },
       { name: '/gmanage', usage: '', description: 'Manage active giveaways: Edit prize/time, End early, or Reroll winners.' },
-      { name: '/reactrole', usage: '', description: 'Deploy multi-role reaction picker widgets for member self-assignment.' },
-    ]
-  },
-  {
-    name: 'General & Utility',
-    icon: Zap,
-    color: 'text-emerald-400',
-    bg: 'bg-emerald-500/10',
-    commands: [
       { name: '/help', usage: '', description: 'Open the interactive Command Center with category selector and quick link buttons.' },
       { name: '/ping', usage: '', description: 'Check Discord WebSocket gateway latency, shard status, and API ping.' },
       { name: '/avatar', usage: '[@user]', description: 'View and download full-resolution user profile avatars.' },
@@ -98,14 +113,15 @@ export const commandCategories = [
 export const CommandsPage = () => {
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
-  const [isMobile, setIsMobile] = useState(() => (typeof window !== 'undefined' ? window.innerWidth < 1024 : false));
+  const [isMobile] = useState(() => (typeof window !== 'undefined' ? window.innerWidth < 1024 : false));
 
   const filteredCategories = useMemo(() => {
     return commandCategories.map(cat => ({
       ...cat,
       commands: cat.commands.filter(cmd => 
         cmd.name.toLowerCase().includes(search.toLowerCase()) ||
-        cmd.description.toLowerCase().includes(search.toLowerCase())
+        cmd.description.toLowerCase().includes(search.toLowerCase()) ||
+        cmd.usage.toLowerCase().includes(search.toLowerCase())
       )
     })).filter(cat => 
       (activeCategory === 'All' || cat.name === activeCategory) && 
@@ -128,15 +144,17 @@ export const CommandsPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <Badge variant="primary" className="mb-6">
-                <Zap className="w-3 h-3 mr-2" />
-                Discord Command Suite
-              </Badge>
+              <div className="flex justify-center mb-4">
+                <Badge variant="primary" className="font-mono font-bold text-xs py-1.5 px-4">
+                  <Zap className="w-3.5 h-3.5 mr-2" />
+                  Prefixes: / ! @Fusion Bot
+                </Badge>
+              </div>
               <Typography variant="h1" weight="black" className="mb-6">
-                Official <span className="text-blue-500">Commands</span>
+                Official <span className="text-blue-500">Commands</span> Catalog
               </Typography>
               <Typography variant="lead" className="max-w-2xl mx-auto text-white/60">
-                Explore the complete slash command catalog available in Fusion Bot.
+                Explore the complete 52+ multi-prefix command suite available in Fusion Bot.
               </Typography>
             </motion.div>
           </div>
@@ -149,7 +167,7 @@ export const CommandsPage = () => {
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search commands by name or keyword (e.g. ban, backup, ticket, ai)..."
+                placeholder="Search commands by name or keyword (e.g. lockdown, slowmode, purge, poll, ban)..."
                 className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-14 pr-6 text-white placeholder:text-white/30 focus:outline-none focus:border-blue-500/50 transition-colors backdrop-blur-md"
               />
             </div>
@@ -160,7 +178,7 @@ export const CommandsPage = () => {
               transition={{ delay: 0.1 }}
             >
               <Flex gap={2} className="flex-wrap justify-center">
-                {['All', 'Moderation & Automod', 'Nuke Guard & Backups', 'AI & Creative Media', 'Server & Support Tickets', 'Roles & Verification', 'Utility & Info'].map((cat) => (
+                {['All', 'Moderation & Lockdown', 'Channel & Command Controls', 'Nuke Guard & Backups', 'AI & Creative Media', 'Server & Support Tickets', 'Community, Fun & Utility'].map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
@@ -178,59 +196,51 @@ export const CommandsPage = () => {
           </div>
 
           <div className="grid grid-cols-1 gap-14">
-            {filteredCategories.length > 0 ? (
-              filteredCategories.map((category, i) => (
-                <motion.div
-                  key={category.name}
-                  initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                  whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: isMobile ? 0 : i * 0.08, duration: 0.5 }}
-                >
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className={`w-11 h-11 rounded-2xl ${category.bg} flex items-center justify-center shrink-0`}>
-                      <category.icon className={`w-5 h-5 ${category.color}`} />
-                    </div>
-                    <div>
-                      <Typography variant="h3" weight="bold" className="text-xl text-white">{category.name}</Typography>
-                      <Typography variant="small" className="text-white/40 text-xs">
-                        {category.commands.length} Commands Available
-                      </Typography>
-                    </div>
+            {filteredCategories.map((category, i) => (
+              <motion.div 
+                key={category.name}
+                initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: isMobile ? 0 : i * 0.1 }}
+              >
+                <div className="flex items-center gap-3 mb-6">
+                  <div className={`p-2.5 rounded-xl ${category.bg}`}>
+                    <category.icon className={`w-5 h-5 ${category.color}`} />
                   </div>
+                  <Typography variant="h3" weight="bold" className="text-white text-xl">
+                    {category.name}
+                  </Typography>
+                </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                    {category.commands.map((cmd) => (
-                      <Card 
-                        key={cmd.name} 
-                        className="glass p-6 border-white/5 hover:border-blue-500/30 transition-all duration-300 group rounded-2xl"
-                      >
-                        <Flex justify="between" align="start" className="mb-3">
-                          <Typography variant="h4" weight="bold" className="text-blue-400 font-mono text-base">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {category.commands.map((cmd) => (
+                    <Card key={cmd.name} className="glass p-6 border-white/5 hover:border-blue-500/30 transition-all group flex flex-col justify-between rounded-2xl">
+                      <div>
+                        <div className="flex items-center justify-between mb-3">
+                          <Typography variant="h4" weight="bold" className="text-blue-400 font-mono text-base group-hover:text-blue-300 transition-colors">
                             {cmd.name}
                           </Typography>
-                          <Badge variant="outline" className="text-[10px] text-white/40 border-white/10">
-                            Slash
-                          </Badge>
-                        </Flex>
-                        
-                        {cmd.usage && (
-                          <div className="mb-3 font-mono text-xs bg-black/40 px-3 py-1.5 rounded-lg border border-white/5 text-white/50">
-                            <span className="text-blue-400/80">Usage:</span> {cmd.name} {cmd.usage}
-                          </div>
-                        )}
-                        
-                        <Typography variant="p" className="text-white/70 text-xs leading-relaxed">
+                          {cmd.usage && (
+                            <Badge variant="outline" className="text-[10px] font-mono border-white/10 text-white/40">
+                              {cmd.usage}
+                            </Badge>
+                          )}
+                        </div>
+                        <Typography variant="small" className="text-white/60 text-xs leading-relaxed">
                           {cmd.description}
                         </Typography>
-                      </Card>
-                    ))}
-                  </div>
-                </motion.div>
-              ))
-            ) : (
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+
+            {filteredCategories.length === 0 && (
               <div className="text-center py-20">
-                <Typography variant="h3" className="text-white/30 text-lg">No commands found matching "{search}"</Typography>
+                <Typography variant="lead" className="text-white/40">
+                  No commands found matching "{search}"
+                </Typography>
               </div>
             )}
           </div>
