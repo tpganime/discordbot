@@ -1,6 +1,5 @@
 
 import fs from 'fs';
-import path from 'path';
 import git from 'isomorphic-git';
 import http from 'isomorphic-git/http/node';
 
@@ -33,7 +32,7 @@ async function run() {
     fs,
     dir,
     author: { name: 'CHAUDHARY TANMAY', email: 'support@fusionhub.in' },
-    message: 'perf & feat: Full SSR fallback, PageSpeed optimizations, no-soft404 vercel routes, JSON-LD address schema'
+    message: 'refactor: Clean UI without visual AI banners, preserve all agent endpoints in background'
   });
   console.log('Committed SHA:', sha);
 
@@ -49,4 +48,5 @@ async function run() {
   console.log('✅ Pushed to GitHub:', JSON.stringify(pushRes, null, 2));
 }
 
+import path from 'path';
 run().catch(e => { console.error('Error:', e); process.exit(1); });
