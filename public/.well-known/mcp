@@ -1,0 +1,61 @@
+{
+  "name": "fusion-bot-mcp",
+  "version": "1.0.0",
+  "description": "Model Context Protocol server for Fusion Bot telemetry and configuration.",
+  "transport": "streamable-http",
+  "endpoint": "https://bot.fusionhub.in/api/mcp",
+  "capabilities": {
+    "tools": {
+      "listChanged": true
+    },
+    "resources": {
+      "subscribe": false,
+      "listChanged": true
+    },
+    "prompts": {
+      "listChanged": true
+    }
+  },
+  "tools": [
+    {
+      "name": "get_bot_stats",
+      "description": "Get real-time statistics for Fusion Bot",
+      "parameters": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "name": "get_bot_info",
+      "description": "Retrieve Fusion Bot application metadata",
+      "parameters": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "name": "list_bot_commands",
+      "description": "List all available slash and prefix commands",
+      "parameters": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "name": "get_pricing_plans",
+      "description": "Retrieve current pricing plans",
+      "parameters": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "name": "check_api_health",
+      "description": "Check the operational health of Fusion Bot APIs",
+      "parameters": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+  ]
+}

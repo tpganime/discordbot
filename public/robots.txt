@@ -1,0 +1,31 @@
+User-agent: *
+Allow: /
+Disallow: /api/payment/
+Disallow: /dashboard/*/api/
+
+# AI Crawlers Allowlist
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: DeepSeekBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://bot.fusionhub.in/sitemap.xml

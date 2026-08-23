@@ -1,0 +1,19 @@
+{
+  "resource": "https://bot.fusionhub.in",
+  "authorization_servers": [
+    "https://bot.fusionhub.in"
+  ],
+  "scopes_supported": [
+    "bot:read",
+    "bot:write",
+    "guilds:read",
+    "guilds:write",
+    "backup:create",
+    "backup:restore",
+    "moderation:manage",
+    "tickets:manage"
+  ],
+  "bearer_methods_supported": [
+    "header"
+  ]
+}

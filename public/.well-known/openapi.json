@@ -1,0 +1,81 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Fusion Bot Public Developer & Agent API",
+    "version": "1.0.0",
+    "description": "Comprehensive REST API and Model Context Protocol interface for Fusion Bot.",
+    "contact": {
+      "name": "Fusion Bot Support",
+      "email": "support@fusionhub.in",
+      "url": "https://bot.fusionhub.in/contact"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://bot.fusionhub.in",
+      "description": "Primary Production API Server"
+    },
+    {
+      "url": "https://panel.fusionhub.in",
+      "description": "Dashboard Server"
+    }
+  ],
+  "paths": {
+    "/api/v1/health": {
+      "get": {
+        "summary": "Health Check",
+        "operationId": "getHealth",
+        "responses": {
+          "200": {
+            "description": "Healthy"
+          }
+        }
+      }
+    },
+    "/api/v1/stats": {
+      "get": {
+        "summary": "Bot Telemetry Stats",
+        "operationId": "getStats",
+        "responses": {
+          "200": {
+            "description": "Live stats"
+          }
+        }
+      }
+    },
+    "/api/mcp": {
+      "post": {
+        "summary": "Model Context Protocol JSON-RPC",
+        "operationId": "callMcpRpc",
+        "responses": {
+          "200": {
+            "description": "MCP response"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "oauth2": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://bot.fusionhub.in/oauth/authorize",
+            "tokenUrl": "https://bot.fusionhub.in/oauth/token",
+            "scopes": {
+              "bot:read": "Read bot telemetry, live shard statistics, latency, and public server counts",
+              "bot:write": "Manage bot server nicknames, branding settings, and prefix configurations",
+              "guilds:read": "Read server configurations, automod settings, channels, and active roles",
+              "guilds:write": "Update server configurations, toggle security modules, and configure channels",
+              "backup:create": "Create instant manual or automated snapshots of server structure to Fusion Cloud / Google Drive",
+              "backup:restore": "Reconstruct server categories, channels, permissions, and member roles from snapshots",
+              "moderation:manage": "Execute automated moderation rules (ban, kick, timeout, purge, channel lockdown)",
+              "tickets:manage": "Deploy ticket panels, manage support categories, and archive transcripts"
+            }
+          }
+        }
+      }
+    }
+  }
+}
