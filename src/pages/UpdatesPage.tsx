@@ -10,6 +10,24 @@ import { Flex } from '../components/ui/Flex';
 
 const updates = [
   {
+    version: 'v3.5.0',
+    date: 'September 15, 2026 at 12:00 AM UTC',
+    title: 'User Apps & DMs, Anime GIF Engine & Minigames Suite',
+    description: 'A major feature and utility release introducing Discord User App integration for DM command execution, dynamic random anime GIFs for social interactions, a high-resolution Avatar & Banner suite, and real-time multiplayer minigames.',
+    type: 'Major',
+    icon: Sparkles,
+    color: 'text-purple-500',
+    bg: 'bg-purple-500/10',
+    changes: [
+      'Discord User App & Direct Message (DM) Slash support: Run commands directly in DMs without requiring a mutual server.',
+      'Dynamic Anime GIF Engine: Random anime GIFs for 20+ social reaction actions (hug, kiss, pat, slap, blush, dance, cuddle, etc.).',
+      'High-Resolution Avatar & Banner Suite: Multi-format download shortcuts (PNG, JPG, WEBP) up to 4096px with server-avatar and user-banner support.',
+      'Interactive Minigames Suite: Real-time multiplayer Tic-Tac-Toe, 21 Blackjack with dealer AI, Rock-Paper-Scissors, and interactive Calculator.',
+      'Smart Mention Filtering & Reply Protection: Prevents unintentional command executions when quoting or replying to bot messages.',
+      'Zero-Duplicate Command Registry: Optimized command registration and fast-sync architecture with sub-50ms execution latency.'
+    ]
+  },
+  {
     version: 'v3.2.0',
     date: 'August 15, 2026 at 04:30 AM UTC',
     title: 'Command Center & Liquid Glass Dashboard Overhaul',
