@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { 
   Shield, Zap, Settings, ArrowLeft,
   Layout, ShieldAlert, Sparkles, Gift, Ticket, Cpu, Search as SearchIcon,
-  Lock, Bot, Gamepad2, Wrench, Key
+  Lock, Bot
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Container } from '../components/ui/Container';
