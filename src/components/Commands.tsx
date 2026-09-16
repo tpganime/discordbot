@@ -11,14 +11,14 @@ import { Button } from './ui/Button';
 
 const featuredCategories = [
   {
-    name: 'Moderation & Lockdown',
+    name: 'Moderation & Security',
     icon: Shield,
     color: 'text-red-400',
     bg: 'bg-red-500/10',
     commands: [
-      { name: '/lockdown [channel] [time]', description: 'Locks a channel to prevent regular members from chatting.' },
-      { name: '/unlock [channel]', description: 'Unlocks a previously locked channel.' },
-      { name: '/purge user/links/attachments', description: 'Advanced multi-filter purge to clear unwanted messages.' },
+      { name: '/purge', description: 'Granular message purges with filters for bots, links, embeds, and users.' },
+      { name: '/timeout & /ban', description: 'Instantly timeout or ban malicious members with audit logging.' },
+      { name: '/automod & /antinuke', description: 'Comprehensive automated anti-spam and server raid defenses.' },
     ]
   },
   {
@@ -27,9 +27,9 @@ const featuredCategories = [
     color: 'text-amber-400',
     bg: 'bg-amber-500/10',
     commands: [
-      { name: '/nukebackup', description: 'Snapshot all channels and roles to Google Drive (3 free, then Top.gg vote).' },
-      { name: '/autobackup on / off', description: 'Enable 24h automatic cloud backups (Top.gg daily vote on enable).' },
-      { name: '/nukerestore', description: 'One-click full server restoration in case of emergency (Owner only).' },
+      { name: '/nukebackup', description: 'Snapshot all channels and roles directly to Google Drive.' },
+      { name: '/nukerestore', description: 'One-click full server restoration in case of emergency.' },
+      { name: '/autobackup', description: '24-hour automated background cloud backups.' },
     ]
   },
   {
@@ -38,29 +38,27 @@ const featuredCategories = [
     color: 'text-purple-400',
     bg: 'bg-purple-500/10',
     commands: [
-      { name: '@Fusion Bot / @mention', description: 'Conversational AI chat in English, Hindi, and Hinglish.' },
-      { name: '/imagine <prompt>', description: 'Generate high-resolution artwork, custom emojis, and stickers.' },
-      { name: '/poll <question>', description: 'Create reaction & button polls with modal option creator.' },
+      { name: '@mention AI', description: 'Conversational AI chat in English, Hindi, and Hinglish with web search.' },
+      { name: '/imagine', description: 'Generate high-resolution artwork, custom server emojis, and stickers.' },
+      { name: '/minigames suite', description: 'Interactive multiplayer Tic-Tac-Toe, 21 Blackjack, and ciphers.' },
     ]
   }
 ];
 
 export const Commands = () => {
-  const [isMobile] = React.useState(() => (typeof window !== 'undefined' ? window.innerWidth < 1024 : false));
-
   return (
     <Section spacing="xl" id="commands" className="pt-12 pb-32">
       <Container size="xl">
         <div className="text-center mb-20">
-          <Badge variant="primary" className="mb-6 font-mono font-bold">
+          <Badge variant="primary" className="mb-6">
             <Zap className="w-3 h-3 mr-2" />
-            Prefixes: / ! @Fusion Bot
+            80+ Slash Commands
           </Badge>
           <Typography variant="h2" weight="black" className="mb-6">
             Powerful <span className="text-blue-500">Commands</span> Built for Scale
           </Typography>
           <Typography variant="lead" className="max-w-2xl mx-auto text-white/60">
-            Automate moderation, manage channel permissions, run interactive polls, and restore server structures with multi-prefix commands.
+            Automate moderation, run interactive minigames, and restore server structures with simple slash commands.
           </Typography>
         </div>
 
@@ -68,10 +66,10 @@ export const Commands = () => {
           {featuredCategories.map((category, i) => (
             <motion.div
               key={i}
-              initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: isMobile ? 0 : i * 0.1, duration: 0.5 }}
+              transition={{ delay: i * 0.1, duration: 0.6 }}
             >
               <div className="mb-6 flex items-center gap-3">
                 <div className={`w-10 h-10 rounded-xl ${category.bg} flex items-center justify-center`}>
@@ -98,9 +96,9 @@ export const Commands = () => {
 
         <div className="text-center">
           <Link to="/commands">
-            <Button size="lg" variant="outline" className="group">
-              Explore All 52+ Commands
-              <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+            <Button variant="outline" size="lg" className="border-white/10 hover:border-blue-500/40">
+              View All 80+ Commands
+              <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </Link>
         </div>
