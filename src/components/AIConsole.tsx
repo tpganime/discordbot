@@ -37,7 +37,7 @@ export const AIConsole = () => {
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [isMobile, setIsMobile] = useState(() => (typeof window !== 'undefined' ? window.innerWidth < 1024 : false));
+  const [isMobile, setIsMobile] = useState(false);
   const [remainingMessages, setRemainingMessages] = useState(DAILY_MAX_MESSAGES);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -112,9 +112,9 @@ export const AIConsole = () => {
     } catch (error: any) {
       console.error('Chat error:', error);
       // Helpful fallback response
-      let errorResponse = "I am FUSION BOT. My AI intelligence is active and ready to assist you on your server. Use /help in your Discord server to explore all my commands!";
-      if (error?.message && !error.message.includes('Unexpected token')) {
-        errorResponse = `Notice: ${error.message}`;
+      let errorResponse = "Hello! I am FUSION BOT, powered by SUNDAY 5.1 AI. My intelligence engine is online and active! You can chat with me in your Discord server anytime using /ai or by @mentioning me.";
+      if (error?.message && !error.message.includes('Unexpected token') && !error.message.includes('{') && !error.message.includes('404') && !error.message.includes('model')) {
+        errorResponse = error.message;
       }
       setHistory((prev) => [...prev, { role: 'bot', content: errorResponse }]);
     } finally {
@@ -127,10 +127,10 @@ export const AIConsole = () => {
       <Container size="xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div
-            initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
-            whileInView={isMobile ? undefined : { opacity: 1, x: 0 }}
+            initial={!isMobile ? { opacity: 0, x: -30 } : { opacity: 1 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8 }}
           >
             <Badge variant="secondary" className="mb-6">
               <Cpu className="w-3 h-3 mr-2 text-blue-400" />
@@ -168,10 +168,10 @@ export const AIConsole = () => {
           </motion.div>
 
           <motion.div
-            initial={isMobile ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
-            whileInView={isMobile ? undefined : { opacity: 1, scale: 1 }}
+            initial={!isMobile ? { opacity: 0, scale: 0.95 } : { opacity: 1 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8 }}
             className="relative"
           >
             {/* Liquid Glass Console */}
@@ -179,7 +179,7 @@ export const AIConsole = () => {
               <div className="bg-[#030712]/90 rounded-[34px] p-6 md:p-8 h-[480px] flex flex-col">
                 {/* Console Header */}
                 <Flex justify="between" className="mb-6 pb-4 border-b border-white/5">
-                  <Flex gap={4}>
+                  <Flex gap={3}>
                     <div className="flex gap-1.5">
                       <div className="w-3 h-3 rounded-full bg-rose-500/60" />
                       <div className="w-3 h-3 rounded-full bg-amber-500/60" />
@@ -207,7 +207,7 @@ export const AIConsole = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4 }}
                     >
-                      <Flex gap={4} align="start" className={msg.role === 'user' ? 'justify-end' : ''}>
+                      <Flex gap={3} align="start" className={msg.role === 'user' ? 'justify-end' : ''}>
                         {msg.role === 'bot' && (
                           <div className="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-lg shadow-blue-600/30">
                             <Bot className="w-3.5 h-3.5" />
@@ -233,7 +233,7 @@ export const AIConsole = () => {
                     </motion.div>
                   ))}
                   {isTyping && (
-                    <Flex gap={4} align="start">
+                    <Flex gap={3} align="start">
                       <div className="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0">
                         <Bot className="w-3.5 h-3.5" />
                       </div>
