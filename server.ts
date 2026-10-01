@@ -2,7 +2,6 @@ import express from 'express';
 import path from 'path';
 import Groq from 'groq-sdk';
 import dotenv from 'dotenv';
-import { checkRateLimit, setRateLimitHeaders } from './api/_ratelimit';
 
 dotenv.config();
 
@@ -10,6 +9,40 @@ const app = express();
 const PORT = 3000;
 
 app.use(express.json());
+
+// In-memory Rate Limiting Store for server.ts
+interface ServerRateLimitRecord { count: number; resetTime: number; }
+const serverRateLimitStore = new Map<string, ServerRateLimitRecord>();
+
+function checkServerRateLimit(req: express.Request, limit: number, windowMs = 60000, prefix = 'web') {
+  const xff = req.headers['x-forwarded-for'];
+  const ip = (typeof xff === 'string' ? xff.split(',')[0].trim() : xff?.[0]?.trim()) ||
+    req.headers['cf-connecting-ip'] ||
+    req.headers['x-real-ip'] ||
+    req.socket?.remoteAddress ||
+    '127.0.0.1';
+  const key = `${prefix}:${ip}`;
+  const now = Date.now();
+
+  if (serverRateLimitStore.size > 2000) {
+    for (const [k, v] of serverRateLimitStore.entries()) {
+      if (now > v.resetTime) serverRateLimitStore.delete(k);
+    }
+  }
+
+  let rec = serverRateLimitStore.get(key);
+  if (!rec || now > rec.resetTime) {
+    rec = { count: 1, resetTime: now + windowMs };
+    serverRateLimitStore.set(key, rec);
+    return { allowed: true, limit, remaining: limit - 1, resetTime: Math.ceil(rec.resetTime / 1000), retryAfter: 0 };
+  }
+
+  rec.count += 1;
+  const remaining = Math.max(0, limit - rec.count);
+  const allowed = rec.count <= limit;
+  const retryAfter = Math.max(1, Math.ceil((rec.resetTime - now) / 1000));
+  return { allowed, limit, remaining, resetTime: Math.ceil(rec.resetTime / 1000), retryAfter };
+}
 
 // Global Rate Limiting Middleware for full website
 app.use((req, res, next) => {
@@ -43,10 +76,13 @@ app.use((req, res, next) => {
     prefix = 'api';
   }
 
-  const result = checkRateLimit(req, { limit, windowMs: 60000, prefix });
-  setRateLimitHeaders(res, result);
+  const result = checkServerRateLimit(req, limit, 60000, prefix);
+  res.setHeader('X-RateLimit-Limit', result.limit.toString());
+  res.setHeader('X-RateLimit-Remaining', result.remaining.toString());
+  res.setHeader('X-RateLimit-Reset', result.resetTime.toString());
 
   if (!result.allowed) {
+    res.setHeader('Retry-After', result.retryAfter.toString());
     res.setHeader('Content-Type', 'application/json');
     return res.status(429).json({
       error: 'Too Many Requests',

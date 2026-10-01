@@ -1,4 +1,42 @@
-import { checkRateLimit, setRateLimitHeaders } from './_ratelimit';
+interface RateLimitRecord {
+  count: number;
+  resetTime: number;
+}
+const rateLimitStore = new Map<string, RateLimitRecord>();
+
+function getClientIp(req: any): string {
+  const xff = req.headers?.['x-forwarded-for'];
+  if (xff) {
+    const ips = typeof xff === 'string' ? xff.split(',') : xff;
+    if (ips && ips.length > 0) return ips[0].trim();
+  }
+  return req.headers?.['cf-connecting-ip'] || req.headers?.['x-real-ip'] || req.socket?.remoteAddress || '127.0.0.1';
+}
+
+function checkRateLimit(req: any, limit = 60, windowMs = 60000) {
+  const ip = getClientIp(req);
+  const now = Date.now();
+
+  // Clean stale entries periodically
+  if (rateLimitStore.size > 2000) {
+    for (const [k, v] of rateLimitStore.entries()) {
+      if (now > v.resetTime) rateLimitStore.delete(k);
+    }
+  }
+
+  let rec = rateLimitStore.get(ip);
+  if (!rec || now > rec.resetTime) {
+    rec = { count: 1, resetTime: now + windowMs };
+    rateLimitStore.set(ip, rec);
+    return { allowed: true, limit, remaining: limit - 1, resetTime: Math.ceil(rec.resetTime / 1000), retryAfter: 0 };
+  }
+
+  rec.count += 1;
+  const remaining = Math.max(0, limit - rec.count);
+  const allowed = rec.count <= limit;
+  const retryAfter = Math.max(1, Math.ceil((rec.resetTime - now) / 1000));
+  return { allowed, limit, remaining, resetTime: Math.ceil(rec.resetTime / 1000), retryAfter };
+}
 
 export default async function handler(req: any, res: any) {
   res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -11,15 +49,18 @@ export default async function handler(req: any, res: any) {
   }
 
   // Rate Limiting: 60 requests per minute per IP for stats probe
-  const rateLimit = checkRateLimit(req, { limit: 60, windowMs: 60000, prefix: 'stats' });
-  setRateLimitHeaders(res, rateLimit);
+  const rl = checkRateLimit(req, 60, 60000);
+  res.setHeader('X-RateLimit-Limit', rl.limit.toString());
+  res.setHeader('X-RateLimit-Remaining', rl.remaining.toString());
+  res.setHeader('X-RateLimit-Reset', rl.resetTime.toString());
 
-  if (!rateLimit.allowed) {
+  if (!rl.allowed) {
+    res.setHeader('Retry-After', rl.retryAfter.toString());
     res.setHeader('Content-Type', 'application/json');
     return res.status(429).json({
       error: 'Too Many Requests',
-      message: 'Rate limit exceeded for /api/stats. Please slow down (maximum 60 requests per minute).',
-      retryAfter: rateLimit.retryAfter
+      message: 'Rate limit exceeded for /api/stats. Maximum 60 requests per minute.',
+      retryAfter: rl.retryAfter
     });
   }
 
