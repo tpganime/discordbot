@@ -25,18 +25,18 @@ const HomePage = () => (
   </main>
 );
 
-const KaitoRedirect = () => {
+const PartnerRedirect = ({ code }: { code: string }) => {
   React.useEffect(() => {
     // Attempt tracking referral beacon then redirect to bot invite
-    fetch('https://panel.fusionhub.in/api/track/kaito?type=click', { mode: 'no-cors' }).finally(() => {
-      window.location.href = 'https://panel.fusionhub.in/kaito';
+    fetch(`https://panel.fusionhub.in/api/track/${code}?type=click`, { mode: 'no-cors' }).finally(() => {
+      window.location.href = `https://panel.fusionhub.in/${code}`;
     });
     // Fallback if panel server is unreachable within 1.5s
     const timer = setTimeout(() => {
       window.location.href = DISCORD_INVITE_URL;
     }, 1500);
     return () => clearTimeout(timer);
-  }, []);
+  }, [code]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-black text-white p-6">
@@ -109,8 +109,23 @@ const App = () => {
             <Route path="/status" element={<StatusPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />
-            <Route path="/kaito" element={<KaitoRedirect />} />
-            <Route path="/invite/kaito" element={<KaitoRedirect />} />
+            
+            {/* Custom Partner / Referrals Routes */}
+            <Route path="/fd" element={<PartnerRedirect code="fd" />} />
+            <Route path="/invite/fd" element={<PartnerRedirect code="fd" />} />
+            <Route path="/join/fd" element={<PartnerRedirect code="fd" />} />
+
+            <Route path="/kaito" element={<PartnerRedirect code="kaito" />} />
+            <Route path="/invite/kaito" element={<PartnerRedirect code="kaito" />} />
+            <Route path="/join/kaito" element={<PartnerRedirect code="kaito" />} />
+
+            <Route path="/rosewood" element={<PartnerRedirect code="rosewood" />} />
+            <Route path="/invite/rosewood" element={<PartnerRedirect code="rosewood" />} />
+            <Route path="/join/rosewood" element={<PartnerRedirect code="rosewood" />} />
+
+            <Route path="/qlynk" element={<PartnerRedirect code="qlynk" />} />
+            <Route path="/invite/qlynk" element={<PartnerRedirect code="qlynk" />} />
+            <Route path="/join/qlynk" element={<PartnerRedirect code="qlynk" />} />
           </Routes>
           <Footer />
         </div>
