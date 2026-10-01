@@ -69,10 +69,10 @@ export const Nav = () => {
 
           <Flex gap={8} className="hidden lg:flex items-center">
             <a href="/#features" className="text-sm font-bold text-white/40 hover:text-white transition-colors">Features</a>
-            <a href="/#insider-program" className="text-sm font-bold text-cyan-400/90 hover:text-cyan-300 transition-colors flex items-center gap-1">
+            <Link to="/insider" className="text-sm font-bold text-cyan-400/90 hover:text-cyan-300 transition-colors flex items-center gap-1">
               <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
               Insider
-            </a>
+            </Link>
             <Link to="/commands" className="text-sm font-bold text-white/40 hover:text-white transition-colors">Commands</Link>
             <Link to="/updates" className="text-sm font-bold text-white/40 hover:text-white transition-colors">Updates</Link>
             <Link to="/status" className="text-sm font-bold text-white/40 hover:text-white transition-colors flex items-center gap-1.5">
@@ -119,10 +119,10 @@ export const Nav = () => {
         <Container className="py-10">
           <Flex direction="col" gap={6} align="start">
             <a href="/#features" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors">Features</a>
-            <a href="/#insider-program" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-2.5">
+            <Link to="/insider" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-2.5">
               <Sparkles className="w-5 h-5 text-cyan-400" />
               Insider Program
-            </a>
+            </Link>
             <Link to="/commands" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors">Commands</Link>
             <Link to="/updates" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors">Updates</Link>
             <Link to="/status" onClick={() => setIsOpen(false)} className="text-2xl font-display font-bold text-white/40 hover:text-white transition-colors flex items-center gap-3">

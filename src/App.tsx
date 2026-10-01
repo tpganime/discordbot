@@ -4,7 +4,6 @@ import { Nav } from './components/Nav';
 import { ScrollToTop } from './components/ScrollToTop';
 import { Hero } from './components/Hero';
 import { Features } from './components/Features';
-import { InsiderProgram } from './components/InsiderProgram';
 import { AIConsole } from './components/AIConsole';
 import { NukeGuard } from './components/NukeGuard';
 import { Footer } from './components/Footer';
@@ -13,6 +12,7 @@ import { PrivacyPage } from './pages/PrivacyPage';
 import { TermsPage } from './pages/TermsPage';
 import { UpdatesPage } from './pages/UpdatesPage';
 import { StatusPage } from './pages/StatusPage';
+import { InsiderPage } from './pages/InsiderPage';
 import { CustomCursor } from './components/CustomCursor';
 import { DISCORD_INVITE_URL } from './constants';
 
@@ -20,7 +20,6 @@ const HomePage = () => (
   <main>
     <Hero />
     <Features />
-    <InsiderProgram />
     <AIConsole />
     <NukeGuard />
   </main>
@@ -103,7 +102,8 @@ const App = () => {
           <Nav />
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/insider" element={<main className="pt-20"><InsiderProgram /></main>} />
+            <Route path="/insider" element={<InsiderPage />} />
+            <Route path="/insider-program" element={<InsiderPage />} />
             <Route path="/commands" element={<CommandsPage />} />
             <Route path="/updates" element={<UpdatesPage />} />
             <Route path="/status" element={<StatusPage />} />
