@@ -1,4 +1,5 @@
 import Groq from 'groq-sdk';
+import { checkRateLimit, setRateLimitHeaders } from './_ratelimit';
 
 export default async function handler(req: any, res: any) {
   // CORS configuration
@@ -16,6 +17,18 @@ export default async function handler(req: any, res: any) {
 
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  // Rate Limiting: 15 messages per minute per IP for AI Chat
+  const rateLimit = checkRateLimit(req, { limit: 15, windowMs: 60000, prefix: 'chat' });
+  setRateLimitHeaders(res, rateLimit);
+
+  if (!rateLimit.allowed) {
+    return res.status(429).json({
+      error: 'Too Many Requests',
+      message: 'You are sending AI messages too quickly. Please wait a moment before trying again.',
+      retryAfter: rateLimit.retryAfter
+    });
   }
 
   const apiKey = process.env.GROQ_API_KEY;

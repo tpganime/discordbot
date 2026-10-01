@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import Groq from 'groq-sdk';
 import dotenv from 'dotenv';
+import { checkRateLimit, setRateLimitHeaders } from './api/_ratelimit';
 
 dotenv.config();
 
@@ -9,6 +10,53 @@ const app = express();
 const PORT = 3000;
 
 app.use(express.json());
+
+// Global Rate Limiting Middleware for full website
+app.use((req, res, next) => {
+  // Skip rate limiting for static assets
+  if (
+    req.path.startsWith('/assets') ||
+    req.path.startsWith('/public') ||
+    req.path.endsWith('.js') ||
+    req.path.endsWith('.css') ||
+    req.path.endsWith('.png') ||
+    req.path.endsWith('.jpg') ||
+    req.path.endsWith('.ico') ||
+    req.path.endsWith('.svg') ||
+    req.path.endsWith('.woff2')
+  ) {
+    return next();
+  }
+
+  // Route-specific rate limits
+  let limit = 120; // 120 requests/min for general website pages
+  let prefix = 'web';
+
+  if (req.path === '/api/stats') {
+    limit = 60; // 60 requests/min for /api/stats
+    prefix = 'stats';
+  } else if (req.path === '/api/chat') {
+    limit = 15; // 15 requests/min for AI chat
+    prefix = 'chat';
+  } else if (req.path.startsWith('/api/')) {
+    limit = 60;
+    prefix = 'api';
+  }
+
+  const result = checkRateLimit(req, { limit, windowMs: 60000, prefix });
+  setRateLimitHeaders(res, result);
+
+  if (!result.allowed) {
+    res.setHeader('Content-Type', 'application/json');
+    return res.status(429).json({
+      error: 'Too Many Requests',
+      message: `Rate limit exceeded for ${req.path}. Maximum ${limit} requests per minute.`,
+      retryAfter: result.retryAfter
+    });
+  }
+
+  next();
+});
 
 // API Route for Groq
 app.post('/api/chat', async (req, res) => {

@@ -1,3 +1,5 @@
+import { checkRateLimit, setRateLimitHeaders } from './_ratelimit';
+
 export default async function handler(req: any, res: any) {
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -7,6 +9,22 @@ export default async function handler(req: any, res: any) {
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
+
+  // Rate Limiting: 60 requests per minute per IP for stats probe
+  const rateLimit = checkRateLimit(req, { limit: 60, windowMs: 60000, prefix: 'stats' });
+  setRateLimitHeaders(res, rateLimit);
+
+  if (!rateLimit.allowed) {
+    res.setHeader('Content-Type', 'application/json');
+    return res.status(429).json({
+      error: 'Too Many Requests',
+      message: 'Rate limit exceeded for /api/stats. Please slow down (maximum 60 requests per minute).',
+      retryAfter: rateLimit.retryAfter
+    });
+  }
+
+  // Edge Caching: Cache on Vercel CDN for 5 seconds to absorb spikes
+  res.setHeader('Cache-Control', 'public, s-maxage=5, stale-while-revalidate=10');
 
   const endpoints = [
     'https://panel.fusionhub.in/api/stats',
