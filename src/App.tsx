@@ -4,6 +4,7 @@ import { Nav } from './components/Nav';
 import { ScrollToTop } from './components/ScrollToTop';
 import { Hero } from './components/Hero';
 import { Features } from './components/Features';
+import { InsiderProgram } from './components/InsiderProgram';
 import { AIConsole } from './components/AIConsole';
 import { NukeGuard } from './components/NukeGuard';
 import { Footer } from './components/Footer';
@@ -13,15 +14,41 @@ import { TermsPage } from './pages/TermsPage';
 import { UpdatesPage } from './pages/UpdatesPage';
 import { StatusPage } from './pages/StatusPage';
 import { CustomCursor } from './components/CustomCursor';
+import { DISCORD_INVITE_URL } from './constants';
 
 const HomePage = () => (
   <main>
     <Hero />
     <Features />
+    <InsiderProgram />
     <AIConsole />
     <NukeGuard />
   </main>
 );
+
+const KaitoRedirect = () => {
+  React.useEffect(() => {
+    // Attempt tracking referral beacon then redirect to bot invite
+    fetch('https://panel.fusionhub.in/api/track/kaito?type=click', { mode: 'no-cors' }).finally(() => {
+      window.location.href = 'https://panel.fusionhub.in/kaito';
+    });
+    // Fallback if panel server is unreachable within 1.5s
+    const timer = setTimeout(() => {
+      window.location.href = DISCORD_INVITE_URL;
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-black text-white p-6">
+      <div className="text-center space-y-4">
+        <div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto" />
+        <h2 className="text-xl font-bold">Redirecting to Fusion Bot Invite...</h2>
+        <p className="text-sm text-white/50">Taking you to Discord authorization.</p>
+      </div>
+    </div>
+  );
+};
 
 const App = () => {
   React.useEffect(() => {
@@ -76,11 +103,14 @@ const App = () => {
           <Nav />
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/insider" element={<main className="pt-20"><InsiderProgram /></main>} />
             <Route path="/commands" element={<CommandsPage />} />
             <Route path="/updates" element={<UpdatesPage />} />
             <Route path="/status" element={<StatusPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />
+            <Route path="/kaito" element={<KaitoRedirect />} />
+            <Route path="/invite/kaito" element={<KaitoRedirect />} />
           </Routes>
           <Footer />
         </div>
