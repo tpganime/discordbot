@@ -77,7 +77,7 @@
       "destination": "/api/$1"
     },
     {
-      "source": "/(commands|privacy|terms|updates|status|features|docs|developers|about|contact|refund|shipping|insider|kaito|invite/.*)",
+      "source": "/(commands|privacy|terms|updates|status|features|docs|developers|about|contact|refund|shipping|insider|insider-program|fd|kaito|rosewood|qlynk|invite/.*|join/.*)",
       "destination": "/index.html"
     }
   ]
