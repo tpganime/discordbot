@@ -108,7 +108,6 @@ export const Footer = () => {
             <Typography variant="h4" weight="bold" className="mb-6 text-sm uppercase tracking-wider text-white">Product</Typography>
             <ul className="space-y-3 text-sm">
               <li><a href="/#features" className="text-white/50 hover:text-white transition-colors">Features</a></li>
-              <li><Link to="/insider" className="text-cyan-400/90 hover:text-cyan-300 transition-colors flex items-center gap-1.5 font-medium"><span>💎</span> Insider Program</Link></li>
               <li><Link to="/commands" className="text-white/50 hover:text-white transition-colors">Commands</Link></li>
               <li><Link to="/status" className="text-white/50 hover:text-white transition-colors flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-emerald-400"></span> Bot Shard Status</Link></li>
               <li><a href={TOPGG_URL} target="_blank" rel="noreferrer" className="text-[#ff3366] hover:text-[#ff668f] transition-colors flex items-center gap-1.5 font-semibold"><span>⭐</span> Vote on Top.gg <ExternalLink className="w-3 h-3" /></a></li>
