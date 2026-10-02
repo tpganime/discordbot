@@ -108,9 +108,22 @@ export const PrivacyPage = () => {
                 </Typography>
               </section>
 
+              <section className="space-y-3">
+                <Typography variant="h4" weight="bold" className="text-emerald-400 flex items-center gap-2 text-lg">
+                  <Lock className="w-5 h-5" /> 7. Voice Recording &amp; End-to-End Encryption
+                </Typography>
+                <div className="p-4 rounded-2xl bg-emerald-950/20 border border-emerald-500/20 space-y-2 text-xs text-white/80">
+                  <p>When authorized server members use <code>/join</code> to record voice channels:</p>
+                  <p>• <strong>End-to-End Encryption:</strong> Audio data is encrypted using AES-256-GCM before storage in our cloud database. Encryption keys are delivered directly to the recording initiator in Discord DMs.</p>
+                  <p>• <strong>Cloud Database Storage:</strong> Audio files are stored strictly in our secure MongoDB Cloud database cluster. No persistent audio files are saved on host VPS server disks.</p>
+                  <p>• <strong>48-Hour Automated Purge:</strong> All recorded audio is permanently and automatically deleted after exactly 48 hours. Initiators may also delete recordings immediately using their private delete key.</p>
+                  <p>• <strong>Zero Inactive Storage:</strong> If no speech is detected during a session, all buffers are discarded and nothing is saved to database storage.</p>
+                </div>
+              </section>
+
               <section className="space-y-3 pt-6 border-t border-white/10">
                 <Typography variant="h4" weight="bold" className="text-blue-400 flex items-center gap-2 text-lg">
-                  <Mail className="w-5 h-5" /> 7. Grievance Officer &amp; Privacy Contact
+                  <Mail className="w-5 h-5" /> 8. Grievance Officer &amp; Privacy Contact
                 </Typography>
                 <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2 text-xs">
                   <p className="text-white/80"><strong>Data Protection &amp; Grievance Officer:</strong> {LEGAL_ENTITY_NAME}</p>

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { 
   Shield, Zap, Settings, ArrowLeft,
   Layout, ShieldAlert, Sparkles, Gift, Ticket, Cpu, Search as SearchIcon,
-  Lock, Bot
+  Lock, Bot, Mic
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Container } from '../components/ui/Container';
@@ -14,6 +14,18 @@ import { Badge } from '../components/ui/Badge';
 import { Flex } from '../components/ui/Flex';
 
 export const commandCategories = [
+  {
+    name: 'Voice Recording & Studio',
+    icon: Mic,
+    color: 'text-emerald-400',
+    bg: 'bg-emerald-500/10',
+    badge: '3 Commands',
+    commands: [
+      { name: '/join', usage: '', description: 'Bot joins your voice channel and begins high-fidelity voice recording with per-speaker audio capture and live panel.' },
+      { name: '/stop', usage: '', description: 'Stops active recording, encrypts audio with AES-256-GCM, saves to cloud database, and delivers multi-format download links.' },
+      { name: '/recordings', usage: '', description: 'View your recent voice recordings, track details, and 48-hour automated expiration countdowns.' },
+    ]
+  },
   {
     name: 'Moderation & Staff Tools',
     icon: Shield,

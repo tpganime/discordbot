@@ -12,7 +12,8 @@ import {
   Sparkles, 
   Mail, 
   ArrowLeft,
-  CreditCard
+  CreditCard,
+  Mic
 } from 'lucide-react';
 import { Container } from '../components/ui/Container';
 import { Section } from '../components/ui/Section';
@@ -127,8 +128,21 @@ export const TermsPage = () => {
               </section>
 
               <section className="space-y-3">
+                <Typography variant="h4" weight="bold" className="text-emerald-400 flex items-center gap-2 text-lg">
+                  <Mic className="w-5 h-5" /> 8. Voice Recording Terms &amp; Participant Consent
+                </Typography>
+                <div className="p-4 rounded-2xl bg-emerald-950/20 border border-emerald-500/20 space-y-2 text-xs text-white/80">
+                  <p>Users who trigger the <code>/join</code> and <code>/stop</code> voice recording features agree that:</p>
+                  <p>• <strong>Consent &amp; Legal Compliance:</strong> You are strictly responsible for obtaining participant consent prior to recording in accordance with applicable state, federal, or international wiretapping and privacy laws.</p>
+                  <p>• <strong>End-to-End Encryption:</strong> Audio data is encrypted via AES-256-GCM. Decryption keys are issued exclusively to the recording initiator.</p>
+                  <p>• <strong>Cloud Database Storage &amp; 48-Hour Retention:</strong> Audio is stored in our MongoDB Cloud cluster and is automatically purged after 48 hours. Zero persistent audio is kept on host VPS disks.</p>
+                  <p>• <strong>Prohibited Recording Uses:</strong> You may not use voice recording tools for unauthorized surveillance, harassment, blackmail, or illegal wiretapping.</p>
+                </div>
+              </section>
+
+              <section className="space-y-3">
                 <Typography variant="h4" weight="bold" className="text-blue-400 flex items-center gap-2 text-lg">
-                  <Scale className="w-5 h-5" /> 8. Governing Law &amp; Jurisdiction
+                  <Scale className="w-5 h-5" /> 9. Governing Law &amp; Jurisdiction
                 </Typography>
                 <Typography variant="p" className="text-white/70">
                   These Terms of Service shall be governed by and construed in accordance with the laws of <strong>India</strong>. Any legal disputes or claims arising out of these Terms or use of the services shall be subject to the exclusive jurisdiction of the courts located in Delhi NCR, India.
