@@ -22,7 +22,7 @@ export const commandCategories = [
     badge: '3 Commands',
     commands: [
       { name: '/join', usage: '', description: 'Bot joins your voice channel and begins high-fidelity voice recording with per-speaker audio capture and live panel.' },
-      { name: '/stop', usage: '', description: 'Stops active recording, encrypts audio with AES-256-GCM, saves to cloud database, and delivers multi-format download links.' },
+      { name: '/stop', usage: '', description: 'Stop voice recording and privately deliver studio download link and deletion key directly to your DMs.' },
       { name: '/recordings', usage: '', description: 'View your recent voice recordings, track details, and 48-hour automated expiration countdowns.' },
     ]
   },
