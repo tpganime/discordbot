@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Rocket, Zap, Shield, Sparkles, LayoutDashboard, Gift, Bot, Star, Cloud, Clock } from 'lucide-react';
+import { Rocket, Zap, Shield, Sparkles, LayoutDashboard, Gift, Bot, Star, Cloud, Clock, Mic } from 'lucide-react';
 import { Container } from '../components/ui/Container';
 import { Section } from '../components/ui/Section';
 import { Typography } from '../components/ui/Typography';
@@ -9,6 +9,24 @@ import { Badge } from '../components/ui/Badge';
 import { Flex } from '../components/ui/Flex';
 
 const updates = [
+  {
+    version: 'v3.8.0',
+    date: 'October 3, 2026 at 12:00 AM UTC',
+    title: 'Studio Voice Recording Engine & VIP Partner Communities',
+    description: 'A major feature and infrastructure update introducing multi-track voice recording, private DM delivery for secure downloads, studio audio export engine, and official Insider Program partner integrations.',
+    type: 'Major',
+    icon: Mic,
+    color: 'text-rose-500',
+    bg: 'bg-rose-500/10',
+    changes: [
+      'Multi-Track Studio Voice Recording (/join & /stop): Record up to 2 hours of 48,000 Hz 16-bit uncompressed stereo audio with per-speaker audio isolation.',
+      'Private DM Delivery: Download links and spoiler deletion keys are delivered strictly via private Discord DM, keeping server channels clean and private.',
+      'Encrypted Cloud Audio Storage: Live audio streams are saved directly into AES-256-GCM encrypted cloud storage with automatic 48-hour secure lifecycle purge.',
+      'Studio-Quality Audio Exports: Download individual user tracks or mixed master recordings in 320 kbps MP3, 320 kbps AAC, Q10 Vorbis (~500 kbps), Compression Level 8 FLAC, and uncompressed 16-bit WAV.',
+      'Web Recording Download Portal: Dedicated web player (panel.fusionhub.in/rec/:id) with live countdown timers, per-speaker duration metrics, and secure DM key deletion.',
+      'Official Insider Program Partnerships: Dedicated partner communities for DARK_BROTHER\'S (KAITO), Forest Department (FD), Crimson Rosewood (ROSEWOOD), and Deep\'s Army (QLYNK) with 2-Month Free Pro server trials.'
+    ]
+  },
   {
     version: 'v3.5.0',
     date: 'September 15, 2026 at 12:00 AM UTC',
