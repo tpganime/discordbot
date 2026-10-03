@@ -166,6 +166,7 @@ export const commandCategories = [
     badge: '13 Commands',
     commands: [
       { name: '/help', usage: '', description: 'Open the interactive Command Center with category selector and quick link buttons.' },
+      { name: '/invite', usage: '', description: 'Invite the bot directly to your server, join support community, and view official website.' },
       { name: '/ping', usage: '', description: 'Check Discord WebSocket gateway latency, shard status, and API ping.' },
       { name: '/userinfo', usage: '[@user]', description: 'Comprehensive member details: join date, account age, badges, permissions, and roles.' },
       { name: '/avatar', usage: '[@user]', description: 'View and download full-resolution avatars up to 4096px (PNG, JPG, WEBP).' },
