@@ -7,7 +7,7 @@ import { Section } from '../components/ui/Section';
 import { Typography } from '../components/ui/Typography';
 import { 
   SUPPORT_EMAIL, SUPPORT_SERVER_URL, DASHBOARD_URL, 
-  LEGAL_ENTITY_NAME, BUSINESS_NAME, OPERATIONAL_ADDRESS 
+  LEGAL_ENTITY_NAME, BUSINESS_NAME 
 } from '../constants';
 
 export const PrivacyPage = () => {
@@ -128,7 +128,6 @@ export const PrivacyPage = () => {
                 <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2 text-xs">
                   <p className="text-white/80"><strong>Data Protection &amp; Grievance Officer:</strong> {LEGAL_ENTITY_NAME}</p>
                   <p className="text-white/80"><strong>Official Business:</strong> {BUSINESS_NAME}</p>
-                  <p className="text-white/80"><strong>Operational Address:</strong> {OPERATIONAL_ADDRESS}</p>
                   <p className="text-white/80"><strong>Privacy &amp; Data Inquiries:</strong> <a href={`mailto:${SUPPORT_EMAIL}`} className="text-blue-400 hover:underline">{SUPPORT_EMAIL}</a></p>
                 </div>
               </section>

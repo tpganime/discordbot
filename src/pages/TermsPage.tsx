@@ -23,8 +23,7 @@ import {
   SUPPORT_EMAIL, 
   SUPPORT_SERVER_URL, 
   LEGAL_ENTITY_NAME, 
-  BUSINESS_NAME, 
-  OPERATIONAL_ADDRESS 
+  BUSINESS_NAME 
 } from '../constants';
 
 export const TermsPage = () => {
@@ -164,7 +163,6 @@ export const TermsPage = () => {
                 </Typography>
                 <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2 text-xs">
                   <p className="text-white/80"><strong>Merchant Legal Entity:</strong> {LEGAL_ENTITY_NAME} ({BUSINESS_NAME})</p>
-                  <p className="text-white/80"><strong>Operational Address:</strong> {OPERATIONAL_ADDRESS}</p>
                   <p className="text-white/80"><strong>Official Support Email:</strong> <a href={`mailto:${SUPPORT_EMAIL}`} className="text-blue-400 hover:underline">{SUPPORT_EMAIL}</a></p>
                   <p className="text-white/80"><strong>Discord Support Community:</strong> <a href={SUPPORT_SERVER_URL} target="_blank" rel="noreferrer" className="text-blue-400 hover:underline">{SUPPORT_SERVER_URL}</a></p>
                 </div>

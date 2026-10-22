@@ -166,11 +166,11 @@ export const Hero = () => {
               </div>
             </div>
 
-            <Typography variant="h1" weight="black" className="mb-6 max-w-5xl mx-auto">
-              Elevate Your <span className="text-blue-500">Discord</span> Experience
+            <Typography variant="h1" weight="black" className="mb-6 max-w-5xl mx-auto tracking-tight">
+              Protect &amp; Scale Your <span className="text-blue-500">Discord Server</span> With Zero-Latency Intelligence
             </Typography>
-            <Typography variant="lead" className="max-w-2xl mx-auto mb-10 text-white/70">
-              Enterprise auto-moderation, automated Google Drive backups, interactive tickets, and next-gen AI conversation.
+            <Typography variant="lead" className="max-w-3xl mx-auto mb-10 text-white/70 leading-relaxed text-base sm:text-lg">
+              Fusion Bot is an all-in-one Discord moderation and disaster-recovery bot featuring zero-latency Anti-Nuke protection, automated daily Google Drive server backups, and bilingual AI assistance. It safeguards Discord communities with instant threat mitigation and multi-track studio voice recording with zero setup fees.
             </Typography>
           </motion.div>
 

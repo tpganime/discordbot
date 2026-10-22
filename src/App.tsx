@@ -14,6 +14,8 @@ import { UpdatesPage } from './pages/UpdatesPage';
 import { StatusPage } from './pages/StatusPage';
 import { InsiderPage } from './pages/InsiderPage';
 import { CustomCursor } from './components/CustomCursor';
+import { ComparisonTable } from './components/ComparisonTable';
+import { FAQSection } from './components/FAQSection';
 import { DISCORD_INVITE_URL } from './constants';
 
 const HomePage = () => (
@@ -22,6 +24,8 @@ const HomePage = () => (
     <Features />
     <AIConsole />
     <NukeGuard />
+    <ComparisonTable />
+    <FAQSection />
   </main>
 );
 

@@ -30,5 +30,5 @@
 ## Organization & Legal Trust Info:
 - Organization: Fusion Bot (FusionHub)
 - Merchant Entity: CHAUDHARY TANMAY
-- Support Email: support@fusionhub.in
+- Support Email: mail@fusionhub.in
 - Headquarters: Delhi, India
