@@ -6,7 +6,7 @@ export const SUPPORT_EMAIL = 'mail@fusionhub.in';
 export const SUPPORT_HOURS = '10:00 AM – 8:00 PM IST (Mon - Sat) | 24/7 Discord Live Support';
 export const DISCORD_INVITE_URL = 'https://discord.com/oauth2/authorize?client_id=1485375910562758967&permissions=8&integration_type=0&scope=bot';
 export const DASHBOARD_URL = 'https://panel.fusionhub.in/';
-export const SUPPORT_SERVER_URL = 'https://discord.gg/9VjxW89S6A';
+export const SUPPORT_SERVER_URL = 'https://discord.gg/tHAGVXg3vT';
 export const COMMUNITY_URL = 'https://discord.gg/QK8KJrZv55';
 export const YOUTUBE_URL = 'https://www.youtube.com/@tpggamer1';
 export const GITHUB_URL = 'https://github.com/fusionhub122-ux';

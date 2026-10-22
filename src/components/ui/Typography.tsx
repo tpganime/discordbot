@@ -10,13 +10,13 @@ interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
 
 export const Typography = ({ variant = 'p', weight = 'normal', align = 'left', className, children, ...props }: TypographyProps) => {
   const variants = {
-    h1: 'font-display text-5xl md:text-7xl lg:text-8xl tracking-tight leading-[0.9]',
-    h2: 'font-display text-4xl md:text-6xl tracking-tight leading-[1]',
-    h3: 'font-display text-3xl md:text-5xl tracking-tight leading-[1.1]',
-    h4: 'font-display text-2xl md:text-4xl tracking-tight leading-[1.2]',
-    p: 'text-base md:text-lg leading-relaxed text-white/60',
-    small: 'text-xs md:text-sm font-bold uppercase tracking-widest text-white/40',
-    lead: 'text-xl md:text-2xl leading-relaxed text-white/80',
+    h1: 'font-display text-3xl sm:text-4xl md:text-5xl lg:text-5xl tracking-tight leading-tight',
+    h2: 'font-display text-2xl sm:text-3xl md:text-4xl tracking-tight leading-snug',
+    h3: 'font-display text-xl sm:text-2xl md:text-3xl tracking-tight leading-snug',
+    h4: 'font-display text-lg sm:text-xl md:text-2xl tracking-tight leading-snug',
+    p: 'text-sm md:text-base leading-relaxed text-white/60',
+    small: 'text-xs font-bold uppercase tracking-widest text-white/40',
+    lead: 'text-base md:text-lg leading-relaxed text-white/80',
   };
 
   const weights = {
