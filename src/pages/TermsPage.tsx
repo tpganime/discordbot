@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   ShieldCheck, 
   FileText, 
@@ -27,18 +27,28 @@ import {
 } from '../constants';
 
 export const TermsPage = () => {
+  const navigate = useNavigate();
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate('/');
+    }
+  };
+
   return (
     <main className="pt-24 pb-20">
       <Section className="py-12">
         <Container size="md">
           {/* Back button */}
-          <Link 
-            to="/" 
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-xs font-semibold text-white/60 hover:text-white hover:bg-white/10 active:scale-[0.98] mb-8 transition-all group"
+          <button 
+            type="button"
+            onClick={handleBack}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-xs font-semibold text-white/60 hover:text-white hover:bg-white/10 active:scale-[0.98] mb-8 transition-all group cursor-pointer"
           >
             <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
-            <span>Back to Home</span>
-          </Link>
+            <span>Back</span>
+          </button>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}

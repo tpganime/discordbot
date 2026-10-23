@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { 
   Activity, 
   Server, 
@@ -19,7 +20,8 @@ import {
   Sliders,
   TrendingUp,
   XCircle,
-  WifiOff
+  WifiOff,
+  ArrowLeft
 } from 'lucide-react';
 import { Container } from '../components/ui/Container';
 import { Typography } from '../components/ui/Typography';
@@ -251,10 +253,28 @@ export const StatusPage = () => {
   const isOnline = stats ? (stats.online && stats.status.toLowerCase() !== 'offline') : false;
   const activeShards = stats?.shards || [];
   const currentServers = stats?.servers || 29;
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate('/');
+    }
+  };
 
   return (
     <div className="pt-32 pb-24 min-h-screen">
       <Container size="xl">
+        <button
+          type="button"
+          onClick={handleBack}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-xs font-semibold text-white/60 hover:text-white hover:bg-white/10 active:scale-[0.98] mb-8 transition-all group cursor-pointer"
+        >
+          <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
+          Back
+        </button>
+
         {/* Header Section */}
         <div className="mb-10">
           <motion.div

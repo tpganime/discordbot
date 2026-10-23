@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { 
   Sparkles, 
   Shield, 
@@ -9,7 +10,8 @@ import {
   ExternalLink, 
   Star,
   ArrowRight,
-  Flame
+  Flame,
+  ArrowLeft
 } from 'lucide-react';
 import { Container } from '../components/ui/Container';
 import { Typography } from '../components/ui/Typography';
@@ -97,7 +99,16 @@ const PARTNER_SERVERS: PartnerServer[] = [
 ];
 
 export const InsiderPage = () => {
+  const navigate = useNavigate();
   const [counts, setCounts] = useState<Record<string, { members: number; online: number }>>({});
+
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate('/');
+    }
+  };
 
   useEffect(() => {
     // Attempt live fetch from Discord invite APIs for each partner
@@ -133,6 +144,15 @@ export const InsiderPage = () => {
       <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-gradient-to-r from-emerald-600/15 via-cyan-500/15 to-indigo-600/15 blur-[150px] pointer-events-none" />
 
       <Container className="relative z-10">
+        <button
+          type="button"
+          onClick={handleBack}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-xs font-semibold text-white/60 hover:text-white hover:bg-white/10 active:scale-[0.98] mb-8 transition-all group cursor-pointer"
+        >
+          <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
+          Back
+        </button>
+
         {/* Page Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <motion.div
