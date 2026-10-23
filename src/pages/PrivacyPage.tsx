@@ -15,8 +15,8 @@ export const PrivacyPage = () => {
     <main className="pt-32 pb-24">
       <Section spacing="xl">
         <Container size="md">
-          <Link to="/" className="inline-flex items-center gap-2 text-white/40 hover:text-white mb-12 transition-colors group">
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          <Link to="/" className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-xs font-semibold text-white/60 hover:text-white hover:bg-white/10 active:scale-[0.98] mb-12 transition-all group">
+            <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
             Back to Home
           </Link>
           
@@ -25,17 +25,17 @@ export const PrivacyPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="w-16 h-16 rounded-2xl bg-blue-600/20 flex items-center justify-center mb-8 border border-blue-500/30">
-              <Lock className="w-8 h-8 text-blue-400" />
+            <div className="w-14 h-14 rounded-[20px] bg-blue-500/15 border border-blue-500/25 flex items-center justify-center mb-8 shadow-lg">
+              <Lock className="w-7 h-7 text-blue-400" />
             </div>
-            <Typography variant="h1" weight="black" className="mb-3 text-3xl sm:text-5xl">
+            <Typography variant="h1" weight="bold" className="mb-3 text-3xl sm:text-5xl tracking-[-0.035em]">
               Privacy <span className="text-blue-500">Policy</span>
             </Typography>
-            <Typography variant="small" className="text-white/40 mb-10 block">
+            <Typography variant="small" className="text-white/40 mb-10 block tracking-tight">
               Effective &amp; Last Updated: August 2026 • Compliant with Indian DPDP Act &amp; Cashfree Merchant Guidelines
             </Typography>
             
-            <div className="glass p-8 md:p-12 rounded-[32px] border-white/5 space-y-8 text-white/80 text-sm leading-relaxed">
+            <div className="p-8 md:p-12 rounded-[32px] border border-white/10 bg-white/[0.03] backdrop-blur-3xl shadow-2xl space-y-8 text-white/80 text-sm leading-relaxed tracking-tight">
               
               <section className="space-y-3">
                 <Typography variant="h4" weight="bold" className="text-blue-400 flex items-center gap-2 text-lg">

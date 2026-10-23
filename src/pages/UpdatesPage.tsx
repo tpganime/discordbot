@@ -118,20 +118,20 @@ export const UpdatesPage = () => {
     <main className="pt-32 pb-24">
       <Section spacing="xl">
         <Container size="xl">
-          <div className="text-center mb-24">
+          <div className="text-center mb-20">
             <motion.div
               initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <Badge variant="primary" className="mb-8">
-                <Sparkles className="w-3 h-3 mr-2" />
+              <Badge variant="primary" className="mb-6 rounded-full px-4 py-1 text-xs tracking-wide font-semibold">
+                <Sparkles className="w-3.5 h-3.5 mr-2" />
                 Release History & Changelog
               </Badge>
-              <Typography variant="h1" weight="black" className="mb-8">
-                System <span className="text-blue-600">Updates</span>
+              <Typography variant="h1" weight="bold" className="mb-6 tracking-[-0.035em]">
+                System <span className="text-blue-500">Updates</span>
               </Typography>
-              <Typography variant="lead" className="max-w-2xl mx-auto">
+              <Typography variant="lead" className="max-w-2xl mx-auto text-white/60 text-base sm:text-lg tracking-[-0.012em]">
                 Explore the latest features, security enhancements, and performance upgrades released for Fusion Bot.
               </Typography>
             </motion.div>
@@ -146,39 +146,39 @@ export const UpdatesPage = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: isMobile ? 0 : i * 0.08 }}
               >
-                <Card className="liquid-glass p-8 md:p-10 border border-white/10 rounded-[32px] relative overflow-hidden group">
+                <Card className="p-8 md:p-10 border border-white/10 rounded-[32px] bg-white/[0.03] backdrop-blur-3xl relative overflow-hidden group shadow-2xl">
                   <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity pointer-events-none">
                     <update.icon className={`w-32 h-32 ${update.color}`} />
                   </div>
                   
                   <Flex gap={4} className="mb-8">
-                    <div className={`w-14 h-14 rounded-2xl ${update.bg} flex items-center justify-center shrink-0`}>
+                    <div className={`w-14 h-14 rounded-[20px] ${update.bg} border border-white/10 flex items-center justify-center shrink-0 shadow-md`}>
                       <update.icon className={`w-7 h-7 ${update.color}`} />
                     </div>
                     <div>
                       <Flex gap={4} align="center" className="mb-1 flex-wrap">
-                        <Typography variant="h3" weight="bold">{update.title}</Typography>
-                        <Badge variant="outline">{update.type}</Badge>
+                        <Typography variant="h3" weight="bold" className="tracking-tight">{update.title}</Typography>
+                        <Badge variant="outline" className="rounded-full px-3 py-0.5 text-[11px] border-white/15 text-white/70">{update.type}</Badge>
                       </Flex>
-                      <Typography variant="small" className="text-white/40 flex items-center gap-1.5 mt-1">
+                      <Typography variant="small" className="text-white/40 flex items-center gap-1.5 mt-1 tracking-tight">
                         <Clock className="w-3.5 h-3.5 text-blue-400" />
                         {update.version} • {update.date}
                       </Typography>
                     </div>
                   </Flex>
 
-                  <Typography variant="p" className="text-white/70 mb-8 max-w-2xl leading-relaxed text-sm">
+                  <Typography variant="p" className="text-white/70 mb-8 max-w-2xl leading-relaxed text-sm tracking-tight">
                     {update.description}
                   </Typography>
 
                   <div className="space-y-4">
-                    <Typography variant="small" weight="bold" className="text-blue-400 uppercase tracking-widest text-xs">
+                    <Typography variant="small" weight="bold" className="text-blue-400 uppercase tracking-widest text-[11px]">
                       Key Highlights & Changelog
                     </Typography>
-                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
                       {update.changes.map((change, idx) => (
-                        <li key={idx} className="flex items-start gap-3 text-sm text-white/60 leading-relaxed">
-                          <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 shrink-0" />
+                        <li key={idx} className="flex items-start gap-3 text-sm text-white/60 leading-relaxed tracking-tight">
+                          <div className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-sm mt-2 shrink-0" />
                           {change}
                         </li>
                       ))}

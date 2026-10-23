@@ -34,9 +34,9 @@ export const TermsPage = () => {
           {/* Back button */}
           <Link 
             to="/" 
-            className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white mb-8 transition-colors group"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-xs font-semibold text-white/60 hover:text-white hover:bg-white/10 active:scale-[0.98] mb-8 transition-all group"
           >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
             <span>Back to Home</span>
           </Link>
 
@@ -48,20 +48,20 @@ export const TermsPage = () => {
           >
             {/* Header */}
             <div className="space-y-4 border-b border-white/10 pb-8">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono tracking-tight font-semibold">
                 <FileText className="w-3.5 h-3.5" />
                 <span>LEGAL COMPLIANCE</span>
               </div>
-              <Typography variant="h1" weight="black" className="text-3xl sm:text-4xl">
+              <Typography variant="h1" weight="bold" className="text-3xl sm:text-5xl tracking-[-0.035em]">
                 Terms of Service
               </Typography>
-              <p className="text-sm text-white/50">
+              <p className="text-sm text-white/50 tracking-tight">
                 Effective &amp; Last Updated: August 15, 2026 • Official Merchant: <strong>{LEGAL_ENTITY_NAME}</strong>
               </p>
             </div>
 
             {/* Document Content */}
-            <div className="space-y-8 text-sm text-white/80 leading-relaxed">
+            <div className="p-8 md:p-12 rounded-[32px] border border-white/10 bg-white/[0.03] backdrop-blur-3xl shadow-2xl space-y-8 text-sm text-white/80 leading-relaxed tracking-tight">
               
               <section className="space-y-3">
                 <Typography variant="h4" weight="bold" className="text-blue-400 flex items-center gap-2 text-lg">

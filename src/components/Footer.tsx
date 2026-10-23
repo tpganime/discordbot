@@ -43,22 +43,22 @@ export const Footer = () => {
 
       <Container size="xl" className="relative z-10">
         {/* Top.gg Vote & Review Callout Banner */}
-        <div className="mb-16 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#ff3366]/15 via-purple-600/10 to-blue-600/15 border border-[#ff3366]/30 backdrop-blur-2xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl relative overflow-hidden group">
+        <div className="mb-16 p-6 sm:p-8 rounded-[32px] bg-white/[0.03] border border-white/10 backdrop-blur-3xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl relative overflow-hidden group">
           <div className="flex items-center gap-4 text-center md:text-left flex-col md:flex-row">
-            <div className="w-14 h-14 rounded-2xl bg-[#ff3366]/20 border border-[#ff3366]/40 flex items-center justify-center text-[#ff3366] text-2xl shadow-lg shrink-0 group-hover:scale-110 transition-transform">
+            <div className="w-14 h-14 rounded-[20px] bg-[#ff3366]/15 border border-[#ff3366]/30 flex items-center justify-center text-[#ff3366] text-2xl shadow-lg shrink-0 group-hover:scale-105 transition-transform">
               ⭐
             </div>
             <div>
               <div className="flex items-center gap-2 justify-center md:justify-start">
-                <span className="text-[11px] font-bold uppercase tracking-widest text-[#ff3366] bg-[#ff3366]/20 px-2.5 py-0.5 rounded-full border border-[#ff3366]/30 font-mono">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[#ff3366] bg-[#ff3366]/15 px-3 py-0.5 rounded-full border border-[#ff3366]/30 font-mono">
                   TOP.GG OFFICIAL LISTING
                 </span>
-                <span className="text-xs text-white/50">• Vote every 12 hours</span>
+                <span className="text-xs text-white/50 tracking-tight">• Vote every 12 hours</span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold font-display text-white mt-1.5">
+              <h3 className="text-xl sm:text-2xl font-bold font-display text-white mt-1.5 tracking-tight">
                 Vote and Review us on Top.gg
               </h3>
-              <p className="text-xs sm:text-sm text-white/70 mt-1 max-w-xl leading-relaxed">
+              <p className="text-xs sm:text-sm text-white/70 mt-1 max-w-xl leading-relaxed tracking-tight">
                 Support Fusion Bot on Top.gg! Leave a review, vote to unlock special bot perks, and help more Discord server owners discover automated backups and anti-nuke tools.
               </p>
             </div>
@@ -68,10 +68,10 @@ export const Footer = () => {
               href={TOPGG_URL}
               target="_blank"
               rel="noreferrer"
-              className="px-6 py-3.5 rounded-2xl bg-[#ff3366] hover:bg-[#ff1f58] text-white font-bold text-sm transition-all duration-300 flex items-center gap-2 shadow-lg shadow-[#ff3366]/30 hover:scale-105 active:scale-95 cursor-pointer"
+              className="px-6 py-3 rounded-full bg-[#ff3366] hover:bg-[#ff1f58] text-white font-semibold text-xs tracking-tight transition-all flex items-center gap-2 shadow-lg shadow-[#ff3366]/25 active:scale-[0.98] cursor-pointer"
             >
               <span>⭐ Vote &amp; Review on Top.gg</span>
-              <ExternalLink className="w-4 h-4" />
+              <ExternalLink className="w-3.5 h-3.5" />
             </a>
           </div>
         </div>
@@ -80,25 +80,25 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
           <div className="space-y-6">
             <Flex gap={4}>
-              <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-600/20">
+              <div className="w-12 h-12 rounded-[16px] bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-600/25">
                 <Bot className="w-6 h-6 text-white" />
               </div>
-              <span className="font-display text-2xl font-black tracking-tight">{APP_NAME}</span>
+              <span className="font-display text-2xl font-bold tracking-tight">{APP_NAME}</span>
             </Flex>
-            <Typography variant="p" className="max-w-xs text-sm text-white/60 leading-relaxed">
+            <Typography variant="p" className="max-w-xs text-sm text-white/60 leading-relaxed tracking-tight">
               The premier all-rounder Discord bot for automated Google Drive backups, anti-nuke security, ticketing, and AI integration.
             </Typography>
-            <Flex gap={4}>
-              <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="w-9 h-9 rounded-xl glass flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
+            <Flex gap={3}>
+              <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="w-9 h-9 rounded-[12px] glass flex items-center justify-center hover:bg-white/10 hover:text-white active:scale-[0.98] transition-all">
                 <Github className="w-4 h-4" />
               </a>
-              <a href={YOUTUBE_URL} target="_blank" rel="noreferrer" className="w-9 h-9 rounded-xl glass flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
+              <a href={YOUTUBE_URL} target="_blank" rel="noreferrer" className="w-9 h-9 rounded-[12px] glass flex items-center justify-center hover:bg-white/10 hover:text-white active:scale-[0.98] transition-all">
                 <Youtube className="w-4 h-4" />
               </a>
-              <a href={COMMUNITY_URL} target="_blank" rel="noreferrer" className="w-9 h-9 rounded-xl glass flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
+              <a href={COMMUNITY_URL} target="_blank" rel="noreferrer" className="w-9 h-9 rounded-[12px] glass flex items-center justify-center hover:bg-white/10 hover:text-white active:scale-[0.98] transition-all">
                 <MessageSquare className="w-4 h-4" />
               </a>
-              <a href={TOPGG_URL} target="_blank" rel="noreferrer" className="w-9 h-9 rounded-xl glass flex items-center justify-center hover:bg-[#ff3366] hover:text-white transition-all" title="Vote on Top.gg">
+              <a href={TOPGG_URL} target="_blank" rel="noreferrer" className="w-9 h-9 rounded-[12px] glass flex items-center justify-center hover:bg-white/10 hover:text-white active:scale-[0.98] transition-all" title="Vote on Top.gg">
                 <Star className="w-4 h-4 text-yellow-400" />
               </a>
             </Flex>

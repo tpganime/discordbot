@@ -89,43 +89,43 @@ export const InsiderProgram = () => {
             </Typography>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-              <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3">
-                <div className="w-8 h-8 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center flex-shrink-0 text-cyan-400">
+              <div className="p-3.5 rounded-[18px] bg-white/[0.03] backdrop-blur-xl border border-white/10 flex items-start gap-3 shadow-sm">
+                <div className="w-8 h-8 rounded-[10px] bg-cyan-500/15 border border-cyan-500/25 flex items-center justify-center flex-shrink-0 text-cyan-400">
                   <Shield className="w-4 h-4" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-white">Nuke Guard Active</div>
-                  <div className="text-[11px] text-white/50">Google Drive Snapshots</div>
+                  <div className="text-xs font-bold text-white tracking-tight">Nuke Guard Active</div>
+                  <div className="text-[11px] text-white/50 tracking-tight">Google Drive Snapshots</div>
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3">
-                <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0 text-blue-400">
+              <div className="p-3.5 rounded-[18px] bg-white/[0.03] backdrop-blur-xl border border-white/10 flex items-start gap-3 shadow-sm">
+                <div className="w-8 h-8 rounded-[10px] bg-blue-500/15 border border-blue-500/25 flex items-center justify-center flex-shrink-0 text-blue-400">
                   <Zap className="w-4 h-4" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-white">SUNDAY 5.1 AI</div>
-                  <div className="text-[11px] text-white/50">Conversational Engine</div>
+                  <div className="text-xs font-bold text-white tracking-tight">SUNDAY 5.1 AI</div>
+                  <div className="text-[11px] text-white/50 tracking-tight">Conversational Engine</div>
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3">
-                <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center flex-shrink-0 text-emerald-400">
+              <div className="p-3.5 rounded-[18px] bg-white/[0.03] backdrop-blur-xl border border-white/10 flex items-start gap-3 shadow-sm">
+                <div className="w-8 h-8 rounded-[10px] bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center flex-shrink-0 text-emerald-400">
                   <Users className="w-4 h-4" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-white">Active Community</div>
-                  <div className="text-[11px] text-white/50">Growing Network</div>
+                  <div className="text-xs font-bold text-white tracking-tight">Active Community</div>
+                  <div className="text-[11px] text-white/50 tracking-tight">Growing Network</div>
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3">
-                <div className="w-8 h-8 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center flex-shrink-0 text-purple-400">
+              <div className="p-3.5 rounded-[18px] bg-white/[0.03] backdrop-blur-xl border border-white/10 flex items-start gap-3 shadow-sm">
+                <div className="w-8 h-8 rounded-[10px] bg-purple-500/15 border border-purple-500/25 flex items-center justify-center flex-shrink-0 text-purple-400">
                   <CheckCircle2 className="w-4 h-4" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-white">Verified Tier</div>
-                  <div className="text-[11px] text-white/50">Partner Program</div>
+                  <div className="text-xs font-bold text-white tracking-tight">Verified Tier</div>
+                  <div className="text-[11px] text-white/50 tracking-tight">Partner Program</div>
                 </div>
               </div>
             </div>
@@ -139,7 +139,7 @@ export const InsiderProgram = () => {
             transition={{ duration: 0.6 }}
             className="lg:col-span-6 flex justify-center"
           >
-            <div className="w-full max-w-[360px] bg-[#1e1f22] rounded-[18px] overflow-hidden border border-[#2b2d31] shadow-2xl shadow-black/80 transition-all duration-300 hover:border-[#3b3e45] hover:shadow-cyan-500/10">
+            <div className="w-full max-w-[360px] bg-white/[0.04] backdrop-blur-2xl rounded-[28px] overflow-hidden border border-white/10 shadow-2xl shadow-black/80 transition-all duration-300 hover:border-cyan-500/30">
               {/* Header Banner */}
               <div className="h-[110px] w-full relative bg-gradient-to-b from-[#0088ff] to-[#00c8ff] overflow-hidden">
                 <img 
@@ -155,7 +155,7 @@ export const InsiderProgram = () => {
 
               {/* Avatar Overlap Area */}
               <div className="-mt-10 ml-4 mb-2 flex items-end">
-                <div className="w-[84px] h-[84px] rounded-[24px] bg-[#1e1f22] p-1 shadow-lg relative flex-shrink-0">
+                <div className="w-[84px] h-[84px] rounded-[24px] bg-[#12141a] p-1 shadow-lg relative flex-shrink-0 border border-white/10">
                   <img
                     src="https://cdn.discordapp.com/icons/1457383827625476160/daa345e459a98df29d15da38d682b83d.png?size=256"
                     alt="DARK_BROTHER'S Icon"
@@ -168,7 +168,7 @@ export const InsiderProgram = () => {
               </div>
 
               {/* Server Information */}
-              <div className="px-4 pb-4 space-y-2">
+              <div className="px-5 pb-5 space-y-2.5">
                 {/* Title & Verified Badge */}
                 <div className="flex items-center gap-1.5 pt-1">
                   <span className="font-bold text-white text-[19px] tracking-tight">DARK_BROTHER'S</span>
@@ -183,33 +183,33 @@ export const InsiderProgram = () => {
                 </div>
 
                 {/* Live Online & Member Counts */}
-                <div className="flex items-center gap-4 text-xs font-semibold text-[#949ba4]">
+                <div className="flex items-center gap-4 text-xs font-semibold text-white/50">
                   <div className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-[#23a55a]"></span>
-                    <span>{onlineCount} Online</span>
+                    <span className="w-2 h-2 rounded-full bg-[#30D158]"></span>
+                    <span className="text-[#30D158]">{onlineCount} Online</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-[#80848e]"></span>
+                    <span className="w-2 h-2 rounded-full bg-white/40"></span>
                     <span>{memberCount} Members</span>
                   </div>
                 </div>
 
                 {/* Established Subtitle */}
-                <div className="text-xs text-[#949ba4] font-medium">
+                <div className="text-xs text-white/40 font-medium">
                   Est. Jan 2026
                 </div>
 
                 {/* Description */}
-                <p className="text-xs text-[#dbdee1] leading-relaxed pt-1 pb-2">
+                <p className="text-xs text-white/70 leading-relaxed pt-1 pb-2 tracking-tight">
                   💎 Official Dark Brother's family server community [EN | 02/06] 👑 🖤 stay loyal be respectful towards everyone grow together
                 </p>
 
-                {/* Green Join Now Action Button */}
+                {/* Action Button */}
                 <a
                   href="https://discord.gg/BYGpaPbVS"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full py-2.5 px-4 rounded-[8px] bg-[#23a55a] hover:bg-[#1f8b4c] active:bg-[#1a7941] text-white font-semibold text-center text-sm transition-all duration-150 shadow-sm"
+                  className="block w-full py-2.5 px-4 rounded-full bg-[#30D158] hover:bg-[#28b84d] active:scale-[0.98] text-black font-bold text-center text-xs tracking-tight transition-all shadow-md"
                 >
                   Join Now
                 </a>

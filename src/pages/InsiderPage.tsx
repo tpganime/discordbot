@@ -239,13 +239,13 @@ export const InsiderPage = () => {
               transition={{ duration: 0.6 }}
               className="lg:col-span-6 flex justify-center"
             >
-              <div className="w-full max-w-[360px] bg-[#1e1f22] rounded-[18px] overflow-hidden border border-[#2b2d31] shadow-2xl shadow-black/80 transition-all duration-300 hover:border-emerald-500/40 hover:shadow-emerald-500/10">
+              <div className="w-full max-w-[360px] bg-white/[0.04] backdrop-blur-2xl rounded-[28px] overflow-hidden border border-white/10 shadow-2xl shadow-black/80 transition-all duration-300 hover:border-emerald-500/40 hover:shadow-emerald-500/10">
                 {/* Header Banner */}
                 <div className={`h-[110px] w-full relative bg-gradient-to-r ${topPartner.bannerGradient} overflow-hidden`} />
 
                 {/* Avatar Overlap Area */}
                 <div className="-mt-10 ml-4 mb-2 flex items-end">
-                  <div className="w-[84px] h-[84px] rounded-[24px] bg-[#1e1f22] p-1 shadow-lg relative flex-shrink-0">
+                  <div className="w-[84px] h-[84px] rounded-[24px] bg-[#12141a] p-1 shadow-lg relative flex-shrink-0 border border-white/10">
                     <img
                       src={topPartner.icon}
                       alt={topPartner.name}
@@ -258,7 +258,7 @@ export const InsiderPage = () => {
                 </div>
 
                 {/* Server Information */}
-                <div className="px-4 pb-4 space-y-2">
+                <div className="px-5 pb-5 space-y-2.5">
                   <div className="flex items-center gap-1.5 pt-1">
                     <span className="font-bold text-white text-[19px] tracking-tight">{topPartner.name}</span>
                     <svg className="w-5 h-5 text-emerald-400 flex-shrink-0 fill-current" viewBox="0 0 16 16" title="Verified Community">
@@ -266,22 +266,22 @@ export const InsiderPage = () => {
                     </svg>
                   </div>
 
-                  <div className="flex items-center gap-4 text-xs font-semibold text-[#949ba4]">
+                  <div className="flex items-center gap-4 text-xs font-semibold text-white/50">
                     <div className="flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-[#23a55a]"></span>
-                      <span>{topCounts.online} Online</span>
+                      <span className="w-2 h-2 rounded-full bg-[#30D158]"></span>
+                      <span className="text-[#30D158]">{topCounts.online} Online</span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-[#80848e]"></span>
+                      <span className="w-2 h-2 rounded-full bg-white/40"></span>
                       <span>{topCounts.members} Members</span>
                     </div>
                   </div>
 
-                  <div className="text-xs text-[#949ba4] font-medium">
+                  <div className="text-xs text-white/40 font-medium">
                     {topPartner.est}
                   </div>
 
-                  <p className="text-xs text-[#dbdee1] leading-relaxed pt-1 pb-2">
+                  <p className="text-xs text-white/70 leading-relaxed pt-1 pb-2 tracking-tight">
                     {topPartner.description}
                   </p>
 
@@ -289,10 +289,10 @@ export const InsiderPage = () => {
                     href={topPartner.inviteUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block w-full py-2.5 px-4 rounded-[8px] bg-[#23a55a] hover:bg-[#1f8b4c] active:bg-[#1a7941] text-white font-semibold text-center text-sm transition-all duration-150 shadow-sm flex items-center justify-center gap-2"
+                    className="block w-full py-2.5 px-4 rounded-full bg-[#30D158] hover:bg-[#28b84d] active:scale-[0.98] text-black font-bold text-center text-xs tracking-tight transition-all shadow-md flex items-center justify-center gap-2"
                   >
                     <span>Join Server</span>
-                    <ExternalLink className="w-4 h-4" />
+                    <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                 </div>
               </div>
@@ -303,10 +303,10 @@ export const InsiderPage = () => {
         {/* All Verified Partner Communities Section */}
         <div className="mb-24">
           <div className="text-center max-w-2xl mx-auto mb-10">
-            <Typography variant="h2" className="text-2xl sm:text-3xl font-black text-white mb-2">
+            <Typography variant="h2" className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-2">
               Official Partner Network
             </Typography>
-            <Typography variant="body" className="text-sm sm:text-base text-white/50">
+            <Typography variant="body" className="text-sm sm:text-base text-white/50 tracking-tight">
               Explore all verified servers actively using Fusion Bot's enterprise suite.
             </Typography>
           </div>
@@ -324,7 +324,7 @@ export const InsiderPage = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.1 * idx }}
-                  className="bg-[#1e1f22] rounded-[18px] overflow-hidden border border-[#2b2d31] shadow-xl shadow-black/60 flex flex-col justify-between hover:border-[#3b3e45] transition-all"
+                  className="bg-white/[0.04] backdrop-blur-2xl rounded-[24px] overflow-hidden border border-white/10 shadow-xl shadow-black/60 flex flex-col justify-between hover:border-white/20 transition-all"
                 >
                   <div>
                     {/* Header Banner */}
@@ -343,7 +343,7 @@ export const InsiderPage = () => {
 
                     {/* Avatar Overlap */}
                     <div className="-mt-8 ml-4 mb-2 flex items-end">
-                      <div className="w-[68px] h-[68px] rounded-[20px] bg-[#1e1f22] p-1 shadow-lg relative flex-shrink-0">
+                      <div className="w-[68px] h-[68px] rounded-[20px] bg-[#12141a] p-1 shadow-lg relative flex-shrink-0 border border-white/10">
                         <img
                           src={server.icon}
                           alt={server.name}
@@ -356,7 +356,7 @@ export const InsiderPage = () => {
                     </div>
 
                     {/* Information */}
-                    <div className="px-4 pb-2 space-y-2">
+                    <div className="px-5 pb-2 space-y-2">
                       <div className="flex items-center gap-1.5 pt-1">
                         <span className="font-bold text-white text-[17px] tracking-tight truncate">{server.name}</span>
                         <svg className="w-4 h-4 text-cyan-400 flex-shrink-0 fill-current" viewBox="0 0 16 16" title="Verified Community">
@@ -364,34 +364,34 @@ export const InsiderPage = () => {
                         </svg>
                       </div>
 
-                      <div className="flex items-center gap-3 text-xs font-semibold text-[#949ba4]">
+                      <div className="flex items-center gap-3 text-xs font-semibold text-white/50">
                         <div className="flex items-center gap-1.5">
-                          <span className="w-2 h-2 rounded-full bg-[#23a55a]"></span>
-                          <span>{sCounts.online} Online</span>
+                          <span className="w-2 h-2 rounded-full bg-[#30D158]"></span>
+                          <span className="text-[#30D158]">{sCounts.online} Online</span>
                         </div>
                         <div className="flex items-center gap-1.5">
-                          <span className="w-2 h-2 rounded-full bg-[#80848e]"></span>
+                          <span className="w-2 h-2 rounded-full bg-white/40"></span>
                           <span>{sCounts.members} Members</span>
                         </div>
                       </div>
 
-                      <div className="text-[11px] text-[#949ba4] font-medium">
+                      <div className="text-[11px] text-white/40 font-medium">
                         {server.est}
                       </div>
 
-                      <p className="text-xs text-[#dbdee1] leading-relaxed line-clamp-3 pt-1">
+                      <p className="text-xs text-white/70 leading-relaxed line-clamp-3 pt-1 tracking-tight">
                         {server.description}
                       </p>
                     </div>
                   </div>
 
                   {/* Action Button */}
-                  <div className="p-4 pt-2">
+                  <div className="p-5 pt-2">
                     <a
                       href={server.inviteUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block w-full py-2 px-3 rounded-[8px] bg-[#23a55a] hover:bg-[#1f8b4c] active:bg-[#1a7941] text-white font-semibold text-center text-xs transition-all duration-150 shadow-sm flex items-center justify-center gap-1.5"
+                      className="block w-full py-2.5 px-3 rounded-full bg-white text-black hover:bg-white/90 active:scale-[0.98] font-semibold text-center text-xs tracking-tight transition-all shadow-md flex items-center justify-center gap-1.5"
                     >
                       <span>Join Community</span>
                       <ExternalLink className="w-3.5 h-3.5" />
@@ -404,43 +404,44 @@ export const InsiderPage = () => {
         </div>
 
         {/* Partner Program Perks Grid */}
+        {/* Partner Program Perks Grid */}
         <div className="mt-16 border-t border-white/5 pt-16">
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <Typography variant="h2" className="text-2xl sm:text-3xl font-bold text-white mb-3">
+            <Typography variant="h2" className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-3">
               Why Join the Fusion Insider Program?
             </Typography>
-            <Typography variant="body" className="text-sm sm:text-base text-white/50">
+            <Typography variant="body" className="text-sm sm:text-base text-white/50 tracking-tight">
               Verified partner servers unlock dedicated resources, enterprise security, and direct integration support.
             </Typography>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-cyan-500/30 transition-colors">
-              <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 mb-4">
+            <div className="p-6 rounded-[24px] bg-white/[0.03] backdrop-blur-2xl border border-white/10 hover:border-white/20 transition-all shadow-lg">
+              <div className="w-12 h-12 rounded-[16px] bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 mb-4 shadow-sm">
                 <Shield className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-bold text-white mb-2">Disaster Recovery Guarantee</h3>
-              <p className="text-sm text-white/50 leading-relaxed">
+              <h3 className="text-lg font-bold tracking-tight text-white mb-2">Disaster Recovery Guarantee</h3>
+              <p className="text-sm text-white/50 leading-relaxed tracking-tight">
                 Automated hourly snapshot backups to Google Drive and Fusion Cloud ensuring your server can be restored in 1 click after any disaster.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-blue-500/30 transition-colors">
-              <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-4">
+            <div className="p-6 rounded-[24px] bg-white/[0.03] backdrop-blur-2xl border border-white/10 hover:border-white/20 transition-all shadow-lg">
+              <div className="w-12 h-12 rounded-[16px] bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-4 shadow-sm">
                 <Zap className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-bold text-white mb-2">High-Performance Sharding</h3>
-              <p className="text-sm text-white/50 leading-relaxed">
+              <h3 className="text-lg font-bold tracking-tight text-white mb-2">High-Performance Sharding</h3>
+              <p className="text-sm text-white/50 leading-relaxed tracking-tight">
                 Dedicated bot clusters ensuring sub-25ms response latency for instant command execution, automod moderation, and ticketing.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-purple-500/30 transition-colors">
-              <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 mb-4">
+            <div className="p-6 rounded-[24px] bg-white/[0.03] backdrop-blur-2xl border border-white/10 hover:border-white/20 transition-all shadow-lg">
+              <div className="w-12 h-12 rounded-[16px] bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 mb-4 shadow-sm">
                 <Star className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-bold text-white mb-2">Featured Showcase & Growth</h3>
-              <p className="text-sm text-white/50 leading-relaxed">
+              <h3 className="text-lg font-bold tracking-tight text-white mb-2">Featured Showcase & Growth</h3>
+              <p className="text-sm text-white/50 leading-relaxed tracking-tight">
                 Direct placement in the official Fusion Bot directory, main website partner showcase, and Discord verification badges.
               </p>
             </div>
@@ -448,17 +449,17 @@ export const InsiderPage = () => {
         </div>
 
         {/* Application CTA */}
-        <div className="mt-16 max-w-3xl mx-auto p-8 rounded-3xl bg-gradient-to-r from-blue-900/20 via-cyan-900/20 to-indigo-900/20 border border-white/10 text-center space-y-4">
-          <h3 className="text-2xl font-black text-white">Want to feature your server in the Insider Program?</h3>
-          <p className="text-sm text-white/60 max-w-xl mx-auto leading-relaxed">
+        <div className="mt-16 max-w-3xl mx-auto p-8 sm:p-10 rounded-[32px] bg-white/[0.03] backdrop-blur-3xl border border-white/10 text-center space-y-4 shadow-2xl">
+          <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">Want to feature your server in the Insider Program?</h3>
+          <p className="text-sm text-white/60 max-w-xl mx-auto leading-relaxed tracking-tight">
             Active communities with healthy engagement can apply for official partner status and enterprise protection.
           </p>
           <div className="flex flex-wrap justify-center gap-4 pt-2">
-            <Button variant="primary" size="md" onClick={() => window.open(SUPPORT_SERVER_URL)}>
+            <Button variant="primary" size="md" className="rounded-full shadow-lg" onClick={() => window.open(SUPPORT_SERVER_URL)}>
               Apply on Support Server
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
-            <Button variant="outline" size="md" onClick={() => window.open(DISCORD_INVITE_URL)}>
+            <Button variant="outline" size="md" className="rounded-full" onClick={() => window.open(DISCORD_INVITE_URL)}>
               Add Bot to Your Server
             </Button>
           </div>

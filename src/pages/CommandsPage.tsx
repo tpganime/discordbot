@@ -255,8 +255,8 @@ export const CommandsPage = () => {
     <main className="pt-32 pb-24">
       <Section spacing="xl">
         <Container size="xl">
-          <Link to="/" className="inline-flex items-center gap-2 text-white/40 hover:text-white mb-12 transition-colors group">
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          <Link to="/" className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-xs font-semibold text-white/60 hover:text-white hover:bg-white/10 active:scale-[0.98] mb-12 transition-all group">
+            <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
             Back to Home
           </Link>
           
@@ -266,14 +266,14 @@ export const CommandsPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <Badge variant="primary" className="mb-6">
-                <Zap className="w-3 h-3 mr-2" />
+              <Badge variant="primary" className="mb-6 rounded-full px-3.5 py-1 text-[11px] tracking-wide font-semibold">
+                <Zap className="w-3 h-3 mr-1.5 text-blue-400" />
                 {totalCommandsCount}+ Commands Available
               </Badge>
-              <Typography variant="h1" weight="black" className="mb-6">
+              <Typography variant="h1" weight="bold" className="mb-6 tracking-[-0.035em]">
                 Official <span className="text-blue-500">Commands</span> Catalog
               </Typography>
-              <Typography variant="lead" className="max-w-2xl mx-auto text-white/60">
+              <Typography variant="lead" className="max-w-2xl mx-auto text-white/60 text-base sm:text-lg tracking-[-0.012em]">
                 Explore the complete suite of 80 official slash commands and interactive anime social actions.
               </Typography>
             </motion.div>
@@ -285,16 +285,16 @@ export const CommandsPage = () => {
               transition={{ delay: 0.2, duration: 0.6 }}
               className="mt-10 max-w-xl mx-auto relative"
             >
-              <div className="glass rounded-2xl p-1.5 flex items-center border border-white/10 group focus-within:border-blue-500/50 transition-all">
+              <div className="rounded-full p-1.5 flex items-center border border-white/10 bg-white/[0.05] backdrop-blur-2xl group focus-within:border-blue-500/60 focus-within:ring-2 focus-within:ring-blue-500/20 transition-all shadow-lg">
                 <div className="pl-4">
-                  <SearchIcon className="w-5 h-5 text-white/40 group-focus-within:text-blue-400 transition-colors" />
+                  <SearchIcon className="w-4 h-4 text-white/40 group-focus-within:text-blue-400 transition-colors" />
                 </div>
                 <input 
                   type="text" 
                   placeholder="Search commands or keywords (e.g. purge, ban, tictactoe, nuke, imagine)..." 
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full bg-transparent border-none focus:ring-0 py-2.5 px-4 text-white placeholder:text-white/20 text-sm"
+                  className="w-full bg-transparent border-none focus:ring-0 py-2.5 px-4 text-white placeholder:text-white/30 text-xs sm:text-sm tracking-tight outline-none"
                 />
               </div>
 
@@ -304,10 +304,10 @@ export const CommandsPage = () => {
                   <button
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
-                    className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                    className={`px-4 py-1.5 rounded-full text-xs font-semibold tracking-tight active:scale-[0.98] transition-all ${
                       activeCategory === cat 
-                        ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/25' 
-                        : 'bg-white/5 text-white/40 hover:bg-white/10 hover:text-white'
+                        ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' 
+                        : 'bg-white/[0.06] text-white/50 hover:bg-white/[0.12] hover:text-white border border-white/5'
                     }`}
                   >
                     {cat}
@@ -328,12 +328,12 @@ export const CommandsPage = () => {
                   transition={{ delay: i * 0.05, duration: 0.5 }}
                 >
                   <div className="flex items-center gap-4 mb-6">
-                    <div className={`w-11 h-11 rounded-2xl ${category.bg} flex items-center justify-center shrink-0`}>
+                    <div className={`w-12 h-12 rounded-[18px] ${category.bg} border border-white/10 flex items-center justify-center shrink-0 shadow-md`}>
                       <category.icon className={`w-5 h-5 ${category.color}`} />
                     </div>
                     <div>
-                      <Typography variant="h3" weight="bold" className="text-xl text-white">{category.name}</Typography>
-                      <Typography variant="small" className="text-white/40 text-xs">
+                      <Typography variant="h3" weight="bold" className="text-xl text-white tracking-tight">{category.name}</Typography>
+                      <Typography variant="small" className="text-white/40 text-xs tracking-tight">
                         {category.commands.length} Commands Available • {category.badge || 'Slash Command'}
                       </Typography>
                     </div>
@@ -343,24 +343,24 @@ export const CommandsPage = () => {
                     {category.commands.map((cmd) => (
                       <Card 
                         key={cmd.name} 
-                        className="glass p-6 border-white/5 hover:border-blue-500/30 transition-all duration-300 group rounded-2xl"
+                        className="p-6 border-white/10 hover:border-blue-500/40 transition-all duration-300 group rounded-[24px] bg-white/[0.03] backdrop-blur-2xl shadow-lg hover:-translate-y-1"
                       >
                         <Flex justify="between" align="start" className="mb-3">
-                          <Typography variant="h4" weight="bold" className="text-blue-400 font-mono text-base">
+                          <Typography variant="h4" weight="bold" className="text-blue-400 font-mono text-sm tracking-tight">
                             {cmd.name}
                           </Typography>
-                          <Badge variant="outline" className="text-[10px] text-white/40 border-white/10">
+                          <Badge variant="outline" className="text-[10px] text-white/40 border-white/10 rounded-full px-2.5 py-0.5">
                             {cmd.name.startsWith('/') ? 'Slash' : 'Action'}
                           </Badge>
                         </Flex>
                         
                         {cmd.usage && (
-                          <div className="mb-3 font-mono text-xs bg-black/40 px-3 py-1.5 rounded-lg border border-white/5 text-white/50">
-                            <span className="text-blue-400/80">Usage:</span> {cmd.name} {cmd.usage}
+                          <div className="mb-3 font-mono text-[11px] bg-black/50 px-3 py-1.5 rounded-full border border-white/5 text-white/60 truncate">
+                            <span className="text-blue-400 font-semibold">Usage:</span> {cmd.name} {cmd.usage}
                           </div>
                         )}
                         
-                        <Typography variant="p" className="text-white/70 text-xs leading-relaxed">
+                        <Typography variant="p" className="text-white/70 text-xs leading-relaxed tracking-tight">
                           {cmd.description}
                         </Typography>
                       </Card>
@@ -369,8 +369,8 @@ export const CommandsPage = () => {
                 </motion.div>
               ))
             ) : (
-              <div className="text-center py-20">
-                <Typography variant="h3" className="text-white/30 text-lg">No commands found matching "{search}"</Typography>
+              <div className="text-center py-20 rounded-[28px] bg-white/[0.03] border border-white/10 max-w-md mx-auto">
+                <Typography variant="h3" className="text-white/40 text-sm font-medium">No commands found matching "{search}"</Typography>
               </div>
             )}
           </div>

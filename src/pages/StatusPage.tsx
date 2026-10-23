@@ -263,11 +263,11 @@ export const StatusPage = () => {
             transition={{ duration: 0.5 }}
           >
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-3">
-              <h1 className="text-4xl sm:text-5xl font-black font-display tracking-tight text-white flex items-center gap-3">
+              <h1 className="text-4xl sm:text-5xl font-bold font-display tracking-[-0.035em] text-white flex items-center gap-3">
                 Bot status
-                <span className="relative flex h-3.5 w-3.5">
+                <span className="relative flex h-3 w-3">
                   <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${isOnline ? 'bg-emerald-400 opacity-75' : 'bg-rose-500 opacity-75'}`}></span>
-                  <span className={`relative inline-flex rounded-full h-3.5 w-3.5 ${isOnline ? 'bg-emerald-500' : 'bg-rose-500'}`}></span>
+                  <span className={`relative inline-flex rounded-full h-3 w-3 ${isOnline ? 'bg-emerald-500' : 'bg-rose-500'}`}></span>
                 </span>
               </h1>
 
@@ -277,18 +277,18 @@ export const StatusPage = () => {
                   size="sm"
                   onClick={() => fetchStats(true)}
                   disabled={refreshing}
-                  className="bg-white/5 border-white/10 text-xs font-semibold hover:bg-white/10"
+                  className="rounded-full bg-white/5 border-white/10 text-xs font-semibold hover:bg-white/10 active:scale-[0.98] transition-all px-4 py-2"
                 >
                   <RefreshCw className={`w-3.5 h-3.5 mr-2 ${refreshing ? 'animate-spin text-blue-400' : ''}`} />
                   Refresh
                 </Button>
-                <div className="text-xs font-mono text-white/50 bg-white/5 px-3 py-1.5 rounded-lg border border-white/10">
+                <div className="text-xs font-mono text-white/50 bg-white/5 px-3.5 py-1.5 rounded-full border border-white/10 tracking-tight">
                   Next update in: <span className={isOnline ? 'text-emerald-400 font-bold' : 'text-rose-400 font-bold'}>{countdown}s</span>
                 </div>
               </div>
             </div>
 
-            <p className="text-white/60 text-sm mb-3">
+            <p className="text-white/60 text-sm mb-3 tracking-tight">
               This page automatically refreshes every 30 seconds. Real-time telemetry from Discord gateway clusters and live active shards.
             </p>
 
@@ -307,35 +307,35 @@ export const StatusPage = () => {
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.4, delay: 0.1 }}
-          className={`mb-8 p-4 sm:p-5 rounded-2xl backdrop-blur-xl flex items-center justify-between flex-wrap gap-4 shadow-lg ${
+          className={`mb-8 p-5 sm:p-6 rounded-[28px] backdrop-blur-2xl flex items-center justify-between flex-wrap gap-4 shadow-xl ${
             isOnline 
-              ? 'bg-emerald-500/15 border border-emerald-500/30 shadow-emerald-950/20' 
-              : 'bg-rose-500/15 border border-rose-500/30 shadow-rose-950/20'
+              ? 'bg-emerald-500/10 border border-emerald-500/25 shadow-emerald-950/20' 
+              : 'bg-rose-500/10 border border-rose-500/25 shadow-rose-950/20'
           }`}
         >
-          <div className="flex items-center gap-3">
-            <div className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 ${
+          <div className="flex items-center gap-3.5">
+            <div className={`w-10 h-10 rounded-[14px] flex items-center justify-center flex-shrink-0 shadow-md ${
               isOnline ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'
             }`}>
               {isOnline ? <CheckCircle2 className="w-5 h-5" /> : <WifiOff className="w-5 h-5" />}
             </div>
             <div>
-              <span className={`font-display font-bold text-base sm:text-lg ${
+              <span className={`font-display font-bold text-base sm:text-lg tracking-tight ${
                 isOnline ? 'text-emerald-300' : 'text-rose-300'
               }`}>
                 {isOnline ? 'All systems operational' : 'Bot Offline / Service Unreachable'}
               </span>
-              <p className={`text-xs mt-0.5 ${isOnline ? 'text-emerald-300/70' : 'text-rose-300/70'}`}>
+              <p className={`text-xs mt-0.5 tracking-tight ${isOnline ? 'text-emerald-300/70' : 'text-rose-300/70'}`}>
                 {isOnline 
                   ? `Cluster 0 (US-East) is healthy. ${activeShards.length} active gateway shard connected with zero dropped packets.`
                   : 'Cluster 0 (US-East) host server is currently stopped or offline. Gateway disconnected.'}
               </p>
             </div>
           </div>
-          <div className={`flex items-center gap-2 text-xs font-mono px-3 py-1.5 rounded-lg border ${
+          <div className={`flex items-center gap-2 text-xs font-mono px-4 py-2 rounded-full border ${
             isOnline 
-              ? 'text-emerald-300/80 bg-emerald-950/40 border-emerald-500/20' 
-              : 'text-rose-300/80 bg-rose-950/40 border-rose-500/20'
+              ? 'text-emerald-300/90 bg-emerald-950/40 border-emerald-500/20' 
+              : 'text-rose-300/90 bg-rose-950/40 border-rose-500/20'
           }`}>
             <span>Uptime:</span>
             <strong className="text-white">{stats?.uptime || (isOnline ? '2h 31m' : 'Offline')}</strong>
@@ -347,73 +347,73 @@ export const StatusPage = () => {
 
         {/* Metrics Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <div className="p-5 rounded-2xl bg-[#0b0f19]/80 border border-white/10 backdrop-blur-xl">
-            <span className="text-xs font-bold uppercase tracking-wider text-white/40 block mb-1">Status</span>
-            <div className={`text-xl sm:text-2xl font-display font-black flex items-center gap-2 ${
+          <div className="p-5 rounded-[24px] bg-white/[0.03] border border-white/10 backdrop-blur-2xl shadow-lg">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-white/40 block mb-1">Status</span>
+            <div className={`text-xl sm:text-2xl font-display font-bold tracking-tight flex items-center gap-2 ${
               isOnline ? 'text-white' : 'text-rose-400'
             }`}>
               <span className={`w-2.5 h-2.5 rounded-full ${isOnline ? 'bg-emerald-400' : 'bg-rose-500'} animate-pulse`}></span>
               {isOnline ? (stats?.status || 'Ready') : 'Offline'}
             </div>
-            <span className={`text-[11px] font-mono mt-1 block ${isOnline ? 'text-emerald-400/80' : 'text-rose-400/80'}`}>
+            <span className={`text-[11px] font-mono mt-1 block tracking-tight ${isOnline ? 'text-emerald-400/80' : 'text-rose-400/80'}`}>
               {isOnline ? 'Cluster 0 Ready' : 'Cluster 0 Stopped'}
             </span>
           </div>
 
-          <div className="p-5 rounded-2xl bg-[#0b0f19]/80 border border-white/10 backdrop-blur-xl">
-            <span className="text-xs font-bold uppercase tracking-wider text-white/40 block mb-1">Avg Latency</span>
-            <div className={`text-xl sm:text-2xl font-display font-black font-mono flex items-center gap-2 ${
+          <div className="p-5 rounded-[24px] bg-white/[0.03] border border-white/10 backdrop-blur-2xl shadow-lg">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-white/40 block mb-1">Avg Latency</span>
+            <div className={`text-xl sm:text-2xl font-display font-bold font-mono tracking-tight flex items-center gap-2 ${
               isOnline ? 'text-emerald-400' : 'text-white/40'
             }`}>
               <Zap className={`w-5 h-5 ${isOnline ? 'text-yellow-400' : 'text-white/30'}`} />
               {isOnline ? `${stats?.avgLatency || stats?.ping || 23}ms` : '0ms'}
             </div>
-            <span className="text-[11px] text-white/40 font-mono mt-1 block">
+            <span className="text-[11px] text-white/40 font-mono mt-1 block tracking-tight">
               {isOnline ? 'WebSocket Heartbeat' : 'No Connection'}
             </span>
           </div>
 
-          <div className="p-5 rounded-2xl bg-[#0b0f19]/80 border border-white/10 backdrop-blur-xl">
-            <span className="text-xs font-bold uppercase tracking-wider text-white/40 block mb-1">Total Servers</span>
-            <div className="text-xl sm:text-2xl font-display font-black text-white font-mono flex items-center gap-2">
+          <div className="p-5 rounded-[24px] bg-white/[0.03] border border-white/10 backdrop-blur-2xl shadow-lg">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-white/40 block mb-1">Total Servers</span>
+            <div className="text-xl sm:text-2xl font-display font-bold text-white font-mono tracking-tight flex items-center gap-2">
               <Server className="w-5 h-5 text-blue-400" />
               {currentServers.toLocaleString()}
             </div>
-            <span className="text-[11px] text-blue-400 font-mono mt-1 block">Active Guilds</span>
+            <span className="text-[11px] text-blue-400 font-mono mt-1 block tracking-tight">Active Guilds</span>
           </div>
 
-          <div className="p-5 rounded-2xl bg-[#0b0f19]/80 border border-white/10 backdrop-blur-xl">
-            <span className="text-xs font-bold uppercase tracking-wider text-white/40 block mb-1">Active Shards</span>
-            <div className={`text-xl sm:text-2xl font-display font-black font-mono flex items-center gap-2 ${
+          <div className="p-5 rounded-[24px] bg-white/[0.03] border border-white/10 backdrop-blur-2xl shadow-lg">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-white/40 block mb-1">Active Shards</span>
+            <div className={`text-xl sm:text-2xl font-display font-bold font-mono tracking-tight flex items-center gap-2 ${
               isOnline ? 'text-white' : 'text-rose-400'
             }`}>
               <Layers className={`w-5 h-5 ${isOnline ? 'text-purple-400' : 'text-rose-400'}`} />
               {isOnline ? `${stats?.operationalShards || 1} / ${stats?.totalShards || 1}` : '0 / 1'}
             </div>
-            <span className="text-[11px] text-purple-400 font-mono mt-1 block">1,000 Max Guilds/Shard</span>
+            <span className="text-[11px] text-purple-400 font-mono mt-1 block tracking-tight">1,000 Max Guilds/Shard</span>
           </div>
         </div>
 
         {/* Shard Auto-Scaling Info Banner */}
-        <div className="mb-8 p-4 sm:p-5 rounded-2xl bg-blue-950/20 border border-blue-500/20 backdrop-blur-md flex items-start sm:items-center justify-between gap-4 flex-col sm:flex-row">
+        <div className="mb-8 p-4 sm:p-5 rounded-[24px] bg-blue-950/20 border border-blue-500/20 backdrop-blur-2xl flex items-start sm:items-center justify-between gap-4 flex-col sm:flex-row shadow-lg">
           <div className="flex items-start sm:items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0 mt-0.5 sm:mt-0">
+            <div className="w-8 h-8 rounded-[10px] bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0 mt-0.5 sm:mt-0">
               <TrendingUp className="w-4 h-4" />
             </div>
-            <div className="text-xs text-white/80">
+            <div className="text-xs text-white/80 tracking-tight">
               <strong className="text-blue-300">Dynamic Gateway Auto-Scaling:</strong> Each shard holds up to <strong>1,000 servers</strong>. When Shard 0 reaches 1,000 servers, the bot automatically deploys <strong>Shard 1</strong> and balances incoming servers in real time.
             </div>
           </div>
-          <div className="flex items-center gap-2 bg-white/5 p-1 rounded-xl border border-white/10 shrink-0 self-end sm:self-auto">
+          <div className="flex items-center gap-1.5 bg-white/5 p-1 rounded-full border border-white/10 shrink-0 self-end sm:self-auto">
             <button
               onClick={() => setViewMode('cards')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${viewMode === 'cards' ? 'bg-blue-600 text-white shadow' : 'text-white/60 hover:text-white'}`}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-tight active:scale-[0.98] transition-all ${viewMode === 'cards' ? 'bg-blue-600 text-white shadow-md' : 'text-white/60 hover:text-white'}`}
             >
               Shard Cards
             </button>
             <button
               onClick={() => setViewMode('terminal')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${viewMode === 'terminal' ? 'bg-blue-600 text-white shadow' : 'text-white/60 hover:text-white'}`}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-tight active:scale-[0.98] transition-all ${viewMode === 'terminal' ? 'bg-blue-600 text-white shadow-md' : 'text-white/60 hover:text-white'}`}
             >
               Terminal List
             </button>

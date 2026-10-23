@@ -132,14 +132,14 @@ export const AIConsole = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <Badge variant="secondary" className="mb-6">
-              <Cpu className="w-3 h-3 mr-2 text-blue-400" />
+            <Badge variant="secondary" className="mb-6 rounded-full px-3.5 py-1 text-xs tracking-wide font-semibold">
+              <Cpu className="w-3.5 h-3.5 mr-2 text-blue-400" />
               SUNDAY 5.1 Engine
             </Badge>
-            <Typography variant="h2" weight="black" className="mb-6">
+            <Typography variant="h2" weight="bold" className="mb-6 tracking-[-0.03em]">
               Interactive <span className="text-blue-500">AI Console</span>
             </Typography>
-            <Typography variant="lead" className="mb-8 text-white/60">
+            <Typography variant="lead" className="mb-8 text-white/60 text-base sm:text-lg tracking-[-0.012em]">
               Test Fusion's natural conversational AI live in your browser. Powered by high-speed neural language models.
             </Typography>
 
@@ -150,18 +150,18 @@ export const AIConsole = () => {
                 { title: 'Natural Language Processing', desc: 'Context-aware responses tailored for your Discord community.' }
               ].map((item, i) => (
                 <Flex key={i} gap={4} align="start">
-                  <div className="w-6 h-6 rounded-full bg-blue-600/20 flex items-center justify-center shrink-0 mt-1">
-                    <Sparkles className="w-3 h-3 text-blue-400" />
+                  <div className="w-7 h-7 rounded-[10px] bg-blue-500/15 border border-blue-500/20 flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
+                    <Sparkles className="w-3.5 h-3.5 text-blue-400" />
                   </div>
                   <div>
-                    <Typography variant="h4" weight="bold" className="mb-0.5 text-sm text-white">{item.title}</Typography>
-                    <Typography variant="p" className="text-xs text-white/40">{item.desc}</Typography>
+                    <Typography variant="h4" weight="bold" className="mb-0.5 text-sm text-white tracking-tight">{item.title}</Typography>
+                    <Typography variant="p" className="text-xs text-white/50 tracking-tight">{item.desc}</Typography>
                   </div>
                 </Flex>
               ))}
             </div>
 
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-white/60">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.05] border border-white/10 text-xs text-white/60 tracking-tight">
               <Clock className="w-3.5 h-3.5 text-blue-400" />
               <span>Daily Test Quota: <strong className="text-white">{remainingMessages}/{DAILY_MAX_MESSAGES} messages</strong> remaining today</span>
             </div>
@@ -174,24 +174,24 @@ export const AIConsole = () => {
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            {/* Liquid Glass Console */}
-            <div className="liquid-glass rounded-[36px] p-1 border border-white/10 shadow-2xl">
-              <div className="bg-[#030712]/90 rounded-[34px] p-6 md:p-8 h-[480px] flex flex-col">
+            {/* Console */}
+            <div className="rounded-[36px] p-1.5 border border-white/10 bg-white/[0.03] backdrop-blur-3xl shadow-2xl">
+              <div className="bg-[#05070e]/95 rounded-[32px] p-6 md:p-8 h-[480px] flex flex-col border border-white/5">
                 {/* Console Header */}
                 <Flex justify="between" className="mb-6 pb-4 border-b border-white/5">
                   <Flex gap={3}>
-                    <div className="flex gap-1.5">
-                      <div className="w-3 h-3 rounded-full bg-rose-500/60" />
-                      <div className="w-3 h-3 rounded-full bg-amber-500/60" />
-                      <div className="w-3 h-3 rounded-full bg-emerald-500/60" />
+                    <div className="flex gap-1.5 items-center">
+                      <div className="w-3 h-3 rounded-full bg-[#FF453A]" />
+                      <div className="w-3 h-3 rounded-full bg-[#FF9F0A]" />
+                      <div className="w-3 h-3 rounded-full bg-[#30D158]" />
                     </div>
-                    <Typography variant="small" weight="bold" className="text-white/40 ml-2 font-mono text-xs">fusion-console.sh • SUNDAY 5.1</Typography>
+                    <Typography variant="small" weight="bold" className="text-white/40 ml-2 font-mono text-xs tracking-tight">fusion-console.sh • SUNDAY 5.1</Typography>
                   </Flex>
                   <div className="flex items-center gap-2">
-                    <span className="text-[11px] font-mono text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20">
+                    <span className="text-[11px] font-mono text-blue-400 bg-blue-500/10 px-2.5 py-0.5 rounded-full border border-blue-500/20 font-semibold">
                       {remainingMessages} left
                     </span>
-                    <Terminal className="w-4 h-4 text-white/30" />
+                    <Terminal className="w-4 h-4 text-white/40" />
                   </div>
                 </Flex>
 
@@ -209,12 +209,12 @@ export const AIConsole = () => {
                     >
                       <Flex gap={3} align="start" className={msg.role === 'user' ? 'justify-end' : ''}>
                         {msg.role === 'bot' && (
-                          <div className="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-lg shadow-blue-600/30">
+                          <div className="w-7 h-7 rounded-[10px] bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-md">
                             <Bot className="w-3.5 h-3.5" />
                           </div>
                         )}
-                        <div className={`flex-1 max-w-[85%] rounded-2xl p-3.5 border border-white/5 ${
-                          msg.role === 'bot' ? 'bg-white/5 rounded-tl-none' : 'bg-blue-600/20 rounded-tr-none border-blue-500/30'
+                        <div className={`flex-1 max-w-[85%] rounded-[20px] p-4 border border-white/5 ${
+                          msg.role === 'bot' ? 'bg-white/5 rounded-tl-sm' : 'bg-blue-600/20 rounded-tr-sm border-blue-500/30'
                         }`}>
                           <Typography variant="p" className="text-xs leading-relaxed font-mono text-white/90">
                             {idx === history.length - 1 && msg.role === 'bot' ? (
@@ -225,7 +225,7 @@ export const AIConsole = () => {
                           </Typography>
                         </div>
                         {msg.role === 'user' && (
-                          <div className="w-7 h-7 rounded-lg bg-white/10 text-white/60 flex items-center justify-center shrink-0">
+                          <div className="w-7 h-7 rounded-[10px] bg-white/10 text-white/60 flex items-center justify-center shrink-0">
                             <User className="w-3.5 h-3.5" />
                           </div>
                         )}
@@ -234,10 +234,10 @@ export const AIConsole = () => {
                   ))}
                   {isTyping && (
                     <Flex gap={3} align="start">
-                      <div className="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0">
+                      <div className="w-7 h-7 rounded-[10px] bg-blue-600 text-white flex items-center justify-center shrink-0">
                         <Bot className="w-3.5 h-3.5" />
                       </div>
-                      <div className="flex gap-1 p-3 rounded-2xl bg-white/5 border border-white/5">
+                      <div className="flex gap-1.5 p-3.5 rounded-[20px] bg-white/5 border border-white/5">
                         <div className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-bounce" style={{ animationDelay: '0ms' }} />
                         <div className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-bounce" style={{ animationDelay: '150ms' }} />
                         <div className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-bounce" style={{ animationDelay: '300ms' }} />
@@ -248,7 +248,7 @@ export const AIConsole = () => {
 
                 {/* Console Input Area */}
                 <form onSubmit={handleSendMessage} className="mt-4 pt-4 border-t border-white/5">
-                  <div className="bg-white/5 rounded-xl px-4 py-2.5 flex items-center gap-3 border border-white/5 focus-within:border-blue-500/40 transition-all">
+                  <div className="bg-white/[0.06] rounded-full px-4 py-2 flex items-center gap-3 border border-white/10 focus-within:border-blue-500/60 focus-within:ring-2 focus-within:ring-blue-500/20 transition-all shadow-inner">
                     <Typography variant="small" className="text-blue-400 font-mono font-bold text-xs">$</Typography>
                     <input
                       type="text"
@@ -256,7 +256,7 @@ export const AIConsole = () => {
                       onChange={(e) => setInputValue(e.target.value)}
                       placeholder={remainingMessages <= 0 ? "Daily limit reached (10/10)" : isTyping ? "Fusion is thinking..." : "Enter message or question..."}
                       disabled={isTyping || remainingMessages <= 0}
-                      className="flex-1 bg-transparent border-none outline-none text-xs font-mono text-white placeholder:text-white/20 disabled:opacity-40"
+                      className="flex-1 bg-transparent border-none outline-none text-xs font-mono text-white placeholder:text-white/30 disabled:opacity-40"
                     />
                     <button 
                       type="submit" 
