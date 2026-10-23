@@ -5,12 +5,9 @@ import {
   Sparkles, 
   Shield, 
   Zap, 
-  Users, 
-  CheckCircle2, 
   ExternalLink, 
   Star,
   ArrowRight,
-  Flame,
   ArrowLeft
 } from 'lucide-react';
 import { Container } from '../components/ui/Container';
@@ -33,7 +30,6 @@ interface PartnerServer {
   defaultOnline: number;
   accentColor: string;
   bannerGradient: string;
-  featuredTop?: boolean;
 }
 
 const PARTNER_SERVERS: PartnerServer[] = [
@@ -50,8 +46,7 @@ const PARTNER_SERVERS: PartnerServer[] = [
     defaultMembers: 73,
     defaultOnline: 20,
     accentColor: '#3b82f6',
-    bannerGradient: 'from-[#0088ff] to-[#00c8ff]',
-    featuredTop: true
+    bannerGradient: 'from-[#0088ff] to-[#00c8ff]'
   },
   {
     id: '1499581222916198480',
@@ -132,12 +127,6 @@ export const InsiderPage = () => {
     });
   }, []);
 
-  const topPartner = PARTNER_SERVERS[0];
-  const topCounts = counts[topPartner.id] || {
-    members: topPartner.defaultMembers,
-    online: topPartner.defaultOnline
-  };
-
   return (
     <div className="min-h-screen pt-28 pb-24 relative overflow-hidden">
       {/* Background Ambient Glows */}
@@ -176,163 +165,15 @@ export const InsiderPage = () => {
               Featured Partner <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-400">Communities</span>
             </Typography>
             <Typography variant="body" className="text-base sm:text-lg text-white/60 max-w-2xl mx-auto leading-relaxed">
-              Discover official partner servers and verified flagship communities actively protected and powered 24/7 by Fusion Bot.
+              Discover official partner servers and verified communities actively protected and powered 24/7 by Fusion Bot.
             </Typography>
           </motion.div>
         </div>
 
-        {/* Featured Showcase #1 On Top: DARK_BROTHER'S */}
-        <div className="relative p-8 sm:p-10 rounded-3xl bg-gradient-to-b from-white/[0.04] to-white/[0.01] border border-blue-500/30 shadow-[0_0_50px_rgba(59,130,246,0.1)] mb-20">
-          <div className="absolute top-4 right-4 flex items-center gap-1 px-3 py-1 rounded-full bg-blue-500/15 border border-blue-500/30 text-blue-400 text-xs font-bold uppercase tracking-wider">
-            <Flame className="w-3.5 h-3.5" />
-            Top Featured Flagship
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            {/* Left Column: Community Details & Badges */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              className="lg:col-span-6 space-y-6 text-left"
-            >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono font-semibold">
-                <Shield className="w-3.5 h-3.5" />
-                OFFICIAL VERIFIED PARTNER
-              </div>
-
-              <Typography variant="h2" className="text-2xl sm:text-4xl font-black text-white leading-tight">
-                {topPartner.name}
-              </Typography>
-
-              <Typography variant="body" className="text-white/60 leading-relaxed text-sm sm:text-base">
-                {topPartner.description}
-              </Typography>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0 text-blue-400">
-                    <Shield className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-white">Nuke Guard Active</div>
-                    <div className="text-[11px] text-white/50">Google Drive Snapshots</div>
-                  </div>
-                </div>
-
-                <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center flex-shrink-0 text-cyan-400">
-                    <Zap className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-white">SUNDAY 5.1 AI</div>
-                    <div className="text-[11px] text-white/50">Conversational Engine</div>
-                  </div>
-                </div>
-
-                <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center flex-shrink-0 text-indigo-400">
-                    <Users className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-white">Active Community</div>
-                    <div className="text-[11px] text-white/50">International Members</div>
-                  </div>
-                </div>
-
-                <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center flex-shrink-0 text-purple-400">
-                    <CheckCircle2 className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-white">Verified Tier</div>
-                    <div className="text-[11px] text-white/50">Partner Program</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Right Column: Server Invite Card */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6 }}
-              className="lg:col-span-6 flex justify-center"
-            >
-              <div className="w-full max-w-[360px] bg-white/[0.04] backdrop-blur-2xl rounded-[28px] overflow-hidden border border-white/10 shadow-2xl shadow-black/80 transition-all duration-300 hover:border-blue-500/40 hover:shadow-blue-500/10">
-                {/* Header Banner */}
-                <div className={`h-[110px] w-full relative bg-gradient-to-r ${topPartner.bannerGradient} overflow-hidden`} />
-
-                {/* Avatar Overlap Area */}
-                <div className="-mt-10 ml-4 mb-2 flex items-end">
-                  <div className="w-[84px] h-[84px] rounded-[24px] bg-[#12141a] p-1 shadow-lg relative flex-shrink-0 border border-white/10">
-                    <img
-                      src={topPartner.icon}
-                      alt={topPartner.name}
-                      className="w-full h-full rounded-[20px] object-cover bg-black"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = 'https://cdn.discordapp.com/embed/avatars/0.png';
-                      }}
-                    />
-                  </div>
-                </div>
-
-                {/* Server Information */}
-                <div className="px-5 pb-5 space-y-2.5">
-                  <div className="flex items-center gap-1.5 pt-1">
-                    <span className="font-bold text-white text-[19px] tracking-tight">{topPartner.name}</span>
-                    <svg className="w-5 h-5 text-blue-400 flex-shrink-0 fill-current" viewBox="0 0 16 16" title="Verified Community">
-                      <path d="M14.92 6.64a2.25 2.25 0 0 0-.82-2 2.25 2.25 0 0 0-2-1.29 2.25 2.25 0 0 0-2-.82 2.25 2.25 0 0 0-2 .82 2.25 2.25 0 0 0-2 1.29 2.25 2.25 0 0 0-.82 2 2.25 2.25 0 0 0 .82 2 2.25 2.25 0 0 0 2 1.29 2.25 2.25 0 0 0 2 .82 2.25 2.25 0 0 0 2-.82 2.25 2.25 0 0 0 2-1.29 2.25 2.25 0 0 0 .82-2zM8 4.25l3.5 2.8v4.2H9.25V8.75h-2.5v2.5H4.5v-4.2L8 4.25z"/>
-                    </svg>
-                  </div>
-
-                  <div className="flex items-center gap-4 text-xs font-semibold text-white/50">
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-[#30D158]"></span>
-                      <span className="text-[#30D158]">{topCounts.online} Online</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-white/40"></span>
-                      <span>{topCounts.members} Members</span>
-                    </div>
-                  </div>
-
-                  <div className="text-xs text-white/40 font-medium">
-                    {topPartner.est}
-                  </div>
-
-                  <p className="text-xs text-white/70 leading-relaxed pt-1 pb-2 tracking-tight">
-                    {topPartner.description}
-                  </p>
-
-                  <a
-                    href={topPartner.inviteUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block w-full py-2.5 px-4 rounded-full bg-[#30D158] hover:bg-[#28b84d] active:scale-[0.98] text-black font-bold text-center text-xs tracking-tight transition-all shadow-md flex items-center justify-center gap-2"
-                  >
-                    <span>Join Server</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
         {/* All Verified Partner Communities Section */}
         <div className="mb-24">
-          <div className="text-center max-w-2xl mx-auto mb-10">
-            <Typography variant="h2" className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-2">
-              Official Partner Network
-            </Typography>
-            <Typography variant="body" className="text-sm sm:text-base text-white/50 tracking-tight">
-              Explore all verified servers actively using Fusion Bot's enterprise suite.
-            </Typography>
-          </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {PARTNER_SERVERS.slice(1).map((server, idx) => {
+            {PARTNER_SERVERS.map((server, idx) => {
               const sCounts = counts[server.id] || {
                 members: server.defaultMembers,
                 online: server.defaultOnline
