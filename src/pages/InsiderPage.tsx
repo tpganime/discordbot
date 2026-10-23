@@ -36,21 +36,6 @@ interface PartnerServer {
 
 const PARTNER_SERVERS: PartnerServer[] = [
   {
-    id: '1499581222916198480',
-    inviteCode: 'ZqwwxuVrYG',
-    inviteUrl: 'https://discord.gg/ZqwwxuVrYG',
-    name: '𝕋ℍ𝔼 𝔽𝕆ℝ𝔼𝕊𝕋 𝔻𝔼ℙ𝔸ℝ𝕋𝕄𝔼ℕ𝕋',
-    displayName: 'The Forest Department',
-    description: '🌲 Official Forest Department flagship community. An international family fostering camaraderie, mutual growth, and collective empowerment. Secured 24/7 by Fusion Bot Nuke Guard.',
-    icon: 'https://cdn.discordapp.com/icons/1499581222916198480/a1910251fb5aa7eac3e9ece6167c8664.png?size=256',
-    est: 'Est. Feb 2026',
-    defaultMembers: 53,
-    defaultOnline: 10,
-    accentColor: '#10b981',
-    bannerGradient: 'from-[#059669] via-[#10b981] to-[#14b8a6]',
-    featuredTop: true
-  },
-  {
     id: '1457383827625476160',
     inviteCode: 'BYGpaPbVS',
     inviteUrl: 'https://discord.gg/BYGpaPbVS',
@@ -63,7 +48,22 @@ const PARTNER_SERVERS: PartnerServer[] = [
     defaultMembers: 73,
     defaultOnline: 20,
     accentColor: '#3b82f6',
-    bannerGradient: 'from-[#0088ff] to-[#00c8ff]'
+    bannerGradient: 'from-[#0088ff] to-[#00c8ff]',
+    featuredTop: true
+  },
+  {
+    id: '1499581222916198480',
+    inviteCode: 'ZqwwxuVrYG',
+    inviteUrl: 'https://discord.gg/ZqwwxuVrYG',
+    name: '𝕋ℍ𝔼 𝔽𝕆ℝ𝔼𝕊𝕋 𝔻𝔼ℙ𝔸ℝ𝕋𝕄𝔼ℕ𝕋',
+    displayName: 'The Forest Department',
+    description: '🌲 Official Forest Department flagship community. An international family fostering camaraderie, mutual growth, and collective empowerment. Secured 24/7 by Fusion Bot Nuke Guard.',
+    icon: 'https://cdn.discordapp.com/icons/1499581222916198480/a1910251fb5aa7eac3e9ece6167c8664.png?size=256',
+    est: 'Est. Feb 2026',
+    defaultMembers: 53,
+    defaultOnline: 10,
+    accentColor: '#10b981',
+    bannerGradient: 'from-[#059669] via-[#10b981] to-[#14b8a6]'
   },
   {
     id: '1543138843765637250',
@@ -161,9 +161,9 @@ export const InsiderPage = () => {
           </motion.div>
         </div>
 
-        {/* Featured Showcase #1 On Top: THE FOREST DEPARTMENT (FD) */}
-        <div className="relative p-8 sm:p-10 rounded-3xl bg-gradient-to-b from-white/[0.04] to-white/[0.01] border border-emerald-500/30 shadow-[0_0_50px_rgba(16,185,129,0.1)] mb-20">
-          <div className="absolute top-4 right-4 flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider">
+        {/* Featured Showcase #1 On Top: DARK_BROTHER'S */}
+        <div className="relative p-8 sm:p-10 rounded-3xl bg-gradient-to-b from-white/[0.04] to-white/[0.01] border border-blue-500/30 shadow-[0_0_50px_rgba(59,130,246,0.1)] mb-20">
+          <div className="absolute top-4 right-4 flex items-center gap-1 px-3 py-1 rounded-full bg-blue-500/15 border border-blue-500/30 text-blue-400 text-xs font-bold uppercase tracking-wider">
             <Flame className="w-3.5 h-3.5" />
             Top Featured Flagship
           </div>
@@ -176,7 +176,7 @@ export const InsiderPage = () => {
               transition={{ duration: 0.6 }}
               className="lg:col-span-6 space-y-6 text-left"
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono font-semibold">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono font-semibold">
                 <Shield className="w-3.5 h-3.5" />
                 OFFICIAL VERIFIED PARTNER
               </div>
@@ -191,7 +191,7 @@ export const InsiderPage = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                 <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center flex-shrink-0 text-emerald-400">
+                  <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0 text-blue-400">
                     <Shield className="w-4 h-4" />
                   </div>
                   <div>
@@ -211,7 +211,7 @@ export const InsiderPage = () => {
                 </div>
 
                 <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0 text-blue-400">
+                  <div className="w-8 h-8 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center flex-shrink-0 text-indigo-400">
                     <Users className="w-4 h-4" />
                   </div>
                   <div>
@@ -239,7 +239,7 @@ export const InsiderPage = () => {
               transition={{ duration: 0.6 }}
               className="lg:col-span-6 flex justify-center"
             >
-              <div className="w-full max-w-[360px] bg-white/[0.04] backdrop-blur-2xl rounded-[28px] overflow-hidden border border-white/10 shadow-2xl shadow-black/80 transition-all duration-300 hover:border-emerald-500/40 hover:shadow-emerald-500/10">
+              <div className="w-full max-w-[360px] bg-white/[0.04] backdrop-blur-2xl rounded-[28px] overflow-hidden border border-white/10 shadow-2xl shadow-black/80 transition-all duration-300 hover:border-blue-500/40 hover:shadow-blue-500/10">
                 {/* Header Banner */}
                 <div className={`h-[110px] w-full relative bg-gradient-to-r ${topPartner.bannerGradient} overflow-hidden`} />
 
@@ -261,7 +261,7 @@ export const InsiderPage = () => {
                 <div className="px-5 pb-5 space-y-2.5">
                   <div className="flex items-center gap-1.5 pt-1">
                     <span className="font-bold text-white text-[19px] tracking-tight">{topPartner.name}</span>
-                    <svg className="w-5 h-5 text-emerald-400 flex-shrink-0 fill-current" viewBox="0 0 16 16" title="Verified Community">
+                    <svg className="w-5 h-5 text-blue-400 flex-shrink-0 fill-current" viewBox="0 0 16 16" title="Verified Community">
                       <path d="M14.92 6.64a2.25 2.25 0 0 0-.82-2 2.25 2.25 0 0 0-2-1.29 2.25 2.25 0 0 0-2-.82 2.25 2.25 0 0 0-2 .82 2.25 2.25 0 0 0-2 1.29 2.25 2.25 0 0 0-.82 2 2.25 2.25 0 0 0 .82 2 2.25 2.25 0 0 0 2 1.29 2.25 2.25 0 0 0 2 .82 2.25 2.25 0 0 0 2-.82 2.25 2.25 0 0 0 2-1.29 2.25 2.25 0 0 0 .82-2zM8 4.25l3.5 2.8v4.2H9.25V8.75h-2.5v2.5H4.5v-4.2L8 4.25z"/>
                     </svg>
                   </div>
