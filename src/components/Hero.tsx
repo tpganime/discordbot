@@ -7,7 +7,8 @@ import {
   Star, 
   LayoutDashboard, 
   Wifi,
-  ChevronRight
+  ChevronRight,
+  ArrowRight
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Container } from './ui/Container';
@@ -88,9 +89,8 @@ export const Hero = () => {
 
   // Scroll animations for desktop
   const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 500], [0, 100]);
-  const y2 = useTransform(scrollY, [0, 500], [0, -100]);
-  const rotate = useTransform(scrollY, [0, 500], [0, 10]);
+  const y1 = useTransform(scrollY, [0, 500], [0, 80]);
+  const y2 = useTransform(scrollY, [0, 500], [0, -80]);
 
   // Mouse tilt effect for desktop
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -99,8 +99,8 @@ export const Hero = () => {
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
     
-    containerRef.current.style.setProperty('--tilt-x', `${-y * 0.015}deg`);
-    containerRef.current.style.setProperty('--tilt-y', `${x * 0.015}deg`);
+    containerRef.current.style.setProperty('--tilt-x', `${-y * 0.012}deg`);
+    containerRef.current.style.setProperty('--tilt-y', `${x * 0.012}deg`);
   };
 
   const resetTilt = () => {
@@ -110,117 +110,129 @@ export const Hero = () => {
   };
 
   return (
-    <Section spacing="none" className="relative min-h-[90vh] flex items-center justify-center pt-32 pb-20 overflow-hidden">
-      {/* Dynamic Background Glows */}
+    <Section spacing="none" className="relative min-h-[92vh] flex items-center justify-center pt-36 pb-20 overflow-hidden">
+      {/* Refined Ambient Lighting */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <motion.div 
-          style={{ y: !isMobile ? y1 : 0, rotate: !isMobile ? rotate : 0 }}
-          className="absolute top-[-10%] right-[-5%] w-[400px] lg:w-[600px] h-[400px] lg:h-[600px] bg-indigo-600/15 blur-[90px] rounded-full transform-gpu"
+          style={{ y: !isMobile ? y1 : 0 }}
+          className="absolute top-[-12%] right-[15%] w-[450px] lg:w-[650px] h-[450px] lg:h-[650px] bg-blue-600/12 blur-[120px] rounded-full transform-gpu"
         />
         <motion.div 
-          style={{ y: !isMobile ? y2 : 0, rotate: !isMobile ? -rotate : 0 }}
-          className="absolute bottom-[-10%] left-[-5%] w-[350px] lg:w-[500px] h-[350px] lg:h-[500px] bg-blue-600/10 blur-[80px] rounded-full transform-gpu"
+          style={{ y: !isMobile ? y2 : 0 }}
+          className="absolute bottom-[-10%] left-[10%] w-[380px] lg:w-[550px] h-[380px] lg:h-[550px] bg-indigo-600/10 blur-[110px] rounded-full transform-gpu"
         />
       </div>
 
       <Container size="xl" className="relative z-10" ref={containerRef} onMouseMove={handleMouseMove} onMouseLeave={resetTilt}>
-        <Flex direction="col" gap={10} className="text-center" style={!isMobile ? { transform: 'perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg))', transition: 'transform 0.1s ease-out' } : undefined}>
+        <Flex direction="col" gap={8} className="text-center" style={!isMobile ? { transform: 'perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg))', transition: 'transform 0.15s ease-out' } : undefined}>
           
           <motion.div
-            initial={!isMobile ? { opacity: 0, y: 20 } : { opacity: 1 }}
+            initial={!isMobile ? { opacity: 0, y: 16 } : { opacity: 1 }}
             animate={!isMobile ? { opacity: 1, y: 0 } : { opacity: 1 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
             {/* Live Real-Time Status Pill */}
             <Link 
               to="/status" 
-              className={`inline-flex items-center gap-3 bg-white/5 border px-5 py-2.5 rounded-full mb-6 backdrop-blur-md shadow-lg transition-all group cursor-pointer ${
+              className={`inline-flex items-center gap-3 bg-white/[0.04] border px-4 py-1.5 rounded-full mb-6 backdrop-blur-2xl shadow-sm transition-all group cursor-pointer ${
                 stats.online 
-                  ? 'border-white/10 hover:border-emerald-500/40 hover:bg-white/10 shadow-blue-600/10' 
-                  : 'border-rose-500/30 hover:border-rose-500/60 hover:bg-rose-950/20 shadow-rose-600/10'
+                  ? 'border-white/12 hover:border-emerald-500/40 hover:bg-white/[0.08]' 
+                  : 'border-rose-500/30 hover:border-rose-500/50 hover:bg-rose-950/20'
               }`}
             >
               <div className="flex items-center gap-2">
-                <span className={`w-2.5 h-2.5 rounded-full ${stats.online ? 'bg-emerald-400 shadow-[0_0_10px_#34d399]' : 'bg-rose-500 shadow-[0_0_10px_#f43f5e]'} animate-pulse`} />
-                <span className={`text-xs font-bold uppercase tracking-wider ${stats.online ? 'text-white' : 'text-rose-300'}`}>
-                  {stats.online ? 'BOT ONLINE' : 'BOT OFFLINE'}
+                <span className={`w-2 h-2 rounded-full ${stats.online ? 'bg-[#30D158] shadow-[0_0_8px_#30D158]' : 'bg-[#FF453A] shadow-[0_0_8px_#FF453A]'} animate-pulse`} />
+                <span className={`text-[11px] font-semibold tracking-wider uppercase ${stats.online ? 'text-white/90' : 'text-rose-300'}`}>
+                  {stats.online ? 'SYSTEM OPERATIONAL' : 'SYSTEM OFFLINE'}
                 </span>
               </div>
               <span className="text-white/20">•</span>
-              <div className={`flex items-center gap-1.5 text-xs font-mono ${stats.online ? 'text-blue-400' : 'text-rose-400'}`}>
-                <Wifi className="w-3.5 h-3.5 animate-pulse" />
-                <span>{stats.online ? `${stats.ping}ms Ping` : '0ms (Offline)'}</span>
+              <div className={`flex items-center gap-1.5 text-xs font-mono ${stats.online ? 'text-[#0A84FF]' : 'text-rose-400'}`}>
+                <Wifi className="w-3 h-3" />
+                <span>{stats.online ? `${stats.ping}ms Ping` : '0ms'}</span>
               </div>
               <span className="text-white/20 hidden sm:inline">•</span>
-              <span className={`text-[11px] font-mono hidden sm:inline flex items-center gap-1 ${
-                stats.online ? 'text-emerald-400/80 group-hover:text-emerald-300' : 'text-rose-400/80 group-hover:text-rose-300'
+              <span className={`text-[11px] font-medium hidden sm:inline flex items-center gap-1 ${
+                stats.online ? 'text-white/50 group-hover:text-white/80' : 'text-rose-400/80'
               }`}>
-                {stats.online ? 'SHARDS LIVE' : 'UNREACHABLE'} <ChevronRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                View Status <ChevronRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
               </span>
             </Link>
 
-            {/* Official Prefixes Banner */}
-            <div className="flex justify-center mb-6">
-              <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/25 px-4 py-1.5 rounded-full backdrop-blur-md text-xs font-mono font-bold text-blue-300 shadow-sm">
-                <span className="text-white/50 font-sans font-semibold">Prefixes:</span> / ! @Fusion Bot
-              </div>
-            </div>
-
-            <Typography variant="h1" weight="black" className="mb-4 max-w-4xl mx-auto tracking-tight">
-              Complete Discord Bot for <span className="text-blue-500">Server Security</span> &amp; Cloud Backups
+            <Typography variant="h1" weight="black" className="mb-5 max-w-4xl mx-auto tracking-[-0.038em]">
+              Complete Discord Bot for <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-white">Server Security</span> &amp; Cloud Backups
             </Typography>
-            <Typography variant="lead" className="max-w-2xl mx-auto mb-8 text-white/70 leading-relaxed text-sm sm:text-base">
-              Fusion Bot protects your Discord community with fast anti-nuke defense, automated Google Drive server backups, and smart AI moderation. Restore channels, roles, and settings easily with single-click recovery.
+            <Typography variant="lead" className="max-w-2xl mx-auto mb-9 text-white/65 leading-relaxed text-[15px] sm:text-lg">
+              Protect and scale your Discord community with zero-latency Nuke Guard, automated 24h Google Drive server backups, and smart bilingual AI moderation.
             </Typography>
           </motion.div>
 
           <motion.div
-            initial={!isMobile ? { opacity: 0, scale: 0.9 } : { opacity: 1 }}
+            initial={!isMobile ? { opacity: 0, scale: 0.96 } : { opacity: 1 }}
             animate={!isMobile ? { opacity: 1, scale: 1 } : { opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
+            transition={{ delay: 0.15, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
-            <Flex gap={4} justify="center" className="flex-col sm:flex-row">
-              <Button size="lg" onClick={() => window.open(DISCORD_INVITE_URL)}>
+            <Flex gap={3.5} justify="center" className="flex-col sm:flex-row max-w-md mx-auto">
+              <Button size="lg" variant="primary" className="w-full sm:w-auto font-semibold px-8" onClick={() => window.open(DISCORD_INVITE_URL)}>
                 Add to Discord
-                <Zap className="w-5 h-5 ml-2 fill-current" />
+                <Zap className="w-4 h-4 ml-2 fill-current" />
               </Button>
-              <Button size="lg" variant="outline" onClick={() => window.location.href = DASHBOARD_URL}>
-                Dashboard
-                <LayoutDashboard className="w-5 h-5 ml-2" />
+              <Button size="lg" variant="secondary" className="w-full sm:w-auto font-medium px-8" onClick={() => window.location.href = DASHBOARD_URL}>
+                Open Dashboard
+                <LayoutDashboard className="w-4 h-4 ml-2" />
               </Button>
             </Flex>
           </motion.div>
 
-          {/* Real-time Live Stats Counters */}
+          {/* Real-time Live Stats Bento Tiles */}
           <motion.div
-            initial={!isMobile ? { opacity: 0, y: 40, perspective: 1000 } : { opacity: 1, y: 0 }}
+            initial={!isMobile ? { opacity: 0, y: 30 } : { opacity: 1 }}
             animate={!isMobile ? { opacity: 1, y: 0 } : { opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="mt-16 w-full max-w-4xl mx-auto group"
-            style={!isMobile ? { transformStyle: 'preserve-3d' } : undefined}
+            transition={{ delay: 0.3, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-14 w-full max-w-4xl mx-auto"
           >
-            <div 
-              className="grid grid-cols-2 md:grid-cols-4 gap-6 p-8 md:p-10 liquid-glass rounded-[40px] border border-white/10 shadow-[0_20px_50px_-20px_rgba(0,0,0,1),0_0_0_1px_rgba(255,255,255,0.05)] transition-all duration-700 hover:shadow-[0_40px_100px_-20px_rgba(37,99,235,0.25)] hover:-translate-y-1"
-              style={!isMobile ? { transform: 'rotateX(8deg)', transformStyle: 'preserve-3d' } : undefined}
-            >
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-5 p-5 sm:p-7 rounded-[32px] bg-[#121216]/65 border border-white/10 backdrop-blur-2xl shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.1)]">
               {[
-                { label: 'SERVERS', value: stats.servers.toLocaleString(), icon: Shield, color: 'text-blue-400' },
-                { label: 'USERS', value: stats.users.toLocaleString(), icon: Users, color: 'text-indigo-400' },
-                { label: 'COMMANDS', value: stats.commands.toString(), icon: Zap, color: 'text-amber-400' },
-                { label: 'UPTIME', value: stats.uptime, icon: Star, color: 'text-emerald-400' },
+                { 
+                  label: 'SERVERS MANAGED', 
+                  value: stats.servers.toLocaleString(), 
+                  icon: Shield, 
+                  color: 'text-[#0A84FF]', 
+                  badgeBg: 'bg-[#0A84FF]/12 border-[#0A84FF]/25' 
+                },
+                { 
+                  label: 'PROTECTED MEMBERS', 
+                  value: stats.users.toLocaleString(), 
+                  icon: Users, 
+                  color: 'text-[#BF5AF2]', 
+                  badgeBg: 'bg-[#BF5AF2]/12 border-[#BF5AF2]/25' 
+                },
+                { 
+                  label: 'SLASH COMMANDS', 
+                  value: stats.commands.toString(), 
+                  icon: Zap, 
+                  color: 'text-[#FF9F0A]', 
+                  badgeBg: 'bg-[#FF9F0A]/12 border-[#FF9F0A]/25' 
+                },
+                { 
+                  label: 'CLUSTER UPTIME', 
+                  value: stats.uptime, 
+                  icon: Star, 
+                  color: 'text-[#30D158]', 
+                  badgeBg: 'bg-[#30D158]/12 border-[#30D158]/25' 
+                },
               ].map((stat, i) => (
                 <div 
                   key={i} 
-                  className="text-center group/item"
-                  style={!isMobile ? { transform: 'translateZ(25px)' } : undefined}
+                  className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/15 transition-all duration-200 group/tile text-center"
                 >
-                  <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center mx-auto mb-3 group-hover/item:bg-blue-600/20 group-hover/item:scale-110 transition-all duration-300">
-                    <stat.icon className={`w-6 h-6 ${stat.color}`} />
+                  <div className={`w-10 h-10 rounded-xl ${stat.badgeBg} border flex items-center justify-center mx-auto mb-2.5 group-hover/tile:scale-105 transition-transform duration-200`}>
+                    <stat.icon className={`w-5 h-5 ${stat.color}`} />
                   </div>
-                  <Typography variant="h3" weight="black" className="mb-1 text-2xl md:text-3xl text-white font-display tracking-tight">
+                  <Typography variant="h3" weight="bold" className="mb-0.5 text-xl sm:text-2xl text-white font-display tracking-tight">
                     <Counter value={stat.value} />
                   </Typography>
-                  <Typography variant="small" className="text-white/40 font-bold uppercase tracking-widest text-[11px] group-hover/item:text-white/80 transition-colors">
+                  <Typography variant="small" className="text-white/45 text-[10px] font-semibold tracking-wider">
                     {stat.label}
                   </Typography>
                 </div>
