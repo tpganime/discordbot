@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Rocket, Zap, Shield, Sparkles, LayoutDashboard, Gift, Bot, Star, Cloud, Clock, Mic, ArrowLeft } from 'lucide-react';
+import { Rocket, Zap, Shield, Sparkles, LayoutDashboard, Gift, Bot, Star, Cloud, Clock, Mic, ArrowLeft, Brain, Terminal, Server, Hash, Volume2, ShieldCheck, Check, ArrowRight } from 'lucide-react';
 import { Container } from '../components/ui/Container';
 import { Section } from '../components/ui/Section';
 import { Typography } from '../components/ui/Typography';
@@ -13,20 +13,19 @@ const updates = [
   {
     version: 'v4.0.0',
     date: 'October 29, 2026 at 07:15 AM UTC',
-    title: 'Visual Embed Studio, Auto Purge, Sticky Messages & Automation Suite',
-    description: 'A major feature and automation release introducing an interactive Live Embed Studio, interval-based Auto Purge message cleanup, dynamic Sticky Messages, Voice-Role Links, customizable Levels & XP progression, and automated YouTube & Twitch broadcast notifications.',
+    title: 'Model Context Protocol (MCP) AI Connect, Visual Embed Studio & Automation Suite',
+    description: 'A major milestone and AI automation release introducing direct AI assistant integration via Model Context Protocol (MCP) for Claude Desktop and Cursor, an interactive Live Embed Studio with integer color coercion, interval-based Auto Purge message cleanup, dynamic Voice-Role Links, customizable Levels & XP progression starting at ₹79, and a human-friendly custom error engine.',
     type: 'Major',
-    icon: Sparkles,
-    color: 'text-emerald-500',
-    bg: 'bg-emerald-500/10',
+    icon: Brain,
+    color: 'text-indigo-400',
+    bg: 'bg-indigo-500/10',
     changes: [
-      'Visual Embed Studio: Live WYSIWYG Discord preview with rich markdown parsing, dynamic multi-column inline field grid, accent color picker, 6 preset templates (Rules, Announcements, Giveaway, FAQ), message ID edit mode, and instant JSON export/import.',
+      'Model Context Protocol (MCP) AI Connect: Connect Claude Desktop, Cursor, Gemini, and custom AI agents directly to your server settings. Securely automate welcome setups, moderation rules, and bot branding with isolated per-server cryptographic tokens (fmc_live_...) and zero cross-server data leakage.',
+      'Visual Embed Studio: Live WYSIWYG Discord preview with integer color coercion (resolving Discord form body type errors), rich markdown parsing, dynamic multi-column inline field grid, 6 preset templates (Rules, Announcements, Giveaway, FAQ), message ID edit mode, and instant JSON export/import.',
       'Auto Purge Engine: Scheduled automatic message cleanup across up to 15 configured channels with recurrence intervals from 1 hour to 14 days and specialized filters for bots, human messages, links, attachments, and pinned message protection.',
-      'Sticky Messages: Dynamic bottom-pinned notices that automatically reposition to the bottom of active channels when new chat arrives, featuring intelligent debounce anti-spam cooldowns.',
       'Voice-Role Links: Automatic temporary role assignment when members join specific voice or stage channels, with instant role removal upon disconnect.',
-      'Levels & XP System Overhaul: Configurable experience progression curves, multi-tier role rewards for milestone levels, customizable level-up announcements, and ignored channel/role rules.',
-      'YouTube & Twitch Media Notifications: Automated YouTube video upload alerts via RSS and Twitch live stream announcements with customizable ping templates.',
-      'Platform Stability & Permission Hardening: Updated deprecated Discord role creation parameter to modern standards, hardened permission error handling for restricted servers, and refined invite tracker fallback resolution.'
+      'Levels & XP System Starting at ₹79: Configurable experience progression curves, multi-tier role rewards for milestone levels, customizable level-up announcements, and leaderboard web views included in both Starter (₹79/mo) and Pro (₹149/mo) plans.',
+      'Platform Stability & Custom Error Engine: 100% human-friendly error messages replacing technical Discord API exceptions, zero-layout-shift SSR styling, and canonical XML sitemaps.'
     ]
   },
   {
@@ -221,6 +220,226 @@ export const UpdatesPage = () => {
                       ))}
                     </ul>
                   </div>
+
+                  {update.version === 'v4.0.0' && (
+                    <div className="mt-10 pt-8 border-t border-white/10 space-y-6">
+                      <div className="flex items-center justify-between flex-wrap gap-2">
+                        <Typography variant="small" weight="bold" className="text-indigo-400 uppercase tracking-widest text-[11px] flex items-center gap-2">
+                          <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
+                          Feature Screenshots &amp; Visual Previews
+                        </Typography>
+                        <span className="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full flex items-center gap-1.5">
+                          <ShieldCheck className="w-3 h-3 text-emerald-400" />
+                          Simulated Preview • ✦ Example Community
+                        </span>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* 1. MCP AI Connect Mockup */}
+                        <div className="rounded-2xl bg-[#090d14] border border-white/10 overflow-hidden shadow-xl md:col-span-2">
+                          <div className="bg-[#0f1420] px-4 py-2.5 border-b border-white/5 flex items-center justify-between text-xs text-white/50">
+                            <div className="flex items-center gap-2">
+                              <div className="flex gap-1.5">
+                                <span className="w-2.5 h-2.5 rounded-full bg-red-500/70 inline-block" />
+                                <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/70 inline-block" />
+                                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/70 inline-block" />
+                              </div>
+                              <span className="font-mono text-[11px] text-white font-bold ml-2 flex items-center gap-1.5">
+                                <Server className="w-3 h-3 text-indigo-400" /> ✦ Example Community
+                              </span>
+                            </div>
+                            <span className="font-mono text-[10px] bg-white/5 px-2 py-0.5 rounded text-neutral-400">
+                              panel.fusionhub.in/dashboard/example-community/mcp
+                            </span>
+                          </div>
+                          <div className="p-5 text-xs grid grid-cols-1 lg:grid-cols-12 gap-5">
+                            <div className="lg:col-span-6 bg-white/[0.02] border border-white/5 rounded-xl p-4 flex flex-col justify-between">
+                              <div className="space-y-3">
+                                <div className="flex items-center justify-between">
+                                  <span className="font-bold text-white flex items-center gap-1.5">
+                                    <Brain className="w-3.5 h-3.5 text-indigo-400" /> MCP AI Gateway
+                                  </span>
+                                  <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/15 px-2 py-0.5 rounded">Active &amp; Isolated</span>
+                                </div>
+                                <div className="space-y-2 font-mono text-[11px]">
+                                  <div>
+                                    <span className="text-white/40 text-[10px] block mb-1">TARGET COMMUNITY</span>
+                                    <div className="bg-black/40 p-2 rounded border border-white/5 text-white">✦ Example Community (ID: 100000000000000001)</div>
+                                  </div>
+                                  <div>
+                                    <span className="text-white/40 text-[10px] block mb-1">MCP ENDPOINT URL</span>
+                                    <div className="bg-black/40 p-2 rounded border border-white/5 text-indigo-300 truncate">https://panel.fusionhub.in/api/mcp/guild/100000000000000001</div>
+                                  </div>
+                                  <div>
+                                    <span className="text-white/40 text-[10px] block mb-1">SCOPED API TOKEN</span>
+                                    <div className="bg-black/40 p-2 rounded border border-white/5 text-emerald-400 font-bold flex justify-between">
+                                      <span>fmc_live_•••••••••••••••••••••••••demo</span>
+                                      <span className="text-white/40 text-[10px]">Example Token</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="mt-3 pt-2 text-[10.5px] text-white/50 border-t border-white/5 flex justify-between">
+                                <span>Tenant Isolation: <strong className="text-emerald-400">Strict (0 Leaks)</strong></span>
+                                <span>Cursor &amp; Claude: <strong className="text-indigo-400">Ready</strong></span>
+                              </div>
+                            </div>
+                            <div className="lg:col-span-6 bg-black/40 border border-white/5 rounded-xl p-4 flex flex-col justify-between space-y-3">
+                              <div className="text-[11px] font-mono text-white/40 border-b border-white/5 pb-2 flex justify-between">
+                                <span>AI Assistant Prompt Execution</span>
+                                <span className="text-indigo-400">Model Context Protocol</span>
+                              </div>
+                              <div className="space-y-2 text-[11.5px] leading-relaxed">
+                                <div className="bg-indigo-600/15 border border-indigo-500/20 p-2.5 rounded-lg text-white/90">
+                                  "Hey Claude, set up our welcome card in #welcome and ensure anti-nuke is active on <strong>Example Community</strong>."
+                                </div>
+                                <div className="bg-white/5 border border-white/10 p-2.5 rounded-lg text-white/80 space-y-1">
+                                  <div className="text-emerald-400 font-bold flex items-center gap-1.5 text-[11px]">
+                                    <Check className="w-3 h-3 text-emerald-400" /> Fusion MCP Executed:
+                                  </div>
+                                  <p>• Configured welcome greeting &rarr; Target: <code className="text-indigo-300">#welcome</code></p>
+                                  <p>• Verified Anti-Nuke Shield &rarr; <span className="text-emerald-400 font-bold">Active (0 rogue actions)</span></p>
+                                  <span className="text-[10px] text-white/40 block mt-1">Configured strictly within Example Community tenant boundary.</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* 2. Visual Embed Studio Mockup */}
+                        <div className="rounded-2xl bg-[#090d14] border border-white/10 overflow-hidden shadow-xl">
+                          <div className="bg-[#0f1420] px-3.5 py-2 border-b border-white/5 flex items-center justify-between text-xs text-white/50">
+                            <span className="font-mono text-[11px] text-white flex items-center gap-1.5">
+                              <Sparkles className="w-3 h-3 text-indigo-400" /> Embed Studio — ✦ Example Community
+                            </span>
+                            <span className="text-[10px] text-emerald-400 font-mono">Target: #announcements</span>
+                          </div>
+                          <div className="p-4 text-xs">
+                            <div className="bg-[#1e1f22] p-3 rounded-xl border border-white/5">
+                              <div className="flex items-center gap-2 mb-2">
+                                <div className="w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center text-white text-[10px] font-bold">F</div>
+                                <span className="font-bold text-white text-xs">FUSION | BOT</span>
+                                <span className="bg-[#5865f2] text-white text-[9px] px-1 py-0.2 rounded font-bold">BOT</span>
+                                <span className="text-white/40 text-[10px] ml-auto">Today at 12:00 PM</span>
+                              </div>
+                              <div className="border-l-4 border-indigo-500 bg-[#2b2d31] p-3 rounded-r-lg space-y-1.5">
+                                <div className="font-bold text-white text-[13px]">✨ Welcome to Example Community!</div>
+                                <p className="text-white/70 text-[11.5px] leading-relaxed">
+                                  Stay up to date with community announcements, events, and discussions. Grab roles in <code className="text-indigo-300">#roles</code>!
+                                </p>
+                                <div className="grid grid-cols-2 gap-2 pt-1 border-t border-white/5 text-[11px]">
+                                  <div><strong className="text-white block">📋 Server Rules:</strong><span className="text-white/50">Be respectful &amp; friendly</span></div>
+                                  <div><strong className="text-white block">🎁 Giveaways:</strong><span className="text-white/50">Weekly community events</span></div>
+                                </div>
+                                <div className="text-[10px] text-white/40 pt-1">✦ Example Community • Safe &amp; Verified</div>
+                              </div>
+                            </div>
+                            <div className="mt-2.5 flex justify-between text-[11px] text-emerald-400 font-bold">
+                              <span>✓ Embed dispatched without errors</span>
+                              <span className="text-white/40 font-mono text-[10px]">Color: #6366F1</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* 3. Auto Purge Engine Mockup */}
+                        <div className="rounded-2xl bg-[#090d14] border border-white/10 overflow-hidden shadow-xl">
+                          <div className="bg-[#0f1420] px-3.5 py-2 border-b border-white/5 flex items-center justify-between text-xs text-white/50">
+                            <span className="font-mono text-[11px] text-white flex items-center gap-1.5">
+                              <Zap className="w-3 h-3 text-amber-400" /> Auto Purge — ✦ Example Community
+                            </span>
+                            <span className="text-[10px] text-emerald-400 font-bold">● Running Automatically</span>
+                          </div>
+                          <div className="p-4 text-xs space-y-2.5">
+                            <div className="bg-white/[0.02] border border-white/5 rounded-xl p-3 flex justify-between items-center">
+                              <div>
+                                <div className="font-bold text-white flex items-center gap-1.5">
+                                  <Hash className="w-3.5 h-3.5 text-amber-400" /> #bot-commands
+                                </div>
+                                <div className="text-[11px] text-white/50 mt-0.5">Interval: <strong>Every 24 Hours</strong> • Target: Bot &amp; Spam</div>
+                              </div>
+                              <span className="text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded font-bold text-[10px]">Pins Protected 📌</span>
+                            </div>
+                            <div className="bg-white/[0.02] border border-white/5 rounded-xl p-3 flex justify-between items-center">
+                              <div>
+                                <div className="font-bold text-white flex items-center gap-1.5">
+                                  <Hash className="w-3.5 h-3.5 text-amber-400" /> #media-uploads
+                                </div>
+                                <div className="text-[11px] text-white/50 mt-0.5">Interval: <strong>Every 7 Days</strong> • Target: Old attachments</div>
+                              </div>
+                              <span className="text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded font-bold text-[10px]">Pins Protected 📌</span>
+                            </div>
+                            <div className="text-[10px] text-white/40 pt-1 flex justify-between">
+                              <span>Total cleaned: <strong className="text-white">1,420 messages</strong></span>
+                              <span className="text-indigo-400">✦ Example Community Engine</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* 4. Voice-Role Links Mockup */}
+                        <div className="rounded-2xl bg-[#090d14] border border-white/10 overflow-hidden shadow-xl">
+                          <div className="bg-[#0f1420] px-3.5 py-2 border-b border-white/5 flex items-center justify-between text-xs text-white/50">
+                            <span className="font-mono text-[11px] text-white flex items-center gap-1.5">
+                              <Volume2 className="w-3 h-3 text-emerald-400" /> Voice-Role Links — ✦ Example Community
+                            </span>
+                            <span className="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">● Active &amp; Synced</span>
+                          </div>
+                          <div className="p-4 text-xs space-y-2.5">
+                            <div className="bg-gradient-to-r from-emerald-500/10 to-transparent border border-emerald-500/20 rounded-xl p-3 flex justify-between items-center">
+                              <div>
+                                <div className="font-bold text-white flex items-center gap-2">
+                                  <span>🔊 General Voice (Lounge)</span>
+                                  <ArrowRight className="w-3 h-3 text-white/40" />
+                                  <span className="text-emerald-400 font-mono">@Active Voice</span>
+                                </div>
+                                <div className="text-[11px] text-white/50 mt-0.5">Auto-assigned on join • Removed on disconnect</div>
+                              </div>
+                              <span className="text-emerald-400 bg-emerald-500/20 px-2 py-0.5 rounded font-mono text-[10px] font-bold">SYNCED</span>
+                            </div>
+                            <div className="bg-gradient-to-r from-indigo-500/10 to-transparent border border-indigo-500/20 rounded-xl p-3 flex justify-between items-center">
+                              <div>
+                                <div className="font-bold text-white flex items-center gap-2">
+                                  <span>🎙️ Stage Talks &amp; Events</span>
+                                  <ArrowRight className="w-3 h-3 text-white/40" />
+                                  <span className="text-indigo-400 font-mono">@Stage Audience</span>
+                                </div>
+                                <div className="text-[11px] text-white/50 mt-0.5">Temporary access role during community events</div>
+                              </div>
+                              <span className="text-indigo-400 bg-indigo-500/20 px-2 py-0.5 rounded font-mono text-[10px] font-bold">SYNCED</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* 5. Levels & XP Progression Mockup */}
+                        <div className="rounded-2xl bg-[#090d14] border border-white/10 overflow-hidden shadow-xl">
+                          <div className="bg-[#0f1420] px-3.5 py-2 border-b border-white/5 flex items-center justify-between text-xs text-white/50">
+                            <span className="font-mono text-[11px] text-white flex items-center gap-1.5">
+                              <Rocket className="w-3 h-3 text-cyan-400" /> Levels &amp; XP — ✦ Example Community
+                            </span>
+                            <span className="text-[10px] text-cyan-400 font-bold">From ₹79 Starter</span>
+                          </div>
+                          <div className="p-4 text-xs space-y-2.5">
+                            <div className="flex justify-between items-center bg-white/[0.02] border border-white/5 rounded-xl p-2.5">
+                              <span className="text-white/60 font-bold">Role Milestones:</span>
+                              <div className="flex gap-2 font-mono text-[10.5px]">
+                                <span className="bg-cyan-500/20 text-cyan-300 px-2 py-0.5 rounded border border-cyan-500/30">Lv. 5 ➔ @Regular</span>
+                                <span className="bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded border border-purple-500/30">Lv. 15 ➔ @Veteran</span>
+                              </div>
+                            </div>
+                            <div className="space-y-1.5 bg-black/40 rounded-xl p-2.5 border border-white/5 text-[11px]">
+                              <div className="flex justify-between text-white/80">
+                                <span><strong className="text-yellow-400">#1</strong> Alex (Example Member)</span>
+                                <span className="font-mono text-cyan-400 font-bold">Level 24 • 4,820 XP</span>
+                              </div>
+                              <div className="flex justify-between text-white/80">
+                                <span><strong className="text-slate-300">#2</strong> Sarah (Example Member)</span>
+                                <span className="font-mono text-cyan-400 font-bold">Level 21 • 3,950 XP</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </Card>
               </motion.div>
             ))}
