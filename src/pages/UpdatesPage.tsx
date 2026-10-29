@@ -11,6 +11,25 @@ import { Flex } from '../components/ui/Flex';
 
 const updates = [
   {
+    version: 'v4.0.0',
+    date: 'October 29, 2026 at 07:15 AM UTC',
+    title: 'Visual Embed Studio, Auto Purge, Sticky Messages & Automation Suite',
+    description: 'A major feature and automation release introducing an interactive Live Embed Studio, interval-based Auto Purge message cleanup, dynamic Sticky Messages, Voice-Role Links, customizable Levels & XP progression, and automated YouTube & Twitch broadcast notifications.',
+    type: 'Major',
+    icon: Sparkles,
+    color: 'text-emerald-500',
+    bg: 'bg-emerald-500/10',
+    changes: [
+      'Visual Embed Studio: Live WYSIWYG Discord preview with rich markdown parsing, dynamic multi-column inline field grid, accent color picker, 6 preset templates (Rules, Announcements, Giveaway, FAQ), message ID edit mode, and instant JSON export/import.',
+      'Auto Purge Engine: Scheduled automatic message cleanup across up to 15 configured channels with recurrence intervals from 1 hour to 14 days and specialized filters for bots, human messages, links, attachments, and pinned message protection.',
+      'Sticky Messages: Dynamic bottom-pinned notices that automatically reposition to the bottom of active channels when new chat arrives, featuring intelligent debounce anti-spam cooldowns.',
+      'Voice-Role Links: Automatic temporary role assignment when members join specific voice or stage channels, with instant role removal upon disconnect.',
+      'Levels & XP System Overhaul: Configurable experience progression curves, multi-tier role rewards for milestone levels, customizable level-up announcements, and ignored channel/role rules.',
+      'YouTube & Twitch Media Notifications: Automated YouTube video upload alerts via RSS and Twitch live stream announcements with customizable ping templates.',
+      'Platform Stability & Permission Hardening: Updated deprecated Discord role creation parameter to modern standards, hardened permission error handling for restricted servers, and refined invite tracker fallback resolution.'
+    ]
+  },
+  {
     version: 'v3.8.0',
     date: 'October 3, 2026 at 12:00 AM UTC',
     title: 'Studio Voice Recording Engine & VIP Partner Communities',
